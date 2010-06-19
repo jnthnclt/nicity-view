@@ -38,7 +38,9 @@ import com.colt.nicity.core.collection.CSet;
 import com.colt.nicity.core.lang.IOut;
 import com.colt.nicity.core.lang.MinMaxDouble;
 import com.colt.nicity.core.lang.MinMaxLong;
+import com.colt.nicity.core.lang.NullOut;
 import com.colt.nicity.core.lang.UDouble;
+import com.colt.nicity.core.lang.URandom;
 import com.colt.nicity.core.memory.struct.IXYZ;
 import com.colt.nicity.core.memory.struct.XYZ_D;
 import com.colt.nicity.core.memory.struct.XY_I;
@@ -51,6 +53,7 @@ import com.colt.nicity.view.core.VChain;
 import com.colt.nicity.view.core.VPan;
 import com.colt.nicity.view.core.VString;
 import com.colt.nicity.view.core.ViewColor;
+import com.colt.nicity.view.core.Viewer;
 import com.colt.nicity.view.interfaces.ICanvas;
 import com.colt.nicity.view.interfaces.IDropMode;
 import com.colt.nicity.view.interfaces.IEnteredOrExited;
@@ -71,6 +74,21 @@ import linloglayout.LinLogProgress;
  * @author Administrator
  */
 public class NGEnv extends AItem {
+
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+        ViewColor.onBlack();
+        NG ng = new NG();
+        for (int i = 0; i < 40; i++) {
+            ng.order(URandom.randomLowerCaseAlphaString(1), URandom.randomLowerCaseAlphaString(1), ULinkDrawer.inout("", AColor.blue));
+        }
+        NGEnv g = new NGEnv(800, 600);
+        g.set(NullOut.cNull, ng);
+        UV.exitFrame(new Viewer(g), "");
+    }
 
     Object[] links = new Object[0];
     long maxNodeCount = 0;
@@ -119,7 +137,7 @@ public class NGEnv extends AItem {
             public void mouseReleased(final MouseReleased _e) {
                 super.mouseReleased(_e);
                 if (_e.isRightClick()) {
-                    UV.popup(this, _e, NGEnv.this.popupView(), true);
+                    UV.popup(this, _e, UV.zone(NGEnv.this.popupView()), true);
                 }
 
             }
@@ -217,7 +235,7 @@ public class NGEnv extends AItem {
         setContent(pan);
         setBorder(new SolidBorder(ViewColor.cVisualizeTheme));
 
-        refresher = new ElapseCall(null, 500, new ICall() {
+        refresher = new ElapseCall(NullOut.cNull, 500, new ICall() {
 
             public void invoke(IOut _) {
                 _refresh(_);
@@ -760,7 +778,7 @@ public class NGEnv extends AItem {
         public void mouseReleased(final MouseReleased _e) {
             super.mouseReleased(_e);
             if (_e.isRightClick() && _e.isSingleClick()) {
-                UV.popup(this, _e, NGEnv.this.popupView(), true);
+                UV.popup(this, _e,UV.zone(NGEnv.this.popupView()), true);
             }
         }
         // IXYZ

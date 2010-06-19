@@ -79,46 +79,40 @@ public class NGEnvAnim extends Viewer {
     public static void main(String[] _args) {
         ViewColor.onBlack();
         NG ng = new NG();
-        for(int i=0;i<40;i++) {
-            ng.order(URandom.randomLowerCaseAlphaString(1), URandom.randomLowerCaseAlphaString(1),ULinkDrawer.inout("",AColor.blue));
+        for (int i = 0; i < 40; i++) {
+            ng.order(URandom.randomLowerCaseAlphaString(1), URandom.randomLowerCaseAlphaString(1), ULinkDrawer.inout("", AColor.blue));
         }
-       NGEnvAnim g = new NGEnvAnim(800,600);
-       g.set(NullOut.cNull, ng);
+        NGEnvAnim g = new NGEnvAnim(800, 600);
+        g.set(NullOut.cNull, ng);
         UV.exitFrame(new Viewer(g), "");
     }
 
-    
     /**
      *
      * @param _location
      */
     public void setPicked(IVNode _location) {
     }
-    
+
     /**
      *
      * @param _location
      */
     public void setSelected(IVNode _location) {
     }
-   
     long maxNodeCount = 0;
     double minNode = 0;
     double maxNode = 1;
-    
     long maxLinkCount = 0;
     double minLink = 0;
     double maxLink = 1;
-    
     CSet hashNodes = new CSet();
-    
     CSet nodes = new CSet();
     Object[] links = new Object[0];
     /**
      *
      */
     public VLoose loose;
-    
     /**
      *
      */
@@ -143,10 +137,9 @@ public class NGEnvAnim extends Viewer {
     int cw = 800;
     int ch = 800;
     VPan panGraph;
-    
     VStatus status;
     CSet pinned = new CSet();
-    
+
     /**
      *
      * @param _w
@@ -157,12 +150,13 @@ public class NGEnvAnim extends Viewer {
         ch = _h;
 
         loose = new VLoose(new ListController(nodes)) {
+
             @Override
             public void mend() {
                 enableFlag(UV.cRepair);//??
                 super.mend();
             }
-            
+
             @Override
             public void mouseReleased(final MouseReleased _e) {
                 super.mouseReleased(_e);
@@ -170,13 +164,13 @@ public class NGEnvAnim extends Viewer {
                     UV.popup(this, _e, NGEnvAnim.this.popupView(), true);
                 }
             }
-            
+
             @Override
-            public void paintBackground(ICanvas _g,int _x,int _y, int _w, int _h) {
-                super.paintBackground(_g,_x,_y, _w, _h);
+            public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
+                super.paintBackground(_g, _x, _y, _w, _h);
                 //_g.setColor(ViewColor.cVisualizeTheme);
 
-                
+
                 _g.setAlpha(0.1f, 0);
                 for (IVItem i : getItems()) {
                     _g.setColor(ViewColor.cVisualizeThemeFont);
@@ -185,7 +179,7 @@ public class NGEnvAnim extends Viewer {
                     int max = (int) Math.max(i.getW(), i.getH());
                     int steps = max / 3;
                     for (int m = 0; m < steps; m++) {
-                        _g.oval(true,cx - (max / 2), cy - (max / 2), max, max);
+                        _g.oval(true, cx - (max / 2), cy - (max / 2), max, max);
                         max -= steps;
                         steps += steps;
                         if (max / 2 < 1) {
@@ -215,7 +209,8 @@ public class NGEnvAnim extends Viewer {
                         XY_I tp = UV.toPoint(to, UV.cWW);
                         LinkDrawer linkDrawer = (LinkDrawer) link.key(2);
                         linkDrawer.draw(_g, fp, tp, rank, 8);
-                    } else {
+                    }
+                    else {
                         XY_I _fp = UV.toPoint(from, UV.cCC);
                         XY_I _tp = UV.toPoint(to, UV.cCC);
 
@@ -233,9 +228,10 @@ public class NGEnvAnim extends Viewer {
         loose.setBorder(new SolidBorder(ViewColor.cVisualizeTheme));
 
         panGraph = new VPan(loose, _w, _h) {
+
             @Override
-            public void paintBackground(ICanvas _g,int _x,int _y, int _w, int _h) {
-                super.paintBackground(_g,_x,_y, _w, _h);
+            public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
+                super.paintBackground(_g, _x, _y, _w, _h);
                 if (cw != _w || ch != _h) {
                     cw = _w;
                     ch = _h;
@@ -247,7 +243,8 @@ public class NGEnvAnim extends Viewer {
         setContent(status);
         setBorder(new SolidBorder(ViewColor.cVisualizeTheme));
 
-        refresher = new ElapseCall(NullOut.cNull,500,new ICall() {
+        refresher = new ElapseCall(NullOut.cNull, 500, new ICall() {
+
             public void invoke(IOut _) {
                 _refresh(_);
             }
@@ -259,12 +256,12 @@ public class NGEnvAnim extends Viewer {
      * @param _w
      * @param _h
      */
-    public  void setSize(int _w,int _h) {
+    public void setSize(int _w, int _h) {
         panGraph.setSize(_w, _h);
         panGraph.layoutInterior();
     }
-
     private boolean editable = true;
+
     /**
      *
      * @param b
@@ -272,7 +269,7 @@ public class NGEnvAnim extends Viewer {
     public void setEditable(boolean b) {
         editable = b;
     }
-    
+
     /**
      *
      * @param _
@@ -281,7 +278,6 @@ public class NGEnvAnim extends Viewer {
     public void set(IOut _, NG _dos) {
         set(_, _dos.nodes.getAll(Object.class), _dos.maxNodeCount, _dos.links.getAll(Object.class), _dos.maxLinkCount);
     }
-    
     // _nodes instanceof IVNode
     // _links instanceof DoLink
     Map<Object, Map<Object, Float>> graph;
@@ -341,7 +337,7 @@ public class NGEnvAnim extends Viewer {
         for (Object node : nodeToId.keySet()) {
             int pi = nodeToId.get(node);
             toPaint.add(new DoLocation((IVNode) node, pi));
-            float[] xyz = (float[])KeyedValue.get(pinned, node);
+            float[] xyz = (float[]) KeyedValue.get(pinned, node);
             if (xyz != null) {
                 positions[pi][0] = xyz[0];
                 positions[pi][1] = xyz[1];
@@ -351,15 +347,15 @@ public class NGEnvAnim extends Viewer {
         }
 
         minimizer = new MinimizerBarnesHut(
-                attractionIndexes, attrationWeights, repulsionWeights,
-                (float) attraction.doubleValue(), (float) repulsion.doubleValue(), 0.01f, positions, pinnedPositions);
+            attractionIndexes, attrationWeights, repulsionWeights,
+            (float) attraction.doubleValue(), (float) repulsion.doubleValue(), 0.01f, positions, pinnedPositions);
 
         nodes.removeAll();
         nodes.add(toPaint.getAll(Object.class));
         loose.listModified(_);
         _refresh(_);
     }
-    
+
     /**
      *
      * @param _nodes
@@ -368,7 +364,7 @@ public class NGEnvAnim extends Viewer {
         hashNodes.removeAll();
         hashNodes.add(_nodes);
     }
-    
+
     /**
      *
      * @param _links
@@ -376,32 +372,36 @@ public class NGEnvAnim extends Viewer {
     public void setLinks(Object[] _links) {
         links = _links;
     }
-    
+
     /**
      *
      */
     public void clearNodes() {
         hashNodes.removeAll();
     }
-    
+
     /**
      *
      * @return
      */
     public IView popupView() {
         VChain c = new VChain(UV.cSWNW);
-        c.add(new VItem("Unpin all") { public void picked(IEvent _e) {
-            pinned.removeAll();
-            for(int i=0;i<pinnedPositions.length;i++) {
-                getRootView().dispose();
-                pinnedPositions[i] = false;
-                refresh();
+        c.add(new VItem("Unpin all") {
+
+            public void picked(IEvent _e) {
+                pinned.removeAll();
+                for (int i = 0; i < pinnedPositions.length; i++) {
+                    getRootView().dispose();
+                    pinnedPositions[i] = false;
+                    refresh();
+                }
             }
-        }});
+        });
         c.add(new VEditValue("Attraction:", attraction, "", false));
         c.add(new VEditValue("Repulsion:", repulsion, "", false));
         c.add(new VEditValue("Iterations:", iterations, "", false));
         VItem b = new VItem("Refresh") {
+
             public void picked(IEvent _e) {
                 getRootView().dispose();
                 refresh();
@@ -410,18 +410,19 @@ public class NGEnvAnim extends Viewer {
         c.add(b);
         return c;
     }
-    
+
     /**
      *
      */
     public void refresh() {
         refresher.signal();
     }
-    
+
     private void _refresh(final IOut _) {
 
-        
+
         LinLogProgress llp = new LinLogProgress() {
+
             public void out(double _count, double _outof) {
                 _.out(_count, _outof);
                 //status.out((_count / _outof) + "%");
@@ -438,9 +439,11 @@ public class NGEnvAnim extends Viewer {
 
                 loose.listModified(_);
             }
+
             public void out(Object... _value) {
                 _.out(_value);
             }
+
             public boolean canceled() {
                 return _.canceled();
             }
@@ -452,33 +455,35 @@ public class NGEnvAnim extends Viewer {
 
         status.out("");
     }
-    
 
     class DoLocation extends AItem implements IXYZ, Comparable, IMouseEvents, IMouseMotionEvents {
+
         IVNode key;
-        
         AColor color = null;
         int pi;
-        
+
         DoLocation(IVNode _key, int _pi) {
             key = _key;
             pi = _pi;
             VChain c = new VChain(UV.cEW);
             if (key.value() instanceof IView) {
                 c.add((IView) key.value());
-            } else if (key.value() instanceof IEnteredOrExited) {
+            }
+            else if (key.value() instanceof IEnteredOrExited) {
                 c.add(((IEnteredOrExited) key.value()).exitedView());
-            } else {
+            }
+            else {
                 VString s = new VString(key, new AFont(AFont.cPlain, 14), ViewColor.cVisualizeThemeFont);
                 c.add(s);
             }
             setContent(c);
             setBorder(null);
         }
+
         public float[] xyz() {
             return positions[pi];
         }
-        
+
         @Override
         public void mouseEntered(MouseEntered e) {
             super.mouseEntered(e);
@@ -488,7 +493,7 @@ public class NGEnvAnim extends Viewer {
                 }
             }
         }
-        
+
         @Override
         public void mouseExited(MouseExited e) {
             super.mouseExited(e);
@@ -498,89 +503,92 @@ public class NGEnvAnim extends Viewer {
                 }
             }
         }
+
         @Override
-        public void paintBorder(ICanvas g,int _x,int _y, int _w, int _h) {
-            super.paintBorder(g,_x,_y, _w, _h);
+        public void paintBorder(ICanvas g, int _x, int _y, int _w, int _h) {
+            super.paintBorder(g, _x, _y, _w, _h);
             if (pinnedPositions[pi]) {
                 g.setColor(AColor.red);
-                g.oval(false,_x,_y,6,6);
+                g.oval(false, _x, _y, 6, 6);
             }
         }
 
-
-        
         public float getX() {
             return UFloat.clamp((float) (cw * x()) - (getW() / 2), 16, cw - getW() - 16);
         }
-        
+
         public float getY() {
             return UFloat.clamp((float) (ch * y()) - (getH() / 2), 16, ch - getH() - 16);
         }
-        
+
         public IToolTip getToolTip() {
             if (key.value() instanceof IView) {
                 return ((IView) key.value()).getToolTip();
             }
             return super.getToolTip();
         }
-        
+
         public String toString() {
             return key.toString();
         }
-        
+
         public void picked(IEvent _e) {
             setPicked(key);
         }
-        
+
         public void selected(IEvent _e) {
             setSelected(key);
         }
-        
+
         public Object getValue() {
             return key;
         }
-        
+
         public void mouseReleased(final MouseReleased _e) {
             super.mouseReleased(_e);
             if (editable) {
                 pinnedPositions[pi] = true;
-                KeyedValue.add(pinned, xyz(),key);
+                KeyedValue.add(pinned, xyz(), key);
                 refresh();
             }
         }
-        
+
         // IXYZ
         public double x() {
             return xp.zeroToOne(xyz()[0]);
         }
+
         public double y() {
             return yp.zeroToOne(xyz()[1]);
         }
+
         public double z() {
             return zp.zeroToOne(xyz()[2]);
         }
+
         public void x(double _px) {
             xyz()[0] = (float) xp.unzeroToOne(_px);
         }
+
         public void y(double _py) {
             xyz()[1] = (float) yp.unzeroToOne(_py);
         }
+
         public void z(double _pz) {
             xyz()[2] = (float) zp.unzeroToOne(_pz);
         }
-        
+
         // Comparable
-        
         public int compareTo(Object other) {
             double thisVal = z();
             double otherVal = ((IXYZ) other).z();
             return (otherVal < thisVal ? -1 : (otherVal == thisVal ? 0 : 1));
         }
-        
+
         // IMouseMotionEvents
-        
         public void mouseMoved(MouseMoved e) {
         }
+
         public void mouseDragged(MouseDragged e) {
             int dx = e.getDeltaX();
             int dy = e.getDeltaY();
