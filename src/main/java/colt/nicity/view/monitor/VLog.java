@@ -26,10 +26,13 @@ import colt.nicity.core.collection.CSet;
 import colt.nicity.core.collection.keyed.KeyedValue;
 import colt.nicity.core.lang.IOut;
 import colt.nicity.core.lang.UArray;
+import colt.nicity.core.lang.URandom;
 import colt.nicity.core.lang.UString;
 import colt.nicity.core.lang.UText;
 import colt.nicity.core.lang.UTrace;
 import colt.nicity.core.time.UTime;
+import colt.nicity.view.border.RoundBorder;
+import colt.nicity.view.border.WindowBorder;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.RigidBox;
 import colt.nicity.view.core.UV;
@@ -43,6 +46,8 @@ import colt.nicity.view.interfaces.IEmailer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.ISizeable;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -62,13 +67,28 @@ public class VLog extends Viewer implements IOut, ISizeable {
      */
     public static void main(String[] _args) {
         // Make Gargage as fast as you can
+        ViewColor.onBlack();
         VChain c = new VChain(UV.cSN);
-        c.add(new VLog("", 100, null));
+        c.add(new VLog("", 1000, null));
         UV.exitFrame(c, "Test");
-        //while (true) {
-        //    VLog.out.out(URandom.rand(1000000));
-        //}
-        
+        for (int i = 0; i < 10; i++) {
+            new Thread() {
+                public void run() {
+                    int i = 0;
+                    String[] header = new String[]{"DEBUG","INFO","WARN","ERROR"};
+                    while (i < 100000) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(VLog.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        VLog.out.out(header[URandom.rand(4)]+" "+i + "" + Thread.currentThread());
+                        i++;
+                    }
+                }
+            }.start();
+        }
+
     }
     /**
      *
@@ -85,6 +105,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
     int insertAt = 0;
     File logFile;
     boolean enabled = true;
+    VPan pan;
 
     /**
      *
@@ -156,6 +177,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
                 clear();
             }
         };
+        clear.setBorder(new RoundBorder(ViewColor.cItemTheme, 1));
         m.add(clear);
 
         if (logMailer != null) {
@@ -180,19 +202,25 @@ public class VLog extends Viewer implements IOut, ISizeable {
 
         VChain c = new VChain(UV.cSN);
         c.add(m);
-        RigidBox r = new RigidBox(1600, _capacity * 14) {
-
+        RigidBox r = new RigidBox(2400, _capacity * 14) {
+            int lastInsertAt = 0;
             @Override
             public void paintBorder(ICanvas _g, int _x, int _y, int _w, int _h) {
                 _g.setColor(ViewColor.cTheme);
                 _g.rect(true, _x, _y, _w, _h);
                 _g.setFont(UV.fonts[UV.cText]);
                 _g.setColor(ViewColor.cThemeFont);
-                int y = 14;
+                int y = _y+_h;
                 long[] _threadIds = threadIds;
                 Object[] _lines = lines;
                 AColor[] _colors = lineColors;
-                int _insertAt = insertAt;
+                int _insertAt = lastInsertAt;
+                if (pan != null && pan.getPositionY() == 1f) {
+                    _insertAt = insertAt;
+                    lastInsertAt = insertAt;
+                }
+                int progressWidth = 32;
+                int fh = (int)UV.fonts[UV.cText].getH("A");
                 for (int i = 0; i < _lines.length; i++) {
                     int getAt = _insertAt - i;
                     if (getAt < 0) {
@@ -202,22 +230,30 @@ public class VLog extends Viewer implements IOut, ISizeable {
                         continue;
                     }
                     if (_lines[getAt] != null) {
+                        String s = _lines[getAt].toString();
+                        if (s.contains("DEBUG")) _g.setColor(AColor.gray);
+                        else if(s.contains("WARN")) _g.setColor(AColor.orange);
+                        else if(s.contains("ERROR")) _g.setColor(AColor.red);
+                        else _g.setColor(ViewColor.cThemeFont);
+                        _g.drawString(s, _x + progressWidth, _y + y);
+
                         if (_colors[getAt] != null) {
                             _g.setColor(_colors[getAt]);
-                        } else {
-                            _g.setColor(ViewColor.cThemeFont);
                         }
-                        _g.drawString(_lines[getAt].toString(), _x + 100, _y + y);
-                        Double p = (Double) KeyedValue.get(threadProgress,_threadIds[getAt]);
-                        if (p != null) {
-                            _g.rect(true, _x, _y + y - 14, (int) (100 * p), 14);
+                        Double p = (Double) KeyedValue.get(threadProgress, _threadIds[getAt]);
+                        if (p == null) {
+                            p = 1d;
                         }
+                        _g.rect(true, _x, _y + y - 14, (int) (progressWidth * p), 14);
+                        
                     }
-                    y += 14;
+                    y -= fh;
                 }
             }
         };
-        c.add(UV.zone(new VPan(r, _w, _h)));
+        pan = new VPan(r, _w, _h);
+        pan.setPositionY(1f);
+        c.add(UV.zone(pan));
         setContent(c);
         layoutInterior();
         paint();
@@ -300,7 +336,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
                     _insertAt = 0;
                 }
                 Thread ct = Thread.currentThread();
-                KeyedValue.remove(threadProgress,threadIds[_insertAt]);//??
+                KeyedValue.remove(threadProgress, threadIds[_insertAt]);//??
                 threadIds[_insertAt] = ct.getId();
                 lines[_insertAt] = m;
                 lineColors[_insertAt] = AColor.getHashSolid(ct);
@@ -317,8 +353,8 @@ public class VLog extends Viewer implements IOut, ISizeable {
      */
     public void out(double _at, double _outof) {
         Thread ct = Thread.currentThread();
-        KeyedValue.remove(threadProgress,ct.getId());
-        KeyedValue.add(threadProgress,ct.getId(),(_at / _outof));
+        KeyedValue.remove(threadProgress, ct.getId());
+        KeyedValue.add(threadProgress, ct.getId(), (_at / _outof));
     }
 
     /**

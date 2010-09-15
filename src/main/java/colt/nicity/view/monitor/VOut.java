@@ -75,7 +75,7 @@ import colt.nicity.view.interfaces.IWindowEvents;
  *
  * @author Administrator
  */
-public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, IMouseEvents, IMouseMotionEvents {
+public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, IMouseEvents, IMouseMotionEvents {
 
     private static CSet pulseSet = new CSet();
 
@@ -89,8 +89,8 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
                         if (pulseSet != null) {
                             Object[] all = pulseSet.getAll(Object.class);
                             for (int i = 0; i < all.length; i++) {
-                                if (all[i] instanceof VWait) {
-                                    ((VWait) all[i]).pulse();
+                                if (all[i] instanceof VOut) {
+                                    ((VOut) all[i]).pulse();
                                 }
                             }
                         }
@@ -123,7 +123,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
     /**
      *
      */
-    public VWait() {
+    public VOut() {
         this(640);
     }
 
@@ -131,7 +131,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
      *
      * @param _w
      */
-    public VWait(int _w) {
+    public VOut(int _w) {
         this(_w, "Please Wait");
     }
 
@@ -140,7 +140,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
      * @param _w
      * @param _title
      */
-    public VWait(int _w, Object _title) {
+    public VOut(int _w, Object _title) {
         this(_w, _title, null);
     }
 
@@ -148,7 +148,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
      *
      * @param _title
      */
-    public VWait(Object _title) {
+    public VOut(Object _title) {
         this(640, _title, null);
     }
 
@@ -157,7 +157,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
      * @param _title
      * @param _menu
      */
-    public VWait(Object _title, IView _menu) {
+    public VOut(Object _title, IView _menu) {
         this(640, _title, _menu);
     }
     long birth;
@@ -168,7 +168,7 @@ public class VWait extends Viewer implements IOut, IFocusEvents, IWindowEvents, 
      * @param _title
      * @param _menu
      */
-    public VWait(int _w, Object _title, IView _menu) {
+    public VOut(int _w, Object _title, IView _menu) {
 
         birth = System.currentTimeMillis();
         title = _title;
