@@ -168,27 +168,7 @@ public class NGEnvAnim extends Viewer {
             @Override
             public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
                 super.paintBackground(_g, _x, _y, _w, _h);
-                //_g.setColor(ViewColor.cVisualizeTheme);
-
-
-                _g.setAlpha(0.1f, 0);
-                for (IVItem i : getItems()) {
-                    _g.setColor(ViewColor.cVisualizeThemeFont);
-                    int cx = (int) (i.getX() + (i.getW() / 2));
-                    int cy = (int) (i.getY() + (i.getH() / 2));
-                    int max = (int) Math.max(i.getW(), i.getH());
-                    int steps = max / 3;
-                    for (int m = 0; m < steps; m++) {
-                        _g.oval(true, cx - (max / 2), cy - (max / 2), max, max);
-                        max -= steps;
-                        steps += steps;
-                        if (max / 2 < 1) {
-                            break;
-                        }
-                    }
-                }
-                _g.setAlpha(1f, 0);
-
+                
                 for (int i = 0; i < links.length; i++) {
                     if (links[i] == null) {
                         continue;

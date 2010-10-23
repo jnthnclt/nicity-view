@@ -144,10 +144,6 @@ public class NGEnv extends AItem {
 
             public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
                 super.paintBackground(_g, _x, _y, _w, _h);
-
-
-
-
                 NGEnv.this.paintBackground(_g, _x, _y, _w, _h);
 
 
@@ -155,25 +151,6 @@ public class NGEnv extends AItem {
                 if (threeD) {
                     tunnel.drawTunnel(_g);
                 }
-
-
-                _g.setAlpha(0.1f, 0);
-                for (IVItem i : getItems()) {
-                    _g.setColor(ViewColor.cVisualizeThemeFont);
-                    int cx = (int) (i.getX() + (i.getW() / 2));
-                    int cy = (int) (i.getY() + (i.getH() / 2));
-                    int max = (int) Math.max(i.getW(), i.getH());
-                    int steps = max / 3;
-                    for (int m = 0; m < steps; m++) {
-                        _g.oval(true, _x + cx - (max / 2), _y + cy - (max / 2), max, max);
-                        max -= steps;
-                        steps += steps;
-                        if (max / 2 < 1) {
-                            break;
-                        }
-                    }
-                }
-                _g.setAlpha(1f, 0);
 
                 for (int i = 0; i < links.length; i++) {
                     //if (refreshing)
@@ -203,10 +180,6 @@ public class NGEnv extends AItem {
                     LinkDrawer linkDrawer = (LinkDrawer) link.key(2);
                     linkDrawer.draw(_g, fp, tp, rank, 8);
                 }
-
-                //PaintCompression.paintBackground(compression, _g, 0, 0, _w, _h, 0, 16);
-                //PaintCompression.paintBorder(compression, _g, 0, 0, _w, _h, 0, 16, true);
-
             }
         };
         grid.set3D(true, Math.min(_w, _h), _w, _h);
