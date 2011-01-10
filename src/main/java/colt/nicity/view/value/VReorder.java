@@ -16,7 +16,6 @@ import colt.nicity.view.core.VChain;
 import colt.nicity.view.core.VIcon;
 import colt.nicity.view.core.VPan;
 import colt.nicity.view.core.VString;
-import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IDropMode;
 import colt.nicity.view.interfaces.IEvent;
@@ -32,9 +31,9 @@ abstract public class VReorder extends Viewer {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        //ViewColor.onBlack();
         VReorder ro = new VReorder() {
-            Object[] order = new Object[]{"five","two","seven","nine","one"};
+            Object[] order = new Object[]{"five","two","seven","nine","one","a","b","c","d","e","f","g","h","i"};
             @Override
             public void ordered(Object[] _newOrder) {
                 order = _newOrder;

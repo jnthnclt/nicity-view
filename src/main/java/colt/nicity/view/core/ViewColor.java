@@ -73,15 +73,15 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeActive = new AColor(100, 100, 200);
+    public static AColor cThemeActive = new AColor(200, 200, 200);
     /**
      *
      */
-    public static AColor cThemeSelected = new AColor(50, 50, 150);
+    public static AColor cThemeSelected = new AColor(150, 150, 150);
     /**
      *
      */
-    public static AColor cThemeScroll = new AColor(50, 50, 150);
+    public static AColor cThemeScroll = new AColor(150, 150, 150);
     /**
      *
      */

@@ -38,6 +38,7 @@ import colt.nicity.core.observer.Observable;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VString;
+import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.ViewString;
 import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IEvent;
@@ -206,10 +207,10 @@ public class ListController extends AListController implements IListController, 
         }
         if ((items == null || items.length == 0) && !(filter.toString().equals(""))) {
             Viewer titleViewer = new Viewer(new ViewString(" filter= "));
-            titleViewer.setBorder(new SolidBorder(AColor.yellow));
+            titleViewer.setBorder(new SolidBorder(ViewColor.cThemeAccent));
 
             Viewer filterViewer = new Viewer(new ViewString(filter));
-            filterViewer.setBorder(new SolidBorder(AColor.yellow));
+            filterViewer.setBorder(new SolidBorder(ViewColor.cThemeAccent));
 
             titleViewer.place(filterViewer, UV.cEW);
 
@@ -611,7 +612,7 @@ public class ListController extends AListController implements IListController, 
         }
         if (regx.length() > 0) {
             try {
-                pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
+                pattern = Pattern.compile(regx);
             } catch (Exception x) {
                 if (_ != null) {
                     _.out(x);
@@ -642,6 +643,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _filter
      */
+    @Override
     public void setFilter(String _filter) {
         filter.setText((_filter == null) ? "" : _filter);
         filterModified(null);//??

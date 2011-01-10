@@ -58,6 +58,9 @@ import javax.imageio.ImageIO;
  * @author Administrator
  */
 public class UV {
+
+    public static boolean paintListCounts = false;
+    public static boolean paintWhos = false;
     
     /**
      *

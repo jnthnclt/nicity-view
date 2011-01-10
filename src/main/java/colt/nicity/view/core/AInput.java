@@ -147,7 +147,7 @@ public class AInput {
         Object[] all = userEventStates.getAll(Object.class);
         for (Object a : all) {
             UserEventState ues = (UserEventState) a;
-            if (ues.mp != null) {
+            if (UV.paintWhos && ues.mp != null) {
                 _g.setColor(AColor.getHashColor(a));
                 _g.line(ues.mp.x - 0, ues.mp.y - 4, ues.mp.x + 0, ues.mp.y + 4);
                 _g.line(ues.mp.x - 4, ues.mp.y - 0, ues.mp.x + 4, ues.mp.y + 0);

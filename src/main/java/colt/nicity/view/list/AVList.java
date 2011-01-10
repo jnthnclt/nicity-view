@@ -329,6 +329,7 @@ public abstract class AVList extends AItem implements IVList, IMouseEvents, IMou
      *
      * @param _task
      */
+    @Override
     public void promoteEvent(IEvent _task) {
         if (_task instanceof AViewEvent) {
             UEvent.processEvent(getListController(), _task);
@@ -346,6 +347,7 @@ public abstract class AVList extends AItem implements IVList, IMouseEvents, IMou
      * @param _w
      * @param _h
      */
+    @Override
     public void paintBorder(ICanvas _g, int _x, int _y, int _w, int _h) {
         super.paintBorder(_g, _x, _y, _w, _h);
         if (pressed != null && dragging != null) {
@@ -356,11 +358,13 @@ public abstract class AVList extends AItem implements IVList, IMouseEvents, IMou
             _g.setAlpha(1f, 0);
             _g.rect(false, _x + r.x, _y + r.y, r.w, r.h);
         }
-        IListController controller = getListController();
-        IVItem[] items = controller.getItems();
-        _g.setColor(ViewColor.cThemeFont);
-        _g.setFont(UV.fonts[UV.cMicro]);
-        _g.drawString("" + items.length, 2, _h - 3);
+        if (UV.paintListCounts) {
+            IListController controller = getListController();
+            IVItem[] items = controller.getItems();
+            _g.setColor(ViewColor.cThemeFont);
+            _g.setFont(UV.fonts[UV.cMicro]);
+            _g.drawString("" + items.length, 2, _h - 3);
+        }
     }
 
     // IMouseEvents
