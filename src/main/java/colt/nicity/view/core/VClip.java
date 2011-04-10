@@ -106,11 +106,13 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
      */
     public XY_I wDependant;//!! hacky
 
+    @Override
     public void setWDependency(XY_I _d) {
         wDependant = _d;
         paint();
     }
 
+    @Override
     public void setHDependency(XY_I _d) {
         hDependant = _d;
         paint();
@@ -147,6 +149,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
     }
 
     // ISizeable
+    @Override
     public void setSize(int _w, int _h) {
         w = _w;
         h = _h;
@@ -162,7 +165,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
         return offsetY;
     }
 
-    private static final float adjustAlignmentForFlex(float viewSize, float clipSize, float alignment, float flex) {
+    private static float adjustAlignmentForFlex(float viewSize, float clipSize, float alignment, float flex) {
         float offset = -(alignment * ((viewSize - flex) - clipSize));
         float newAlignment = (-offset) / (viewSize - clipSize);
         newAlignment = UFloat.checkFloat(newAlignment, 0.0f);
@@ -183,7 +186,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
     }
 
     @Override
-    public void layoutInterior(IView _parent, Flex _flex) {
+    synchronized public void layoutInterior(IView _parent, Flex _flex) {
         IView _view = placer.getView();
         IView isChild = UV.getChild(_parent, _flex.getCreator());
         if (isChild != null || _flex.getCreator() == this) {

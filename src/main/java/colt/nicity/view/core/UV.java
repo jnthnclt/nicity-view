@@ -825,6 +825,14 @@ public class UV {
             }
         };
         area.setBorder(new LineBorder(ViewColor.cItemTheme,AColor.gray,6,6,6) {
+
+            @Override
+            public void paintBackground(ICanvas g, int x, int y, int _w, int _h) {
+                g.setColor(ViewColor.cThemeShadow);
+                g.rect(true, x, y, _w, _h);
+                super.paintBackground(g, x, y, _w, _h);
+            }
+            
             @Override
             public void paintBorder(ICanvas g,int x,int y, int w, int h) {
                 super.paintBorder(g,x,y, w, h);
@@ -839,7 +847,7 @@ public class UV {
                     g.setColor(ViewColor.cTheme);
                     g.roundRect(true,x+padL+6, y+((padT*2)-sh)+3, sw+4, sh, 8, 8);
 
-                    g.setColor(AColor.gray);
+                    g.setColor(AColor.darkGray);
                     g.roundRect(false,x+padL+6, y+((padT*2)-sh)+3, sw+4, sh, 8, 8);
 
                     g.setFont(UV.fonts[UV.cSmall]);

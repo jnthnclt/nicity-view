@@ -1,25 +1,19 @@
-/*
- * VPan.java.java
- *
- * Created on 01-03-2010 01:33:52 PM
- *
- * Copyright 2010 Jonathan Colt
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package colt.nicity.view.core;
+package colt.nicity.view.concurrent;
 
+import colt.nicity.core.lang.ICallback;
+import colt.nicity.core.lang.MinMaxInt;
+import colt.nicity.core.lang.UDouble;
+import colt.nicity.core.lang.UFloat;
+import colt.nicity.core.memory.struct.XYWH_I;
+import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.border.ViewBorder;
+import colt.nicity.view.core.AColor;
+import colt.nicity.view.core.DragAndDrop;
+import colt.nicity.view.core.Layer;
+import colt.nicity.view.core.PickupAndDrop;
+import colt.nicity.view.core.UV;
+import colt.nicity.view.core.VClip;
+import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.event.AInputEvent;
 import colt.nicity.view.event.AViewEvent;
 import colt.nicity.view.event.MouseDragged;
@@ -30,13 +24,6 @@ import colt.nicity.view.event.MousePressed;
 import colt.nicity.view.event.MouseReleased;
 import colt.nicity.view.event.MouseWheel;
 import colt.nicity.view.flavor.ScrollFlavor;
-import colt.nicity.view.paint.UPaint;
-import colt.nicity.core.lang.ICallback;
-import colt.nicity.core.lang.MinMaxInt;
-import colt.nicity.core.lang.UDouble;
-import colt.nicity.core.lang.UFloat;
-import colt.nicity.core.memory.struct.XYWH_I;
-import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IDrop;
 import colt.nicity.view.interfaces.IDropMode;
@@ -45,13 +32,10 @@ import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IMouseWheelEvents;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.paint.UPaint;
 import java.awt.geom.GeneralPath;
 
-/**
- *
- * @author Administrator
- */
-public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvents, IMouseMotionEvents {
+public class VCPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvents, IMouseMotionEvents {
 
     static ScrollFlavor flavor = new ScrollFlavor();
     float maxWBeforePan = -1;
@@ -109,7 +93,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _autoCenterX
      * @param _autoCenterY
      */
-    public VPan(
+    public VCPan(
             IView _view,
             float _w, float _h,
             boolean _autoCenterX, boolean _autoCenterY) {
@@ -124,7 +108,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _h
      * @param _autoCenter
      */
-    public VPan(IView _view, float _w, float _h, boolean _autoCenter) {
+    public VCPan(IView _view, float _w, float _h, boolean _autoCenter) {
         this(_view, _w, _h);
         setAutoCenter(_autoCenter);
     }
@@ -135,7 +119,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _w
      * @param _h
      */
-    public VPan(IView _view, float _w, float _h) {
+    public VCPan(IView _view, float _w, float _h) {
         super(_view, _w, _h);
         setBorder(new ViewBorder());
     }
@@ -222,9 +206,9 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     @Override
     public void paintBorder(ICanvas _g, int _x, int _y, int _w, int _h) {
         super.paintBorder(_g, _x, _y, _w, _h);
-        
+
         if (operable) {
-            
+
             if (alignY > -1 && view.getH() > getH()) {//paintYScrollbar
 
                 _g.setColor(barColor);
@@ -276,7 +260,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
                 _g.setColor(ViewColor.cThemeFont);
                 _g.oval(false, _x + _w + (scrollBarSize / 2) - (scrollBarSize / 4), _y + _h + (scrollBarSize / 2) - (scrollBarSize / 4), (scrollBarSize / 2), (scrollBarSize / 2));
             }
-            
+
             IView view = placer.getView();
             if (resizingX || paintXResizing) {
                 XYWH_I r = resizeX();

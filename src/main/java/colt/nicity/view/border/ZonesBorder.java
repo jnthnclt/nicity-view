@@ -30,7 +30,7 @@ import colt.nicity.view.interfaces.ICanvas;
  */
 public class ZonesBorder extends AFlaggedBorder {
 
-    private AColor color = ViewColor.cItemTheme;
+    private AColor color = ViewColor.cThemeShadow;
     private int pad;
 
     /**

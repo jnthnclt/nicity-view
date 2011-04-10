@@ -98,7 +98,7 @@ public abstract class AView extends AViewableParentFlagsXY {
     }
 
     @Override
-    public void layoutInterior(Flex _flex) {
+    synchronized public void layoutInterior(Flex _flex) {
         if (_flex.interior && (flags & UV.cInterior) == UV.cInterior) {
             if (parent.hasFlag(UV.cAllInterior)) {
                 flags |= UV.cAllInterior;

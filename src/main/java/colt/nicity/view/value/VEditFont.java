@@ -36,6 +36,7 @@ public class VEditFont extends Viewer {
      */
     public static void main(String[] _args) {
         ViewColor.onBlack();
+        //VOpenWindowsGraph.frame(null, new Viewer(new VEditFont(new Value<AFont>(UV.fonts[UV.cText]))), "");
         UV.exitFrame(new Viewer(new VEditFont(new Value<AFont>(UV.fonts[UV.cText]))), "");
     }
     Value<AFont> font;
