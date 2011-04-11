@@ -35,7 +35,6 @@ public class Placers extends APlacers {
     /**
      *
      */
-    static public int roleOverSize = 100;
     private Object set = null;
 
     /**
@@ -54,6 +53,7 @@ public class Placers extends APlacers {
 
     //!! addPlacer should be directly improved such that it is impossible to add a
     // IPlacer that will cause recursion. For now use careful programing!
+    @Override
     synchronized public IPlacer addPlacer(IPlacer value) {
         IPlacer found = findPlacer(value);
         if (found != NullPlacer.cNull) {
@@ -78,6 +78,7 @@ public class Placers extends APlacers {
         return value;
     }
 
+    @Override
     public IPlacer findPlacer(IPlacer value) {
         if (value == null || set == null) {
             return NullPlacer.cNull;
@@ -100,6 +101,7 @@ public class Placers extends APlacers {
         return NullPlacer.cNull;
     }
 
+    @Override
     public IPlacer findView(IView view) {
 
         if (view == null || set == null) {
@@ -129,7 +131,8 @@ public class Placers extends APlacers {
         return NullPlacer.cNull;
     }
 
-    public IPlacer removePlacer(IPlacer value) {
+    @Override
+    synchronized public IPlacer removePlacer(IPlacer value) {
         if (value == null || set == null) {
             return NullPlacer.cNull;
         }
@@ -158,7 +161,8 @@ public class Placers extends APlacers {
         return NullPlacer.cNull;
     }
 
-    public IPlacer removeView(IView view) {
+    @Override
+    synchronized public IPlacer removeView(IView view) {
         if (view == null || set == null) {
             return NullPlacer.cNull;
         }
@@ -187,6 +191,7 @@ public class Placers extends APlacers {
         return NullPlacer.cNull;
     }
 
+    @Override
     public int size() {
         if (set == null) {
             return 0;
@@ -197,6 +202,7 @@ public class Placers extends APlacers {
         return ((IPlacer[]) set).length;
     }
 
+    @Override
     public Object[] toArray() {
         if (set == null) {
             return new IPlacer[0];
@@ -207,10 +213,12 @@ public class Placers extends APlacers {
         return (IPlacer[]) set;
     }
 
+    @Override
     public void clear() {
         set = null;
     }
 
+    @Override
     public void placeInside(IView parent, IView anchor, WH_F size, Flex _flex) {
         if (set == null) {
             return;
@@ -227,6 +235,7 @@ public class Placers extends APlacers {
         ((IPlacer) set).placeInside(parent, anchor, size, _flex);
     }
 
+    @Override
     public void paintPlacers(IView _parent, ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
         if (set == null) {
             return;
@@ -244,6 +253,7 @@ public class Placers extends APlacers {
         return;
     }
 
+    @Override
     public IView disbatchEventToPlacers(IView parent, AViewEvent event) {
         if (set == null) {
             return NullView.cNull;
@@ -263,6 +273,7 @@ public class Placers extends APlacers {
         return ((IPlacer) set).disbatchEvent(parent, event);
     }
 
+    @Override
     public IView transferFocusToChild(long _who) {
         if (set == null) {
             return NullView.cNull;

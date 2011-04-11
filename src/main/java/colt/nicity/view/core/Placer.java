@@ -86,14 +86,17 @@ public class Placer extends APlacer implements IPlacer {
         place = _place;
     }
 
+    @Override
     public IPlacer getPlacer() {
         return this;
     }
 
+    @Override
     public IViewable getViewable() {
         return viewable;
     }
 
+    @Override
     public void setViewable(IViewable _viewable) {
         viewable = _viewable;
         if (viewable == null) {
@@ -101,18 +104,22 @@ public class Placer extends APlacer implements IPlacer {
         }
     }
 
+    @Override
     public Place getPlace() {
         return place;
     }
 
+    @Override
     public void setPlace(Place _place) {
         place = _place;
     }
 
+    @Override
     public void placeInside(IView _parent, WH_F _size, Flex _flex) {//synchronized
         UPlacer.placeInside(viewable.getView(), place, _parent, _size, _flex);
     }
 
+    @Override
     public void placeInside(IView _parent, IView _anchor, WH_F _size, Flex _flex) {//synchronized
         IView v = viewable.getView();
         if (v == _anchor) {
@@ -124,6 +131,7 @@ public class Placer extends APlacer implements IPlacer {
         UPlacer.placeInside(v, place, _parent, _anchor, _size, _flex);
     }
 
+    @Override
     public void paintPlacer(
             IView _parent, ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
         IView view = viewable.getView();
@@ -133,6 +141,7 @@ public class Placer extends APlacer implements IPlacer {
         view.getPlacers().paintPlacers(_parent, g, _layer, mode, _painted);
     }
 
+    @Override
     public IView disbatchEvent(IView parent, AViewEvent event) {
         IView view = viewable.getView();
         if (parent != NullView.cNull) {
@@ -146,6 +155,7 @@ public class Placer extends APlacer implements IPlacer {
         return v;
     }
 
+    @Override
     public IView transferFocusToChild(long _who) {
         IView child = viewable.getView();
         if (child.isEventEnabled(AViewEvent.cKeyEvent)) {
@@ -157,6 +167,7 @@ public class Placer extends APlacer implements IPlacer {
     }
 
     // IViewable
+    @Override
     public IView getView() {
         return viewable.getView();
     }
