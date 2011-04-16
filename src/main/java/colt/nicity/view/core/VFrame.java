@@ -19,7 +19,6 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.border.WindowBorder;
 import colt.nicity.view.event.KeyPressed;
 import colt.nicity.view.event.KeyReleased;
 import colt.nicity.view.event.KeyTyped;
@@ -34,6 +33,9 @@ import colt.nicity.view.list.VList;
 import colt.nicity.view.value.VFontBrowser;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.border.LineBorder;
+import colt.nicity.view.border.ZoneBorder;
+import colt.nicity.view.border.ZonesBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IKeyEvents;
@@ -91,30 +93,30 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
 
         VChain buttons = new VChain(UV.cEW);
         if (_canClose) {
-            VItem close = new VItem(new VString(" X ", UV.fonts[UV.cText], AColor.red.darken(0.3f).desaturate(0.4f))) {
+            VItem close = new VItem(new VString(" X ", UV.fonts[UV.cText])) {
 
                 public void picked(IEvent _e) {
                     close();
                 }
             };
-            close.setBorder(new WindowBorder(ViewColor.cWindowTheme, 1));
+            close.setBorder(new LineBorder(AColor.red.darken(0.3f).desaturate(0.4f), 1,4,2));
             buttons.add(close);
         }
         if (_canMinimize) {
-            VItem maximize = new VItem(new VString(" + ", UV.fonts[UV.cText], AColor.orange.darken(0.3f).desaturate(0.4f))) {
+            VItem maximize = new VItem(new VString(" + ", UV.fonts[UV.cText])) {
 
                 public void picked(IEvent _e) {
                     maximize();
                 }
             };
-            maximize.setBorder(new WindowBorder(ViewColor.cWindowTheme, 1));
-            VItem minimize = new VItem(new VString(" _ ", UV.fonts[UV.cText], AColor.yellow.darken(0.3f).desaturate(0.4f))) {
+            maximize.setBorder(new LineBorder( AColor.orange.darken(0.3f).desaturate(0.4f),1,4,2));
+            VItem minimize = new VItem(new VString(" _ ", UV.fonts[UV.cText] )) {
 
                 public void picked(IEvent _e) {
                     minimize();
                 }
             };
-            minimize.setBorder(new WindowBorder(ViewColor.cWindowTheme, 1));
+            minimize.setBorder(new LineBorder(AColor.yellow.darken(0.3f).desaturate(0.4f), 1,4,2));
             buttons.add(maximize);
             buttons.add(minimize);
         }
@@ -126,12 +128,12 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
         VChain chain = new VChain(UV.cEW);
         chain.add(buttons);
         chain.add(title, UV.cFII);
-        //chain.setBorder(new WindowBorder(ViewColor.cWindowTheme, 2));
+        //chain.setBorder(new LineBorder(ViewColor.cWindowTheme, 2));
 
         VChain main = new VChain(UV.cSWNW);
         main.add(chain);
         main.add(new Viewer(_framing));
-        setContent(UV.border(main, new WindowBorder(ViewColor.cTheme, 2)));
+        setContent(UV.border(main, new ZonesBorder(ViewColor.cTheme, 2)));
     }
 
     public void paintBorder(ICanvas g, int _x, int _y, int _w, int _h) {

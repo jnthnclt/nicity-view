@@ -47,18 +47,40 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 
+/**
+ * 
+ * @author jonathan
+ */
 public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
 
     // Convienient overloadable methods
+    /**
+     * 
+     * @param _value
+     */
     public void stringChanged(String[] _value) {
     }
 
+    /**
+     * 
+     * @param _value
+     */
     public void stringSet(String[] _value) {
     }
 
+    /**
+     * 
+     * @param _event
+     */
     public void bondary(AKeyEvent _event) {
     }
+    /**
+     * 
+     */
     protected IView parent = NullView.cNull;
+    /**
+     * 
+     */
     protected IBorder border = NullBorder.cNull;
     final private CSet<KeyedValue<Long, RowColum>> selectionBegin = new CSet<KeyedValue<Long, RowColum>>();
     final private CSet<KeyedValue<Long, RowColum>> selectionStart = new CSet<KeyedValue<Long, RowColum>>();
@@ -79,26 +101,59 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
             }
         }
     }
+    /**
+     * 
+     */
     protected AColor highlight = ViewColor.cThemeSelected;
+    /**
+     * 
+     */
     protected float minW = -1;
+    /**
+     * 
+     */
     protected float maxW = -1;
 
+    /**
+     * 
+     * @param _text
+     */
     public VCText(String[] _text) {
         super(_text);
     }
 
+    /**
+     * 
+     * @param _text
+     * @param _font
+     */
     public VCText(String[] _text, AFont _font) {
         super(_text, _font);
     }
 
+    /**
+     * 
+     * @param _text
+     * @param _color
+     */
     public VCText(String[] _text, AColor _color) {
         super(_text, _color);
     }
 
+    /**
+     * 
+     * @param _text
+     * @param _font
+     * @param _color
+     */
     public VCText(String[] _text, AFont _font, AColor _color) {
         super(_text, _font, _color);
     }
 
+    /**
+     * 
+     * @param _text
+     */
     public void appendText(String[] _text) {
         if (_text == null) {
             return;
@@ -106,18 +161,35 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
         setText(UArray.join(text, _text));
     }
 
+    /**
+     * 
+     * @param _highlight
+     */
     public void setHighlight(AColor _highlight) {
         highlight = (_highlight == null) ? AColor.yellow : _highlight;
     }
 
+    /**
+     * 
+     * @param _highlight
+     * @return
+     */
     public AColor getHighlight(AColor _highlight) {
         return highlight;
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean isEnabled() {
         return true;
     }
 
+    /**
+     * 
+     * @param _boolean
+     */
     public void setEnabled(boolean _boolean) {
     }
 

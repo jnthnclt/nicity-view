@@ -45,7 +45,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeAccent = new AColor(0, 200, 100);
+    public static AColor cThemeAccent = new AColor(0, 200, 230);
     /**
      *
      */
@@ -73,7 +73,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeActive = new AColor(200, 200, 200);
+    public static AColor cThemeActive = new AColor(200, 200, 255);
     /**
      *
      */
@@ -81,7 +81,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeScroll = new AColor(150, 150, 150);
+    public static AColor cThemeScroll = new AColor(230, 230, 230);
     /**
      *
      */
@@ -89,7 +89,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cButtonTheme = new AColor(190, 190, 190);
+    public static AColor cButtonTheme = new AColor(220, 220, 220);
     /**
      *
      */

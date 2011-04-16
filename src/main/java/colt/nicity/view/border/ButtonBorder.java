@@ -19,10 +19,9 @@
  */
 package colt.nicity.view.border;
 
-import colt.nicity.view.flavor.AFlavor;
-import colt.nicity.view.flavor.ButtonFlavor;
 import colt.nicity.core.value.IValue;
 import colt.nicity.view.core.AColor;
+import colt.nicity.view.core.ULAF;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.interfaces.ICanvas;
 
@@ -35,7 +34,6 @@ public class ButtonBorder extends AFlaggedBorder {
     /**
      *
      */
-    public static AFlavor flavor = new ButtonFlavor();
     
     private int pad = 4;
     
@@ -122,12 +120,12 @@ public class ButtonBorder extends AFlaggedBorder {
 
         if (is(cActive)) {
             color = ViewColor.cThemeActive;
-            flavor.paintFlavor(g, x, y, _w, _h, color);
+            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
         } else if (is(cSelected)) {
             color = ViewColor.cThemeSelected;
-            flavor.paintFlavor(g, x, y, _w, _h, color);
+            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
         } else {
-            flavor.paintFlavor(g, x, y, _w, _h, color);
+            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
         }
     }
     

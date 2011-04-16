@@ -123,7 +123,8 @@ public class MinimizerBarnesHut {
 	 *   and specifies the position of the <code>i</code>th node in 3D space. 
 	 *   If the input is two-dimensional (i.e. <code>pos[i][2] == 0.0f</code> 
 	 *   for all <code>i</code>), the output is also two-dimensional.
-	 *   Random initial positions are appropriate.
+         *   Random initial positions are appropriate.
+         * @param pinnedPos  
 	 */
 	public MinimizerBarnesHut( 
 			final int[][] attrIndexes, final float[][] attrWeights, final float[] repuWeights, 
@@ -140,11 +141,19 @@ public class MinimizerBarnesHut {
         this.pinnedPos = pinnedPos;
 	}
 
-    public void attrExponent(float _v) {
+        /**
+         * 
+         * @param _v
+         */
+        public void attrExponent(float _v) {
         attrExponent = _v;
     }
 
-    public void repuExponent(float _v) {
+        /**
+         * 
+         * @param _v
+         */
+        public void repuExponent(float _v) {
         repuExponent = _v;
     }
 
@@ -154,7 +163,8 @@ public class MinimizerBarnesHut {
 	 * Iteratively minimizes energy using the Barnes-Hut algorithm.
 	 * Starts from the positions in the attribute <code>pos</code>, 
 	 * and stores the computed positions in <code>pos</code>.
-	 * @param nrIterations  number of iterations. Choose appropriate values
+     * @param _ 
+     * @param nrIterations  number of iterations. Choose appropriate values
 	 *   by observing the convergence of energy.  A typical value is 100.
 	 */
 	public void minimizeEnergy(final LinLogProgress _,final int nrIterations) {

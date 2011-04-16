@@ -12,17 +12,35 @@ import java.io.IOException;
 public class RPPFiler implements IFiler {
     private byte[] bytes = new byte[0];
     private long fp = 0;
+    /**
+     * 
+     */
     public RPPFiler() {
     }
+    /**
+     * 
+     * @param _bytes
+     */
     public RPPFiler(byte[] _bytes) {
         bytes = _bytes;
     }
+    /**
+     * 
+     * @return
+     */
     public byte[] getBytes() {
         return trim(bytes, (int) fp);
     }
+    /**
+     * 
+     * @return
+     */
     public byte[] leakBytes() {
         return bytes;
     }
+    /**
+     * 
+     */
     public void reset() {
         fp = 0;
         bytes = new byte[0];
@@ -134,6 +152,12 @@ public class RPPFiler implements IFiler {
         System.arraycopy(src, 0, newSrc, 0, count);
         return newSrc;
     }
+    /**
+     * 
+     * @param src
+     * @param amount
+     * @return
+     */
     static final public byte[] grow(byte[] src, int amount) {
         if (src == null) {
             return new byte[amount];

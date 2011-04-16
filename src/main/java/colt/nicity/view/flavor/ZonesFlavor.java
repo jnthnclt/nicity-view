@@ -37,12 +37,13 @@ public class ZonesFlavor extends AFlavor {
      * @param _h
      * @param _color
      */
+    @Override
     public void paintFlavor(ICanvas g, int _x, int _y, int _w, int _h, AColor _color) {
 
         AColor color = _color;
 
 
-        int r = 3;
+        int r = 8;
 
 
         g.setColor(color.desaturate(0.5f).darken(0.2f));

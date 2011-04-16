@@ -59,7 +59,7 @@ public class ULAF {
     /**
      *
      */
-    public static AFlavor cButtonBG = new ButtonFlavor();
+    public static AFlavor cButtonBG = new ZonesFlavor();
     /**
      *
      */

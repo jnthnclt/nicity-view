@@ -112,7 +112,8 @@ public class LinLogLayout {
 	 * a random initial position in three-dimensional space. 
 	 * 
 	 * @param graph the graph.
-	 * @return random initial positions in three-dimensional space
+         * @param _threeD 
+         * @return random initial positions in three-dimensional space
 	 *         for all nodes of the given graph.
 	 */
 	public static float[][] makeInitialPositions(Map<Object,Map<Object,Float>> graph,boolean _threeD) {
@@ -261,7 +262,18 @@ public class LinLogLayout {
 
 	
 	
-	public static void layout(
+        /**
+         * 
+         * @param _
+         * @param _graph
+         * @param nodeToPosition
+         * @param nodeToDiameter
+         * @param _attraction
+         * @param _repulsion
+         * @param _iterations
+         * @param _threeD
+         */
+        public static void layout(
 		LinLogProgress _,
 		Map<Object,Map<Object,Float>> _graph,
 		Map<Object,float[]> nodeToPosition,
@@ -287,7 +299,18 @@ public class LinLogLayout {
 
 
     
-    public static void layout(
+        /**
+         * 
+         * @param _
+         * @param _symmetricGraph
+         * @param nodeToPosition
+         * @param nodeToDiameter
+         * @param _attraction
+         * @param _repulsion
+         * @param _iterations
+         * @param _positions
+         */
+        public static void layout(
 		LinLogProgress _,
 		Map<Object,Map<Object,Float>> _symmetricGraph,
 		Map<Object,float[]> nodeToPosition,

@@ -19,11 +19,28 @@
  */
 package linloglayout;
 
+/**
+ * 
+ * @author jonathan
+ */
 public interface LinLogProgress {
 
+    /**
+     * 
+     * @param _count
+     * @param _outof
+     */
     public void out(double _count, double _outof);
 
+    /**
+     * 
+     * @param _value
+     */
     public void out(Object... _value);
 
+    /**
+     * 
+     * @return
+     */
     public boolean canceled();
 }

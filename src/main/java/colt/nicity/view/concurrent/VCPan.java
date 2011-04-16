@@ -35,6 +35,10 @@ import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.paint.UPaint;
 import java.awt.geom.GeneralPath;
 
+/**
+ * 
+ * @author jonathan
+ */
 public class VCPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvents, IMouseMotionEvents {
 
     static ScrollFlavor flavor = new ScrollFlavor();
@@ -70,6 +74,9 @@ public class VCPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEven
      *
      */
     protected boolean resizingX = false;
+    /**
+     * 
+     */
     protected boolean resizingY = false;
     /**
      *

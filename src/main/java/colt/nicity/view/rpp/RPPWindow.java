@@ -18,17 +18,34 @@ import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IView;
 import java.awt.image.BufferedImage;
 
+/**
+ * 
+ * @author jonathan
+ */
 public class RPPWindow extends AViewer implements IRootView {
 
+    /**
+     * 
+     */
     public RPPDisplay display;
+    /**
+     * 
+     */
     public AInput input;
 
+    /**
+     * 
+     * @param _view
+     */
     public RPPWindow(IView _view) {
         super(_view);
         init();
         show();
     }
 
+    /**
+     * 
+     */
     protected void init() {
         display = new RPPDisplay(this) {
 
@@ -50,6 +67,10 @@ public class RPPWindow extends AViewer implements IRootView {
         super.setParentView(NullRootView.cNull);
     }
 
+    /**
+     * 
+     * @return
+     */
     public IPeerView getPeer() {
         setBorder(null);
         return NullPeerView.cNull;
@@ -64,9 +85,17 @@ public class RPPWindow extends AViewer implements IRootView {
     public void setParentView(IView parent) {
     }
 
+    /**
+     * 
+     * @param _boolean
+     */
     public void systemExitOnClose(boolean _boolean) {
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean systemExitOnClose() {
         return false;
     }
@@ -78,6 +107,9 @@ public class RPPWindow extends AViewer implements IRootView {
     private boolean paintable = false;
     private boolean layedOut = false;
 
+    /**
+     * 
+     */
     public void show() {
         super.setParentView(NullRootView.cNull);
         layoutInterior();
@@ -92,12 +124,21 @@ public class RPPWindow extends AViewer implements IRootView {
         flush();
     }
 
+    /**
+     * 
+     */
     public void iconify() {
     }
 
+    /**
+     * 
+     */
     public void deiconify() {
     }
 
+    /**
+     * 
+     */
     public void maximize() {
     }
 
@@ -105,9 +146,16 @@ public class RPPWindow extends AViewer implements IRootView {
     public void toFront() {
     }
 
+    /**
+     * 
+     */
     public void toBack() {
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean closed() {
         return false;
     }
@@ -162,6 +210,9 @@ public class RPPWindow extends AViewer implements IRootView {
         }
     }
 
+    /**
+     * 
+     */
     public void fullscreen() {
         getPeer().fullscreen();
     }
@@ -211,10 +262,18 @@ public class RPPWindow extends AViewer implements IRootView {
         return new XY_I(0, 0);
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getTitle() {
         return getPeer().getTitle();
     }
 
+    /**
+     * 
+     * @param _title
+     */
     public void setTitle(String _title) {
         getPeer().setTitle(_title);
     }
@@ -257,6 +316,12 @@ public class RPPWindow extends AViewer implements IRootView {
         }
     }
 
+    /**
+     * 
+     * @param _buffer
+     * @param _bufferRegion
+     * @param _screenRegion
+     */
     public void directPaint(BufferedImage _buffer, XYWH_I _bufferRegion, XYWH_I _screenRegion) {
     }
 

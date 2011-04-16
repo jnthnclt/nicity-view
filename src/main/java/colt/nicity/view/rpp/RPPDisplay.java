@@ -11,7 +11,15 @@ import colt.nicity.view.core.ADisplay;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IView;
 
+/**
+ * 
+ * @author jonathan
+ */
 public class RPPDisplay extends ADisplay {    
+    /**
+     * 
+     * @param _view
+     */
     public RPPDisplay(IView _view) {
         super(_view);
     }
@@ -66,6 +74,11 @@ public class RPPDisplay extends ADisplay {
 
     final CSet<PaintUpdates> updatesFor = new CSet<PaintUpdates>();
     Object[] updateable = new Object[0];
+    /**
+     * 
+     * @param _id
+     * @return
+     */
     public PaintUpdates updateFor(long _id) {
         synchronized(updatesFor) {
             PaintUpdates u = (PaintUpdates)updatesFor.get(_id);
@@ -79,6 +92,9 @@ public class RPPDisplay extends ADisplay {
         }
     }
 
+    /**
+     * 
+     */
     public class PaintUpdates extends ASetObject {
         long who;
         CArray<RPP> update = new CArray<RPP>(RPP.class);
@@ -91,16 +107,28 @@ public class RPPDisplay extends ADisplay {
         public Object hashObject() {
             return who;
         }
+        /**
+         * 
+         */
         public void updated() {
             synchronized(lock) {
                 lock.notifyAll();
             }
         }
+        /**
+         * 
+         * @param _update
+         */
         public void add(RPP _update) {
             synchronized(lock) {
                 update.insertLast(_update);
             }
         }
+        /**
+         * 
+         * @param _wait
+         * @return
+         */
         public RPP[] remove(boolean _wait) {
             synchronized(lock) {
                 if (update.getCount() > 0) return (RPP[])update.removeAll();

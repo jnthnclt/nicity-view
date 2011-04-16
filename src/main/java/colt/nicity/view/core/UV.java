@@ -59,7 +59,13 @@ import javax.imageio.ImageIO;
  */
 public class UV {
 
+    /**
+     * 
+     */
     public static boolean paintListCounts = false;
+    /**
+     * 
+     */
     public static boolean paintWhos = false;
     
     /**
@@ -804,7 +810,7 @@ public class UV {
      * @return
      */
     public static IView zone(Object _name, IView _view) {
-        return zone(_name, _view, ViewColor.cItemTheme);
+        return zone(_name, _view, ViewColor.cTheme);
     }
     
 
@@ -823,9 +829,13 @@ public class UV {
                 if (_name == null) return "Null";
                 return _name.toString();
             }
+            @Override
+            public void mend() {
+                enableFlag(UV.cRepair);//??
+                super.mend();
+            }
         };
-        area.setBorder(new LineBorder(ViewColor.cItemTheme,AColor.gray,6,6,6) {
-
+        area.setBorder(new LineBorder(ViewColor.cItemTheme,AColor.gray,1,1,1,1) {
             @Override
             public void paintBackground(ICanvas g, int x, int y, int _w, int _h) {
                 g.setColor(ViewColor.cThemeShadow);
@@ -845,14 +855,14 @@ public class UV {
                     int sh = (int)UV.fonts[UV.cSmall].getH(s);
 
                     g.setColor(ViewColor.cTheme);
-                    g.roundRect(true,x+padL+6, y+((padT*2)-sh)+3, sw+4, sh, 8, 8);
+                    g.roundRect(true,x+padL+6, y+((10)-sh)+3, sw+4, sh, 8, 8);
 
-                    g.setColor(AColor.darkGray);
-                    g.roundRect(false,x+padL+6, y+((padT*2)-sh)+3, sw+4, sh, 8, 8);
+                    g.setColor(ViewColor.cTheme.darken(0.2f));
+                    g.roundRect(false,x+padL+6, y+((10)-sh)+3, sw+4, sh, 8, 8);
 
                     g.setFont(UV.fonts[UV.cSmall]);
                     g.setColor(ViewColor.cThemeFont);
-                    g.drawString(s,x+padL+8,y+(padT*2));
+                    g.drawString(s,x+padL+8,y+(10));
                 }
             }
         });
@@ -935,7 +945,7 @@ public class UV {
      public static IView zones(IView _view) {
         Viewer v = new Viewer(_view);
         Viewer areas = new Viewer(v);
-        areas.setBorder(new ZonesBorder(ViewColor.cItemTheme, 2));
+        areas.setBorder(new ZonesBorder(ViewColor.cTheme, 2));
         return areas;
     }
     

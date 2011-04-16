@@ -142,7 +142,7 @@ public class ZoneBorder extends AFlaggedBorder {
      */
     @Override
     public float getX() {
-        return pad * 2;
+        return pad;
     }
 
     /**
@@ -151,7 +151,7 @@ public class ZoneBorder extends AFlaggedBorder {
      */
     @Override
     public float getY() {
-        return 4 + (pad * 2);
+        return 4 + (pad);
     }
 
     /**
@@ -160,7 +160,7 @@ public class ZoneBorder extends AFlaggedBorder {
      */
     @Override
     public float getW() {
-        return pad * 2;
+        return 1;
     }
 
     /**
@@ -169,6 +169,6 @@ public class ZoneBorder extends AFlaggedBorder {
      */
     @Override
     public float getH() {
-        return pad * 2;
+        return 1;
     }
 }
