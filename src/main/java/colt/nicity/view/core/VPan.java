@@ -151,6 +151,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     public VPan(IView _view, float _w, float _h) {
         super(_view, _w, _h);
         setBorder(new ViewBorder());
+        overScroll = resize+scrollBarSize;
     }
 
     /**
@@ -303,6 +304,10 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
                 c = ViewColor.cThemeActive;
             }
             XYWH_I r = resizeX();
+            c = barColor;
+            if (resizingX || paintXResizing) {
+                c = ViewColor.cThemeActive;
+            }
             flavor.paintFlavor(_g, r.x, r.y, r.w, r.h, c);
             c = barColor;
             if (resizingY || paintYResizing) {

@@ -39,7 +39,7 @@ public class ItemBorder extends AFlaggedBorder {
      *
      */
     public ItemBorder() {
-        this(ViewColor.cItemTheme, 0);
+        this(ViewColor.cItemTheme, 4);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ItemBorder extends AFlaggedBorder {
      * @param _color
      */
     public ItemBorder(Object _color) {
-        this(_color, 0);
+        this(_color, 4);
     }
 
     /**
@@ -135,8 +135,8 @@ public class ItemBorder extends AFlaggedBorder {
         } else if (itemColor instanceof IValue) {
             color = (AColor) ((IValue) itemColor).getValue();
         }
-        g.setColor(color);
-        g.rect(true, x, y, _w, _h);
+        //g.setColor(color);
+        //g.rect(true, x, y, _w, _h);
 
         if (is(cSelected)) {
             paintBackground(g, ViewColor.cThemeSelected, x, y, _w, _h);

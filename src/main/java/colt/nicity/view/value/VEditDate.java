@@ -22,12 +22,10 @@ package colt.nicity.view.value;
 import colt.nicity.core.time.UTime;
 import colt.nicity.core.value.Value;
 import colt.nicity.view.core.UV;
-import colt.nicity.view.core.VButton;
-import colt.nicity.view.core.VChain;
+import colt.nicity.view.core.VPopupButton;
 import colt.nicity.view.core.VString;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.Viewer;
-import colt.nicity.view.interfaces.IEvent;
 import java.util.TimeZone;
 
 /**
@@ -64,13 +62,7 @@ public class VEditDate extends Viewer {
     public VEditDate(Value<Long> _value, TimeZone _tz) {
         value = _value;
         tz = _tz;
-        VButton edit = new VButton("+") {
-            @Override
-            public void picked(IEvent _e) {
-                UV.popup(this, _e, new VDate(value), false);
-            }
-        };
-        setContent(new VChain(UV.cEW, new VString(this), edit));
+        setContent(new VPopupButton(new VString(this), new VDate(value)));
     }
 
     @Override

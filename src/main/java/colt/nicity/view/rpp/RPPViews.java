@@ -2,8 +2,7 @@ package colt.nicity.view.rpp;
 
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.collection.keyed.KeyedValue;
-import colt.nicity.view.border.WindowBorder;
-import colt.nicity.view.core.ViewColor;
+import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.interfaces.IView;
 
 /**
@@ -25,7 +24,7 @@ public class RPPViews {
      * @param _key
      */
     public void register(IView _view, String _key) {
-        _view.setBorder(new WindowBorder(ViewColor.cWindowTheme, 1));
+        _view.setBorder(new ViewBorder());
         RPPWindow v = new RPPWindow(_view);
         KeyedValue.add(views, _key, v);
     }
@@ -35,8 +34,14 @@ public class RPPViews {
      * @param _key
      * @return
      */
-    public RPPWindow view(String _key) {
-        return KeyedValue.get(views, _key);
+    public RPPWindow view(long _who,String _key) {
+        
+        RPPWindow view = KeyedValue.get(views,_key);
+        if (view == null) {
+            register(new RPPHome(this),_key);
+            view =  KeyedValue.get(views,_key);
+        }
+        return view;
     }
 
     /**

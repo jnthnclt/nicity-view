@@ -77,7 +77,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeSelected = new AColor(150, 150, 150);
+    public static AColor cThemeSelected = new AColor(0, 150, 200);
     /**
      *
      */
@@ -226,7 +226,7 @@ public class ViewColor {
         ViewColor.cThemeFont.set8BitColor(new AColor(255, 255, 255).get8BitRGBA());
         ViewColor.cThemeEditFont.set8BitColor(new AColor(255, 255, 255).get8BitRGBA());
         ViewColor.cThemeActive.set8BitColor(new AColor(102, 102, 112).get8BitRGBA());
-        ViewColor.cThemeSelected.set8BitColor(new AColor(120, 120, 130).get8BitRGBA());
+        ViewColor.cThemeSelected.set8BitColor(new AColor(0, 150, 225).get8BitRGBA());
         ViewColor.cButtonTheme.set8BitColor(new AColor(50, 50, 60).get8BitRGBA());
         ViewColor.cButtonFont.set8BitColor(new AColor(240, 240, 240).get8BitRGBA());
         ViewColor.cWindowTheme.set8BitColor(new AColor(50, 50, 60).get8BitRGBA());

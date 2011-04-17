@@ -113,8 +113,8 @@ abstract public class VReorder extends Viewer {
             value = _value;
             final VPosition _this = this;
             VChain c = new VChain(UV.cEW);
-            c.add(VIcon.icon("Int"));// drag spot
-            c.add(UV.border(new VButton(VIcon.icon("up20x20")) {
+            c.add(VIcon.icon("drop",16));// drag spot
+            c.add(UV.border(new VButton(VIcon.icon("up32x32",16)) {
 
                 @Override
                 public void picked(IEvent _e) {
@@ -157,7 +157,7 @@ abstract public class VReorder extends Viewer {
                     }
                 }
             }, new ItemBorder()));
-            c.add(UV.border(new VButton(VIcon.icon("down20x20")) {
+            c.add(UV.border(new VButton(VIcon.icon("down32x32",16)) {
 
                 @Override
                 public void picked(IEvent _e) {

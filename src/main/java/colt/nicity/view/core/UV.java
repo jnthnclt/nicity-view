@@ -875,7 +875,7 @@ public class UV {
      * @return
      */
     public static IView zone(IView _view) {
-        return zone(_view,3,3);
+        return zone(_view,2,2);
     }
 
     /**
