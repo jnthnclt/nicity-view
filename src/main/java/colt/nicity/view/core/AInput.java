@@ -118,7 +118,7 @@ public class AInput {
 
     class UserEventState extends ASetObject {
 
-        long who;
+        final long who;
         XY_I mp, viewPressedPoint, pressedPoint, lastPoint, lastMovePoint;
         ClickTimer clickCounter = null;
         int latch = 0;
@@ -134,6 +134,7 @@ public class AInput {
             who = _who;
         }
 
+        @Override
         public Object hashObject() {
             return who;
         }
@@ -144,13 +145,11 @@ public class AInput {
      * @param _g
      */
     public void paintWhos(ICanvas _g) {
-        Object[] all = userEventStates.getAll(Object.class);
-        for (Object a : all) {
-            UserEventState ues = (UserEventState) a;
+        UserEventState[] all = userEventStates.getAll(UserEventState.class);
+        for (UserEventState ues : all) {
             if (UV.paintWhos && ues.mp != null) {
-                _g.setColor(AColor.getHashColor(a));
-                _g.line(ues.mp.x - 0, ues.mp.y - 4, ues.mp.x + 0, ues.mp.y + 4);
-                _g.line(ues.mp.x - 4, ues.mp.y - 0, ues.mp.x + 4, ues.mp.y + 0);
+                _g.setColor(AColor.getHashColor(ues));
+                _g.rect(false, ues.mp.x-2, ues.mp.y-2, 4, 4);
             }
         }
     }

@@ -6,7 +6,6 @@ import colt.nicity.core.lang.UString;
 import colt.nicity.view.border.ItemBorder;
 import colt.nicity.view.border.LineBorder;
 import colt.nicity.view.border.ViewBorder;
-import colt.nicity.view.concurrent.VCPan;
 import colt.nicity.view.concurrent.VCText;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
@@ -24,7 +23,6 @@ import colt.nicity.view.list.AItem;
 import colt.nicity.view.list.VList;
 import colt.nicity.view.ngraph.NG;
 import colt.nicity.view.ngraph.NGEnvAnim;
-import colt.nicity.view.rpp.RPPViews;
 import colt.nicity.view.value.VAlwaysOver;
 import colt.nicity.view.value.VFiles;
 import java.awt.Font;
@@ -41,7 +39,7 @@ public class VTextEditor extends Viewer {
         name = _name;
 
         String[] t = new String[]{
-            "We the People of the United States, in Order to form a more perfect Union,",
+            "Example: We the People of the United States, in Order to form a more perfect Union,",
             "establish Justice, insure domestic Tranquility, provide for the common defence,",
             "promote the general Welfare, and secure the Blessings of Liberty to ourselves",
             "and our Posterity, do ordain and establish this Constitution for the United States",
@@ -50,7 +48,7 @@ public class VTextEditor extends Viewer {
         final VCText text = new VCText(t,new AFont(Font.MONOSPACED,Font.PLAIN,14));
         VPan panEditors = new VPan(new VList(editors,1),150,800);
         panEditors.setBorder(new LineBorder());
-        final VCPan pan = new VCPan(text,600,800);
+        final VPan pan = new VPan(text,600,800);
         pan.setBorder(new LineBorder());
 
 

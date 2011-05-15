@@ -1,6 +1,5 @@
 package colt.nicity.view.concurrent;
 
-import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.collection.keyed.KeyedValue;
 import colt.nicity.core.lang.UArray;
@@ -97,7 +96,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
         synchronized (_table) {
             KeyedValue.remove(_table, _who);
             if (_caret != null) {
-                KeyedValue.add(carets, _who, _caret);
+                KeyedValue.add(_table, _who, _caret);
             }
         }
     }
@@ -265,10 +264,8 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
 
                 if (ss != null && se != null) {
                     if (i >= ss.row && i <= se.row) {
-                        //g.setAlpha(1f / (float) all.length, 0);
-                        g.setAlpha(1f,0);
-                        //g.setColor(rc.color());
-                        g.setColor(ViewColor.cThemeHighlight);
+                        g.setAlpha(0.5f, 0);
+                        g.setColor(rc.color());
                         if (ss.row == se.row) {
                             paintSelected(g, y, font, text[i], ss.colum, se.colum);
                         } else if (i == ss.row) {
@@ -371,6 +368,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
                     caret(e.who(), new RowColum(e.who(), 0, 0), selectionStart);
                     int end = text.length - 1;
                     caret(e.who(), new RowColum(e.who(), end, text[end].length()), selectionEnd);
+                    update();
                     break;
                 }
                 case KeyEvent.VK_X: {
@@ -440,7 +438,6 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
         } else if (code == KeyEvent.VK_CONTROL) {
         } else if (code == KeyEvent.VK_ALT) {
         } else if (code == KeyEvent.VK_RIGHT) {
-
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
@@ -449,39 +446,60 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
             caret(e.who(), rc, carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             update();
         } else if (code == KeyEvent.VK_LEFT) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             rc = rc.prevColum(text);
             caret(e.who(), rc, carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             update();
         } else if (code == KeyEvent.VK_UP) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             rc = rc.prevRow(text);
             caret(e.who(), rc, carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             update();
         } else if (code == KeyEvent.VK_DOWN) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             rc = rc.nextRow(text);
             caret(e.who(), rc, carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
+            } else {
+                caret(e.who(), rc, carets);
+                caret(e.who(), rc, selectionBegin);
             }
             update();
         } else if (code == KeyEvent.VK_BACK_SPACE) {
