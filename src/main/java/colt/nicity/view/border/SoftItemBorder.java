@@ -109,26 +109,26 @@ public class SoftItemBorder extends AFlaggedBorder {
             color = (AColor) ((IValue) itemColor).getValue();
         }
         g.setColor(color);
-        ScrollFlavor.flavor.paintFlavor(g,x,y,_w,_h,color);
+        g.paintFlavor(ScrollFlavor.flavor,x,y,_w,_h,color);
 
         if (is(cActive)) {
             if (is(cSelected)) {
                 color = ViewColor.cThemeSelected;
                 if (ViewColor.inverted)color = color.lighten(0.1f);
                 else color = color.darken(0.1f);
-                OutlineFlavor.flavor.paintFlavor(g,x+1,y+1, _w - 3, _h - 3,color);
+                g.paintFlavor(OutlineFlavor.flavor,x+1,y+1, _w - 3, _h - 3,color);
             }
             else {
                 color = ViewColor.cThemeActive;
                 if (ViewColor.inverted) color = color.lighten(0.1f);
                 else color = color.darken(0.1f);
-                OutlineFlavor.flavor.paintFlavor(g,x+1, y+1, _w - 3, _h - 3,color);
+                g.paintFlavor(OutlineFlavor.flavor,x+1, y+1, _w - 3, _h - 3,color);
             }
         } else if (is(cSelected)) {
             color = ViewColor.cThemeSelected;
             if (ViewColor.inverted)color = color.lighten(0.1f);
             else color = color.darken(0.1f);
-            ScrollFlavor.flavor.paintFlavor(g,x+1,y+1, _w - 3, _h - 3,color);
+            g.paintFlavor(ScrollFlavor.flavor,x+1,y+1, _w - 3, _h - 3,color);
         } else if (itemColor == null) {
             return;
         }

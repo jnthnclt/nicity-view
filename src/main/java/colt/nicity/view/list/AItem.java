@@ -191,7 +191,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
         super.paintBorder(g, _x, _y, _w, _h);
         if (ULAF.cDropping != null && DragAndDrop.cDefault.isDropOn(this)) {
             g.setAlpha(0.5f, 0);
-            ULAF.cDropping.paintFlavor(g, _x, _y, _w, _h, AColor.green);
+            g.paintFlavor(ULAF.cDropping, _x, _y, _w, _h, AColor.green);
             g.setColor(AColor.black);
             g.drawString("Drop", _x + 5, _y + _h - 5);
             g.setAlpha(1f, 0);
@@ -199,7 +199,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
         }
         if (ULAF.cDragging != null && DragAndDrop.cDefault.isDragFrom(this)) {
             g.setAlpha(0.5f, 0);
-            ULAF.cDragging.paintFlavor(g, _x, _y, _w, _h, AColor.orange);
+            g.paintFlavor(ULAF.cDragging, _x, _y, _w, _h, AColor.orange);
             g.setColor(AColor.black);
             g.drawString("Dragging", _x + 5, _y + _h - 5);
             g.setAlpha(1f, 0);

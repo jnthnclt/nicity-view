@@ -19,7 +19,6 @@
  */
 package colt.nicity.view.paint;
 
-import colt.nicity.view.image.ViewImage;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.MinMaxDouble;
@@ -33,6 +32,7 @@ import colt.nicity.view.core.Place;
 import colt.nicity.view.core.ULAF;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VIcon;
+import colt.nicity.view.image.ViewByteArrayImage;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IHaveColor;
 import colt.nicity.view.interfaces.IView;
@@ -49,7 +49,7 @@ public class UPaint {
     /**
      *
      */
-    public static ViewImage cheched = VIcon.image("Check");
+    public static ViewByteArrayImage cheched = VIcon.image("Check");
 
     /**
      *
@@ -62,7 +62,7 @@ public class UPaint {
      * @param _background
      */
     public static void checked(ICanvas _g, int _x, int _y, int _w, int _h, AColor _forground, AColor _background) {
-        ULAF.cRoundButtonBG.paintFlavor(_g, _x, _y, _w, _h, _background);
+        _g.paintFlavor(ULAF.cRoundButtonBG, _x, _y, _w, _h, _background);
         cheched.paint(_g, null);
     }
 

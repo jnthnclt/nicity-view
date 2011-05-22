@@ -19,8 +19,12 @@
  */
 package colt.nicity.view.flavor;
 
+import colt.nicity.core.collection.CSet;
+import colt.nicity.core.lang.UString;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.ICanvas;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +32,27 @@ import colt.nicity.view.interfaces.ICanvas;
  * @param <C>
  */
 public abstract class AFlavor<C> extends AFlavorCondition<C> {
+
+    static private final CSet<AFlavor> flavors = new CSet<AFlavor>();
+    static private boolean onlyOnceish = true;
+
+    static public AFlavor getFlavor(long hashId) {
+        return flavors.get(hashId);
+    }
+
+    public static void main(String[] args) {
+        getFlavor(0);
+    }
+
+    public AFlavor() {
+        flavors.add(this);
+    }
+
+    @Override
+    public Long hashObject() {
+        return UString.stringToLong(flavorName());
+    }
+
     /**
      *
      * @param _g
@@ -38,4 +63,12 @@ public abstract class AFlavor<C> extends AFlavorCondition<C> {
      * @param _color
      */
     abstract public void paintFlavor(ICanvas _g, int _x, int _y, int _w, int _h, AColor _color);
+
+    /**
+     * 
+     * @return 
+     */
+    public String flavorName() {
+        return getClass().getCanonicalName();
+    }
 }

@@ -79,7 +79,7 @@ public class VFlavor extends AViewableWH {
     public void paintBody(ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
         super.paintBody(g, _layer, mode, _painted);
         if (flavor != null) {
-            flavor.paintFlavor(g, 0, 0, (int) w, (int) h, null);
+            g.paintFlavor(flavor, 0, 0, (int) w, (int) h, null);
         }
     }
 }

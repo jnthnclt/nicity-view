@@ -220,7 +220,7 @@ public class VSlider extends AItem implements Comparable, IMouseMotionEvents {
                 _g.roundRect(false, _x + 0, _y + hh - 2, w - 1, 4, 3, 3);
 
 
-                SliderBarFlavor.pointingUp.paintFlavor(_g, _x + w - 6, _y + hh, 12, hh, ViewColor.cThemeSelected);
+                _g.paintFlavor(SliderBarFlavor.pointingUp, _x + w - 6, _y + hh, 12, hh, ViewColor.cThemeSelected);
 
                 if (title != null) {
                     _g.setFont(UV.fonts[UV.cSmall]);

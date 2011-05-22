@@ -21,6 +21,8 @@ package colt.nicity.view.interfaces;
 
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
+import colt.nicity.view.flavor.AFlavor;
+import java.io.File;
 
 /**
  *
@@ -218,6 +220,11 @@ public interface ICanvas {
             int _dx1, int _dy1, int _dx2, int _dy2,
             int _sx1, int _sy1, int _sx2, int _sy2,
             Object _observer);
+    
+    /**
+     * 
+     */
+    public void drawImage(File _image, int _x, int _y, int _w, int _h);
 
     /**
      *
@@ -292,4 +299,9 @@ public interface ICanvas {
      * @param _ty
      */
     public void setGradient(AColor _from, int _fx, int _fy, AColor _to, int _tx, int _ty);
+    
+    /**
+     * 
+     */
+    public void paintFlavor(AFlavor flavor, int _x, int _y, int _w, int _h,AColor _color);
 }

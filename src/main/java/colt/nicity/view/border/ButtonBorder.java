@@ -120,12 +120,12 @@ public class ButtonBorder extends AFlaggedBorder {
 
         if (is(cActive)) {
             color = ViewColor.cThemeActive;
-            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
+            g.paintFlavor(ULAF.cButtonBG, x, y, _w, _h, color);
         } else if (is(cSelected)) {
             color = ViewColor.cThemeSelected;
-            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
+            g.paintFlavor(ULAF.cButtonBG, x, y, _w, _h, color);
         } else {
-            ULAF.cButtonBG.paintFlavor(g, x, y, _w, _h, color);
+            g.paintFlavor(ULAF.cButtonBG, x, y, _w, _h, color);
         }
     }
     

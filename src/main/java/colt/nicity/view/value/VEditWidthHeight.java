@@ -58,7 +58,7 @@ public class VEditWidthHeight extends Viewer {
         c.add(new VButton(" + ") {
             @Override
             public void picked(IEvent _e) {
-                UV.popup(this, UV.cCC, resolution.popup(false), true);
+                UV.popup(this, UV.cCC, resolution.popup(false), true,true);
             }
         });
         setContent(c);

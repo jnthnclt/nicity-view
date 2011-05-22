@@ -45,6 +45,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      * @param w
      * @param h
      */
+    @Override
     public void paintBorder(ICanvas g, int x, int y, int w, int h) {
     }
 
@@ -56,6 +57,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      * @param _w
      * @param _h
      */
+    @Override
     public void paintBackground(ICanvas g, int x, int y, int _w, int _h) {
 
         g.setColor(ViewColor.cTheme);
@@ -76,6 +78,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public boolean isActive() {
         return false;
     }
@@ -84,6 +87,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public boolean isSelected() {
         return false;
     }
@@ -92,6 +96,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public float getX() {
         return x;
     }
@@ -100,6 +105,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public float getY() {
         return y;
     }
@@ -108,6 +114,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public float getW() {
         return w;
     }
@@ -116,6 +123,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public float getH() {
         return h;
     }
@@ -124,6 +132,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public IBorder getDefaultBorder() {
         return this;
     }
@@ -132,6 +141,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public IActiveBorder getActiveBorder() {
         return this;
     }
@@ -140,6 +150,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public ISelectedBorder getSelectedBorder() {
         return this;
     }
@@ -148,6 +159,7 @@ public class TitleBorder implements IBorder, IActiveBorder, ISelectedBorder, IAc
      *
      * @return
      */
+    @Override
     public IActiveSelectedBorder getActiveSelectedBorder() {
         return this;
     }

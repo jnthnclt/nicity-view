@@ -135,6 +135,6 @@ public class SliderBarFlavor extends AFlavor {
      * @param _color
      */
     public void paintFlavor(ICanvas _g, int _x, int _y, int _w, int _h, AColor _color) {
-        pointingUp.paintFlavor(_g, _x, _y, _w, _h, _color);
+        _g.paintFlavor(pointingUp, _x, _y, _w, _h, _color);
     }
 }

@@ -111,7 +111,7 @@ abstract public class ClickableArea extends RectPaintedArea {
     public void paint(ICanvas _g,XYWH_I _xywh) {
         for(AFlavorCondition fc:flavorConditions) {
             AFlavor f = fc.paintFlavor(this);
-            if (f != null) f.paintFlavor(_g, _xywh.x, _xywh.y, _xywh.w, _xywh.h, ViewColor.cTheme);
+            if (f != null) _g.paintFlavor(f, _xywh.x, _xywh.y, _xywh.w, _xywh.h, ViewColor.cTheme);
         }
     }
     /**

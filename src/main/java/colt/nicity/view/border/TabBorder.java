@@ -93,7 +93,7 @@ public class TabBorder extends AFlaggedBorder {
         if (is(cSelected)) {
             color = ViewColor.cThemeSelected;
         }
-        ULAF.cTab.paintFlavor(g, x, y, _w, _h, color);
+        g.paintFlavor(ULAF.cTab, x, y, _w, _h, color);
     }
 
     /**

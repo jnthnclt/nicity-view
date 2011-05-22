@@ -94,13 +94,9 @@ public class VPopupButton extends VButton {
     public void setPlacePopup(Place _placePopup) {
         placePopup = _placePopup;
     }
-    WindowPopup popupedUp;
-
+    
     @Override
     public void picked(IEvent _e) {
-        if (popupedUp != null && popupedUp.isVisible()) {
-            return;
-        }
         IView v = null;
         if (popupView instanceof IView) {
             v = (IView) popupView;
@@ -111,7 +107,7 @@ public class VPopupButton extends VButton {
         } else {
             v = new VString("Error :" + popupView.getClass());
         }
-        popupedUp = UV.popup(this, placePopup, wrapper(v), hideOnExit);
+        UV.popup(this, placePopup, wrapper(v), hideOnExit,true);
     }
 
     /**

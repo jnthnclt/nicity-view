@@ -61,7 +61,6 @@ import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IToolTip;
-import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -89,7 +88,6 @@ public class NGEnv extends AItem {
         g.set(NullOut.cNull, ng);
         UV.exitFrame(new Viewer(g), "");
     }
-
     Object[] links = new Object[0];
     long maxNodeCount = 0;
     double minNode = 0;
@@ -137,7 +135,7 @@ public class NGEnv extends AItem {
             public void mouseReleased(final MouseReleased _e) {
                 super.mouseReleased(_e);
                 if (_e.isRightClick()) {
-                    UV.popup(this, _e, UV.zone(NGEnv.this.popupView()), true);
+                    UV.popup(this, _e, UV.zone(NGEnv.this.popupView()), true, true);
                 }
 
             }
@@ -751,7 +749,7 @@ public class NGEnv extends AItem {
         public void mouseReleased(final MouseReleased _e) {
             super.mouseReleased(_e);
             if (_e.isRightClick() && _e.isSingleClick()) {
-                UV.popup(this, _e,UV.zone(NGEnv.this.popupView()), true);
+                UV.popup(this, _e, UV.zone(NGEnv.this.popupView()),true, true);
             }
         }
         // IXYZ
@@ -821,4 +819,3 @@ public class NGEnv extends AItem {
     public void dropParcel(final Object value, final IDropMode mode) {
     }
 }
-

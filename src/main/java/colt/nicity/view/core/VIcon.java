@@ -19,10 +19,10 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.image.ViewImage;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.io.UIO;
 import colt.nicity.core.memory.SoftIndex;
+import colt.nicity.view.image.ViewByteArrayImage;
 
 /**
  *
@@ -51,7 +51,7 @@ public class VIcon {
      * @return
      */
     public static VPaintable icon(String _name, String _fallback) {
-        ViewImage i = image(_name, true);
+        ViewByteArrayImage i = image(_name, true);
         if (i != null) {
             return new VPaintable(i);
         }
@@ -65,8 +65,8 @@ public class VIcon {
      * @param _fallback
      * @return
      */
-    public static ViewImage image(String _name, String _fallback) {
-        ViewImage i = image(_name, true);
+    public static ViewByteArrayImage image(String _name, String _fallback) {
+        ViewByteArrayImage i = image(_name, true);
         if (i != null) {
             return i;
         }
@@ -83,11 +83,12 @@ public class VIcon {
         if (_name == null) {
             return null;
         }
-        ViewImage vi = image(_name);
+        ViewByteArrayImage vi = image(_name);
+        vi.scaleTo(_size,_size);
         if (vi == null) {
             return null;
         }
-        return new VPaintable(vi.getThumbnail(_size, _size));
+        return new VPaintable(vi);
     }
 
     /**
@@ -104,7 +105,7 @@ public class VIcon {
      * @param _name
      * @return
      */
-    public static ViewImage image(String _name) {
+    public static ViewByteArrayImage image(String _name) {
         return image(_name, false, false);
     }
 
@@ -114,7 +115,7 @@ public class VIcon {
      * @param _null
      * @return
      */
-    public static ViewImage image(String _name, boolean _null) {
+    public static ViewByteArrayImage image(String _name, boolean _null) {
         return image(_name, _null, false);
     }
 
@@ -125,9 +126,9 @@ public class VIcon {
      * @param _find
      * @return
      */
-    public static ViewImage image(String _name, boolean _null, boolean _find) {
+    public static ViewByteArrayImage image(String _name, boolean _null, boolean _find) {
         _name = _name.toUpperCase();
-        ViewImage image = (ViewImage) icons.get(_name);
+        ViewByteArrayImage image = (ViewByteArrayImage) icons.get(_name);
         if (image != null) {
             return image;
         }
@@ -136,7 +137,7 @@ public class VIcon {
         }
 
         try {
-            image = new ViewImage(
+            image = new ViewByteArrayImage(
                     UIO.toByteArray(
                     ClassLoader.getSystemResourceAsStream(cPathToIcons + _name + cIconExtension),
                     4096));

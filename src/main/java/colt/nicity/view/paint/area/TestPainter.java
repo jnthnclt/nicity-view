@@ -47,6 +47,11 @@ public class TestPainter {
      * @param _args
      */
     public static void main(String[] _args) {
+        
+        UV.exitFrame(painter(), "");
+    }
+    
+    public static Painter painter() {
         painter = new Painter(600,600);
         painter.lensStack.addLens(new OffestLens());
         ZoomLens lens = new ZoomLens();
@@ -127,8 +132,7 @@ public class TestPainter {
         GroupAreas group = new GroupAreas(new V_D(0), new V_D(0), new V_D(1), new V_D(0.25));
         group.add(newItem("Group"));
         painter.add(group);
-
-        UV.exitFrame(painter, "");
+        return painter;
     }
 
     static ItemArea newItem(String _name) {

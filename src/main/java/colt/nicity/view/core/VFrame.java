@@ -132,7 +132,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
 
         VChain main = new VChain(UV.cSWNW);
         main.add(chain);
-        main.add(new Viewer(_framing));
+        main.add(new Viewer(new VPopupViewer(_framing)));
         setContent(UV.border(main, new ZonesBorder(ViewColor.cTheme, 2)));
     }
 
@@ -141,7 +141,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
         AColor _active = active;
         if (_active != null) {
             int hh = _h / 2;
-            ULAF.cButtonBG.paintFlavor(g, _x + _w - 15, _y + 5, 10, 10, _active);
+            g.paintFlavor(ULAF.cButtonBG, _x + _w - 15, _y + 5, 10, 10, _active);
         }
     }
 
@@ -157,24 +157,21 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
      *
      */
     public void close() {
-        AWindow window = (AWindow) getRootView();
-        window.dispose();
+        getRootView().dispose();
     }
 
     /**
      *
      */
     public void maximize() {
-        AWindow window = (AWindow) getRootView();
-        window.maximize();
+        getRootView().maximize();
     }
 
     /**
      *
      */
     public void minimize() {
-        AWindow window = (AWindow) getRootView();
-        window.iconify();
+        getRootView().iconify();
     }
 
     // IKeyEvents

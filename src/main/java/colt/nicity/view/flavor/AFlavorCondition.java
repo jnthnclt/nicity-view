@@ -20,12 +20,22 @@
 
 package colt.nicity.view.flavor;
 
+import colt.nicity.core.lang.ASetObject;
+import colt.nicity.core.lang.UString;
+
 /**
  *
  * @author Administrator
  * @param <I>
  */
-abstract public class AFlavorCondition<I> {
+abstract public class AFlavorCondition<I> extends ASetObject<Long> {
+
+     @Override
+    public Long hashObject() {
+        return UString.stringToLong(getClass().getCanonicalName());
+    }
+    
+    
     /**
      *
      * @param _condition

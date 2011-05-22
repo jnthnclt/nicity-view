@@ -45,6 +45,7 @@ public class ViewBorder implements IBorder {
      * @param w
      * @param h
      */
+    @Override
     public void paintBorder(ICanvas g, int x, int y, int w, int h) {
     }
 
@@ -56,6 +57,7 @@ public class ViewBorder implements IBorder {
      * @param w
      * @param h
      */
+    @Override
     public void paintBackground(ICanvas g, int x, int y, int w, int h) {
         g.setColor(ViewColor.cItemTheme);
         g.rect(true, x, y, w, h);
@@ -65,6 +67,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public boolean isActive() {
         return false;
     }
@@ -73,6 +76,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public boolean isSelected() {
         return false;
     }
@@ -81,6 +85,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public float getX() {
         return x;
     }
@@ -89,6 +94,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public float getY() {
         return y;
     }
@@ -97,6 +103,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public float getW() {
         return w;
     }
@@ -105,6 +112,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public float getH() {
         return h;
     }
@@ -113,6 +121,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public IBorder getDefaultBorder() {
         return new ViewBorder();
     }
@@ -121,6 +130,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public IActiveBorder getActiveBorder() {
         return new ActiveViewBorder();
     }
@@ -129,6 +139,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public ISelectedBorder getSelectedBorder() {
         return new SelectedViewBorder();
     }
@@ -137,6 +148,7 @@ public class ViewBorder implements IBorder {
      *
      * @return
      */
+    @Override
     public IActiveSelectedBorder getActiveSelectedBorder() {
         return new ActiveSelectedViewBorder();
     }

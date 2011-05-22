@@ -27,130 +27,175 @@ import colt.nicity.view.interfaces.IView;
  * @author Administrator
  */
 public class UBorder {
-	//----------------------------------------------------------------------------
+    //----------------------------------------------------------------------------
+
     /**
      *
      * @param view
      */
     static public void activateBorder(IView view) {
-		if (view == null) return;
-		IBorder border = activateBorder(view.getBorder());
-		if (border != null) {
-			view.setBorder(border);
-			view.paint();
-		}
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param border
-         * @return
-         */
-        static public IBorder activateBorder(IBorder border) {
-		if (border == null) return null;
-		if (border.isSelected() && !border.isActive()) {
-			return border.getActiveSelectedBorder();
-		}
-		else if (!border.isActive()) {
-			return border.getActiveBorder();
-		}
-		else return null;
-	}
-	
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param view
-         */
-        static public void deactivateBorder(IView view) {
-		if (view == null) return;
-		IBorder border = deactivateBorder(view.getBorder());
-		if (border != null) {
-			view.setBorder(border);
-			view.paint();
-		}
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param border
-         * @return
-         */
-        static public IBorder deactivateBorder(IBorder border) {
-		if (border == null) return null;
-		if (border.isSelected() && border.isActive()) return border.getSelectedBorder();
-		else if (!border.isSelected() && border.isActive()) return border.getDefaultBorder();
-		else return null;
-	}
-	
-	
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param view
-         */
-        static public void selectBorder(IView view) {
-		selectBorder(view,true);
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param view
-         * @param _flush
-         */
-        static public void selectBorder(IView view,boolean _flush) {
-		if (view == null) return;
-		IBorder border = selectBorder(view.getBorder());
-		if (border == null) return;
-		view.setBorder(border);
-		view.repair();
-		if (_flush) view.flush();
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param border
-         * @return
-         */
-        static public IBorder selectBorder(IBorder border) {
-		if (border == null) return null;
-		if (border.isSelected()) return null;
-		if (border.isActive()) return border.getActiveSelectedBorder();
-		else return border.getSelectedBorder();
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param view
-         */
-        static public void deselectBorder(IView view) {
-		deselectBorder(view,true);
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param view
-         * @param _flush
-         */
-        static public void deselectBorder(IView view,boolean _flush) {
-		if (view == null) return;
-		IBorder border = deselectBorder(view.getBorder());
-		if (border == null) return;
-		view.setBorder(border);
-		view.repair();
-		if (_flush) view.flush();
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param border
-         * @return
-         */
-        static public IBorder deselectBorder(IBorder border) {
-		if (border == null) return null;
-		if (!border.isSelected()) return null;
-		if (border.isActive()) return border.getActiveBorder();
-		else return border.getDefaultBorder();
-	}
-	//----------------------------------------------------------------------------
+        if (view == null) {
+            return;
+        }
+        IBorder border = activateBorder(view.getBorder());
+        if (border != null) {
+            view.setBorder(border);
+            view.paint();
+        }
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param border
+     * @return
+     */
+    static public IBorder activateBorder(IBorder border) {
+        if (border == null) {
+            return null;
+        }
+        if (border.isSelected() && !border.isActive()) {
+            return border.getActiveSelectedBorder();
+        } else if (!border.isActive()) {
+            return border.getActiveBorder();
+        } else {
+            return null;
+        }
+    }
+
+    //----------------------------------------------------------------------------
+    /**
+     *
+     * @param view
+     */
+    static public void deactivateBorder(IView view) {
+        if (view == null) {
+            return;
+        }
+        IBorder border = deactivateBorder(view.getBorder());
+        if (border != null) {
+            view.setBorder(border);
+            view.paint();
+        }
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param border
+     * @return
+     */
+    static public IBorder deactivateBorder(IBorder border) {
+        if (border == null) {
+            return null;
+        }
+        if (border.isSelected() && border.isActive()) {
+            return border.getSelectedBorder();
+        } else if (!border.isSelected() && border.isActive()) {
+            return border.getDefaultBorder();
+        } else {
+            return null;
+        }
+    }
+
+    //----------------------------------------------------------------------------
+    /**
+     *
+     * @param view
+     */
+    static public void selectBorder(IView view) {
+        selectBorder(view, true);
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param view
+     * @param _flush
+     */
+    static public void selectBorder(IView view, boolean _flush) {
+        if (view == null) {
+            return;
+        }
+        IBorder border = selectBorder(view.getBorder());
+        if (border == null) {
+            return;
+        }
+        view.setBorder(border);
+        view.repair();
+        if (_flush) {
+            view.flush();
+        }
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param border
+     * @return
+     */
+    static public IBorder selectBorder(IBorder border) {
+        if (border == null) {
+            return null;
+        }
+        if (border.isSelected()) {
+            return null;
+        }
+        if (border.isActive()) {
+            return border.getActiveSelectedBorder();
+        } else {
+            return border.getSelectedBorder();
+        }
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param view
+     */
+    static public void deselectBorder(IView view) {
+        deselectBorder(view, true);
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param view
+     * @param _flush
+     */
+    static public void deselectBorder(IView view, boolean _flush) {
+        if (view == null) {
+            return;
+        }
+        IBorder border = deselectBorder(view.getBorder());
+        if (border == null) {
+            return;
+        }
+        view.setBorder(border);
+        view.repair();
+        if (_flush) {
+            view.flush();
+        }
+    }
+    //----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param border
+     * @return
+     */
+    static public IBorder deselectBorder(IBorder border) {
+        if (border == null) {
+            return null;
+        }
+        if (!border.isSelected()) {
+            return null;
+        }
+        if (border.isActive()) {
+            return border.getActiveBorder();
+        } else {
+            return border.getDefaultBorder();
+        }
+    }
+    //----------------------------------------------------------------------------
 }

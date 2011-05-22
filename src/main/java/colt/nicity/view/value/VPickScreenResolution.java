@@ -185,7 +185,7 @@ public class VPickScreenResolution extends AItem implements IValue {
      */
     @Override
     public void picked(IEvent _) {
-        UV.popup(this, UV.cCC, popup(true), true);
+        UV.popup(this, UV.cCC, popup(true), true,true);
     }
 
     /**

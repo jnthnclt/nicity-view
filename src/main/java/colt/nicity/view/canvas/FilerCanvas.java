@@ -24,9 +24,11 @@ import colt.nicity.core.io.UIO;
 import colt.nicity.core.lang.ICallback;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
+import colt.nicity.view.flavor.AFlavor;
 import colt.nicity.view.interfaces.ICanvas;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.io.File;
 
 /**
  *
@@ -36,6 +38,12 @@ public class FilerCanvas implements ICanvas {
 
     static CanvasMethod[] methods = new CanvasMethod[128];
 
+    @Override
+    public void drawImage(File _image, int _x, int _y, int _w, int _h) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    
     static abstract class CanvasMethod {
 
         abstract public void render(IFiler _f, ICanvas _c) throws Exception;
@@ -63,6 +71,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @return
      */
+    @Override
     public long who() {
         return who;
     }
@@ -83,7 +92,12 @@ public class FilerCanvas implements ICanvas {
     public void renderTo(ICanvas _c) throws Exception {
         boolean done = false;
         while (!done) {
-            methods[UIO.readByte(f, "method")].render(f, _c);
+            int methodIndex = UIO.readByte(f, "method");
+            if (methods[methodIndex] == null) {
+                System.err.println("unsupported method "+methodIndex);
+                break;
+            }
+            methods[methodIndex].render(f, _c);
             done = UIO.readBoolean(f, "done");
         }
     }
@@ -883,6 +897,39 @@ public class FilerCanvas implements ICanvas {
                         UIO.readInt(f, "sx2"),
                         UIO.readInt(f, "sy2"),
                         null);
+            }
+        };
+    }
+    
+    static byte cPaintFlavor = 27;
+    @Override
+    public void paintFlavor(AFlavor flavor, int _x, int _y, int _w, int _h, AColor _color) {
+        try {
+            UIO.writeByte(f, cPaintFlavor, "method");
+            UIO.writeLong(f, flavor.hashObject(), "flavor");
+            UIO.writeInt(f, _x, "x");
+            UIO.writeInt(f, _y, "y");
+            UIO.writeInt(f, _w, "w");
+            UIO.writeInt(f, _h, "h");
+            UIO.writeInt(f, _color.intValue(), "color");
+            UIO.writeBoolean(f, false, "done");
+        } catch (Exception ex) {
+            exceptions.callback(ex);
+        }
+    }
+    
+    static {
+        methods[cPaintFlavor] = new CanvasMethod() {
+
+            public void render(IFiler f, ICanvas _c) throws Exception {
+                _c.paintFlavor(
+                        AFlavor.getFlavor(UIO.readLong(f, "flavor")),
+                        UIO.readInt(f, "x"),
+                        UIO.readInt(f, "y"),
+                        UIO.readInt(f, "w"),
+                        UIO.readInt(f, "h"),
+                        new AColor(UIO.readInt(f, "color"))
+                        );
             }
         };
     }

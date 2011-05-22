@@ -57,7 +57,6 @@ import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IToolTip;
-import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +129,7 @@ public class NG2DEnv extends Viewer {
             public void mouseReleased(final MouseReleased _e) {
                 super.mouseReleased(_e);
                 if (_e.isRightClick()) {
-                    UV.popup(this, _e, NG2DEnv.this.popupView(), true);
+                    UV.popup(this, _e, NG2DEnv.this.popupView(), true, true);
                 }
             }
 
@@ -482,36 +481,37 @@ public class NG2DEnv extends Viewer {
         public void mouseReleased(final MouseReleased _e) {
             super.mouseReleased(_e);
             if (_e.isRightClick() && _e.isSingleClick()) {
-                UV.popup(this, _e, NG2DEnv.this.popupView(), true);
+                UV.popup(this, _e, NG2DEnv.this.popupView(), true, true);
             }
             loose.layoutInterior();
         }
         // IXYZ
-        
+
         public double x() {
             return xyz.x();
         }
+
         public double y() {
             return xyz.y();
         }
+
         public double z() {
             return xyz.z();
         }
 
-
-
         public void x(double _px) {
             xyz.x(_px);
         }
+
         public void y(double _py) {
             xyz.y(_py);
         }
+
         public void z(double _pz) {
             xyz.z(_pz);
         }
-        
+
         // Comparable
-        
         public int compareTo(Object other) {
             double thisVal = z();
             double otherVal = ((IXYZ) other).z();
@@ -534,4 +534,3 @@ public class NG2DEnv extends Viewer {
         }
     }
 }
-

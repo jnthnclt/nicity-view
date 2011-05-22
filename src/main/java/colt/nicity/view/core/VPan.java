@@ -248,17 +248,18 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
 
 
                 XYWH_I r = panY();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
 
                 r = incUp();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
                 _g.setColor(ViewColor.cThemeFont);
                 GeneralPath p = new GeneralPath();
                 UPaint.arrowHead(p, _x + r.x + (r.w / 2), _y + r.y + (r.h / 2), 0, scrollBarSize / 3, (float) 90);
                 _g.draw(p);
 
                 r = incDown();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
                 _g.setColor(ViewColor.cThemeFont);
                 p = new GeneralPath();
                 UPaint.arrowHead(p, _x + r.x + (r.w / 2), _y + r.y + (r.h / 2), (float) 180, scrollBarSize / 3, (float) 90);
@@ -274,17 +275,17 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
                 _g.setColor(c);
 
                 XYWH_I r = panX();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
 
                 r = incLeft();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
                 _g.setColor(ViewColor.cThemeFont);
                 GeneralPath p = new GeneralPath();
                 UPaint.arrowHead(p, _x + r.x + (r.w / 2), _y + r.y + (r.h / 2), 90, scrollBarSize / 3, (float) 90);
                 _g.draw(p);
 
                 r = incRight();
-                flavor.paintFlavor(_g, _x + r.x, _y + r.y, r.w, r.h, c);
+                _g.paintFlavor(flavor, _x + r.x, _y + r.y, r.w, r.h, c);
                 _g.setColor(ViewColor.cThemeFont);
                 p = new GeneralPath();
                 UPaint.arrowHead(p, _x + r.x + (r.w / 2), _y + r.y + (r.h / 2), (float) 270, scrollBarSize / 3, (float) 90);
@@ -296,7 +297,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
                 if (resizingX && resizingY) {
                     c = ViewColor.cThemeActive;
                 }
-                flavor.paintFlavor(_g, _x + _w - scrollBarSize - resize, _y + _h - scrollBarSize - resize, scrollBarSize, scrollBarSize, c);
+                _g.paintFlavor(flavor, _x + _w - scrollBarSize - resize, _y + _h - scrollBarSize - resize, scrollBarSize, scrollBarSize, c);
             }
 
             c = barColor;
@@ -308,13 +309,13 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
             if (resizingX || paintXResizing) {
                 c = ViewColor.cThemeActive;
             }
-            flavor.paintFlavor(_g, r.x, r.y, r.w, r.h, c);
+            _g.paintFlavor(flavor, r.x, r.y, r.w, r.h, c);
             c = barColor;
             if (resizingY || paintYResizing) {
                 c = ViewColor.cThemeActive;
             }
             r = resizeY();
-            flavor.paintFlavor(_g, r.x, r.y, r.w, r.h, c);
+            _g.paintFlavor(flavor, r.x, r.y, r.w, r.h, c);
 
         }
     }

@@ -21,19 +21,24 @@ package colt.nicity.view.canvas;
 
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
+import colt.nicity.view.flavor.AFlavor;
 import colt.nicity.view.image.IImage;
 import colt.nicity.view.interfaces.ICanvas;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
+import java.io.File;
 
 /**
  *
@@ -69,11 +74,13 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @return
      */
+    @Override
     public long who() { return who; }
     
     /**
      *
      */
+    @Override
     public void dispose() {
        g.dispose();
     }
@@ -88,6 +95,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param start
      * @param arcAngle
      */
+    @Override
     public void arc(boolean _fill,int x, int y, int w, int h, int start, int arcAngle) {
         if (_fill) g.fillArc(x, y, w, h, start, arcAngle);
         else g.drawArc(x, y, w, h, start, arcAngle);
@@ -100,6 +108,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param x2
      * @param y2
      */
+    @Override
     public void line(int x1, int y1, int x2, int y2) {
         g.drawLine(x1, y1, x2, y2);
     }
@@ -112,6 +121,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void oval(boolean _fill,int x, int y, int w, int h) {
         if (_fill) g.fillOval(x, y, w, h);
         else g.drawOval(x, y, w, h);
@@ -124,6 +134,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param yPoints
      * @param nPoints
      */
+    @Override
     public void polygon(boolean _fill,int[] xPoints, int[] yPoints, int nPoints) {
         if (_fill) g.fillPolygon(xPoints, yPoints, nPoints);
         else g.drawPolygon(xPoints, yPoints, nPoints);
@@ -135,6 +146,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param yPoints
      * @param nPoints
      */
+    @Override
     public void polyline(int[] xPoints, int[] yPoints, int nPoints) {
         g.drawPolyline(xPoints, yPoints, nPoints);
     }
@@ -146,6 +158,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void rect(boolean _fill,int x, int y, int w, int h) {
         if (_fill) g.fillRect(x, y, w, h);
         else g.drawRect(x, y, w, h);
@@ -161,6 +174,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param arcWidth
      * @param arcHeight
      */
+    @Override
     public void roundRect(boolean _fill,int x, int y, int w, int h, int arcWidth, int arcHeight) {
         if (_fill) g.fillRoundRect(x, y, w, h, arcWidth, arcHeight);
         else g.drawRoundRect(x, y, w, h, arcWidth, arcHeight);
@@ -172,6 +186,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param x
      * @param y
      */
+    @Override
     public void drawString(String str, int x, int y) {
         g.drawString(str, x, y);
     }
@@ -184,6 +199,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void setClip(int x, int y, int w, int h) {
         g.setClip(x, y, w, h);
     }
@@ -194,6 +210,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _color
      */
+    @Override
     public void setColor(AColor _color) {
         g.setColor(new Color(_color.intValue(),true));
     }
@@ -202,6 +219,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _font
      */
+    @Override
     public void setFont(AFont _font) {
         g.setFont(_font.getFont());
     }
@@ -210,6 +228,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @return
      */
+    @Override
     public Object getClip() {
         return g.getClip();
     }
@@ -217,6 +236,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _clip
      */
+    @Override
     public void setClip(Object _clip) {
         g.setClip((Shape)_clip);
     }
@@ -228,6 +248,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param _y
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image,int _x,int _y,Object _observer) {
         if (_image instanceof IImage) _image = (Image)((IImage)_image).data(0);
         g.drawImage((Image)_image, _x, _y,(ImageObserver)_observer);
@@ -241,6 +262,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param _h
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image,int _x,int _y,int _w,int _h,Object _observer) {
         if (_image instanceof IImage) _image = (Image)((IImage)_image).data(0);
         g.drawImage((Image)_image, _x, _y,_w,_h,(ImageObserver)_observer);
@@ -259,6 +281,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param _sy2
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image,
             int _dx1,int _dy1,int _dx2,int _dy2,
             int _sx1,int _sy1,int _sx2,int _sy2,
@@ -274,6 +297,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _fill
      */
+    @Override
     public void fill(Object _fill) {
         ((Graphics2D)g).fill((Shape)_fill);
     }
@@ -281,6 +305,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _draw
      */
+    @Override
     public void draw(Object _draw) {
         ((Graphics2D)g).draw((Shape)_draw);
     }
@@ -289,6 +314,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _draw
      */
+    @Override
     public void setPaint(Object _draw) {
         ((Graphics2D)g).setPaint((Paint)_draw);
     }
@@ -297,6 +323,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param _angle
      */
+    @Override
     public void rotate(double _angle) {
         ((Graphics2D)g).rotate(_angle);
     }
@@ -305,6 +332,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * 
      * @return
      */
+    @Override
     public Object getTransform() {
         return ((Graphics2D)g).getTransform();
     }
@@ -315,6 +343,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param fx
      * @param fy
      */
+    @Override
     public void rotate(double theta, double fx, double fy) {
         ((Graphics2D)g).rotate(theta, fx, fy);
     }
@@ -323,6 +352,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      *
      * @param restore
      */
+    @Override
     public void setTransform(Object restore) {
         ((Graphics2D)g).setTransform((AffineTransform)restore);
     }
@@ -341,6 +371,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param x
      * @param y
      */
+    @Override
     public void translate(double x, double y) {
         ((Graphics2D)g).translate(x,y);
     }
@@ -351,6 +382,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param _alpha
      * @param _composite
      */
+    @Override
     public void setAlpha(float _alpha, int _composite) {
         int rule = _composite;
         if (rule == 0) rule = ICanvas.cSRC_OVER;
@@ -366,8 +398,50 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      * @param _tx
      * @param _ty
      */
+    @Override
     public void setGradient(AColor _from,int _fx,int _fy,AColor _to,int _tx,int _ty) {
         GradientPaint gp = new GradientPaint(_fx,_fy,new Color(_from.intValue(),true),_tx,_ty,new Color(_to.intValue(),true));
         ((Graphics2D)g).setPaint(gp);
+    }
+
+    @Override
+    public void drawImage(File _image, int _x, int _y, int _w, int _h) {
+        Image image = Toolkit.getDefaultToolkit().getImage(_image.getAbsolutePath());
+        if (image != null) {
+            loadImage(image);
+        }
+        drawImage(image, _x, _y,_w,_h,null);
+    }
+    
+
+    private static int mediaTrackerID = 0;
+    private static final Component component = new Component() {};
+    private static final MediaTracker tracker = new MediaTracker(component);
+
+    private void loadImage(Image image) {
+        if (image == null) {
+            return;
+        }
+        synchronized (tracker) {
+            int id = getNextID();
+            tracker.addImage(image, id);
+            try {
+                tracker.waitForID(id, 0);
+            } catch (InterruptedException e) {
+                System.out.println("INTERRUPTED while loading Image");
+            }
+            tracker.removeImage(image, id);
+        }
+    }
+    private int getNextID() {
+        synchronized (tracker) {
+            return ++mediaTrackerID;
+        }
+    }
+
+    @Override
+    public void paintFlavor(AFlavor flavor, int _x, int _y, int _w, int _h, AColor _color) {
+        if (flavor == null) return;
+        flavor.paintFlavor(this, _x, _y, _w, _h, _color);
     }
 }

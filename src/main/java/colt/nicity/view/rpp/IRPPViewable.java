@@ -13,4 +13,5 @@ import colt.nicity.view.interfaces.IView;
 public interface IRPPViewable {
 
     public IView viewable(String[] args);
+    public String viewableName();
 }

@@ -138,7 +138,7 @@ public class VPreviewColor extends Viewer implements IMouseEvents, IObserver {
      * @param e
      */
     public void mousePressed(MousePressed e) {
-        UV.popup(this, e, UV.zone(new VEditNumericColor(name, color)), false);
+        UV.popup(this, e, UV.zone(new VEditNumericColor(name, color)), false,true);
     }
 
     /**

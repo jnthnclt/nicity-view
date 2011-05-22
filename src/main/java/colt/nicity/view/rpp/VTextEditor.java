@@ -23,6 +23,7 @@ import colt.nicity.view.list.AItem;
 import colt.nicity.view.list.VList;
 import colt.nicity.view.ngraph.NG;
 import colt.nicity.view.ngraph.NGEnvAnim;
+import colt.nicity.view.paint.area.TestPainter;
 import colt.nicity.view.value.VAlwaysOver;
 import colt.nicity.view.value.VFiles;
 import java.awt.Font;
@@ -33,7 +34,6 @@ public class VTextEditor extends Viewer {
     String name;
     CSet editors = new CSet();
     boolean graphing = false;
-    Viewer over = new Viewer();
     VTextEditor(RPPViews _views,String _name) {
         views = _views;
         name = _name;
@@ -83,34 +83,25 @@ public class VTextEditor extends Viewer {
                 paint();
             }
         });
+        f.add(new VButton("TestPainter") {
+            @Override
+            public void picked(IEvent _e) {
+                pan.setView(TestPainter.painter());
+                paint();
+            }
+        });
         f.add(new VButton("Config") {
             @Override
             public void picked(IEvent _e) {
-                VChain c = new VChain(UV.cSWNW);
-                c.add(new VButton("X") {
-                    @Override
-                    public void picked(IEvent _e) {
-                        over.setView(new RigidBox(1,1));
-                    }
-                });
-                c.add(new VPan(ViewColor.edit(),-1,400));
-                over.setView(UV.zone(c));
+                UV.popup(this,UV.cNS, new VPan(ViewColor.edit(),-1,400), true,true);
             }
         });
         f.add(new VButton("Save") {
             @Override
             public void picked(IEvent _e) {
-                VChain c = new VChain(UV.cSWNW);
-                c.add(new VButton("X") {
-                    @Override
-                    public void picked(IEvent _e) {
-                        over.setView(new RigidBox(1,1));
-                    }
-                });
                 VFiles f = new VFiles(new File(System.getProperty("user.dir")), "Save", true);
                 f.init(false, true, 400, 400);
-                c.add(f);
-                over.setView(UV.zone(c));
+                UV.popup(this,UV.cNS,f,true,true);
             }
         });
         f.setBorder(new ViewBorder());
@@ -119,8 +110,7 @@ public class VTextEditor extends Viewer {
         VChain ew = new VChain(UV.cNENW);
         ew.add(new Viewer(pan),UV.cFIG);
         ew.add(new Viewer(panEditors),UV.cFIG);
-        VAlwaysOver o = new VAlwaysOver(new VTrapFlex(over), new VChain(UV.cSN,ew,f), UV.cCC);
-        setContent(o);
+        setContent(new VChain(UV.cSN,ew,f));
     }
     public void addEditor(long _who,String _ipAddress) {
         Editor e = (Editor)editors.get(_who);

@@ -102,4 +102,14 @@ public interface IRootView extends IView {
      *
      */
     public void dispose();
+    
+    /**
+     *
+     */
+    public void maximize();
+    
+    /**
+     *
+     */
+    public void iconify();
 }

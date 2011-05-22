@@ -89,4 +89,12 @@ public class NullRootView extends NullView implements IRootView {
     public IRootView releaseModal(IRootView _modal) {
         return this;
     }
+
+    @Override
+    public void maximize() {
+    }
+
+    @Override
+    public void iconify() {
+    }
 }

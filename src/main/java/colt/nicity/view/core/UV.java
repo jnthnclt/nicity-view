@@ -37,6 +37,22 @@ import colt.nicity.core.lang.UMath;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
+import colt.nicity.view.event.AMouseEvent;
+import colt.nicity.view.flavor.BevelFlavor;
+import colt.nicity.view.flavor.BoxFlavor;
+import colt.nicity.view.flavor.ButtonFlavor;
+import colt.nicity.view.flavor.ItemFlavor;
+import colt.nicity.view.flavor.NullFlavor;
+import colt.nicity.view.flavor.OutlineFlavor;
+import colt.nicity.view.flavor.RoundFlavor;
+import colt.nicity.view.flavor.ScrollFlavor;
+import colt.nicity.view.flavor.SliderBarFlavor;
+import colt.nicity.view.flavor.SoftFlavor;
+import colt.nicity.view.flavor.SolidFlavor;
+import colt.nicity.view.flavor.TabFlavor;
+import colt.nicity.view.flavor.VerticalBuldgeFlavor;
+import colt.nicity.view.flavor.WindowFlavor;
+import colt.nicity.view.flavor.ZonesFlavor;
 import colt.nicity.view.image.IImage;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
@@ -58,6 +74,26 @@ import javax.imageio.ImageIO;
  * @author Administrator
  */
 public class UV {
+    
+    static {
+        
+        // this is a lame short cut to init AFlavor
+        new BevelFlavor();
+        new BoxFlavor();
+        new ButtonFlavor();
+        new ItemFlavor();
+        new NullFlavor();
+        new OutlineFlavor();
+        new RoundFlavor();
+        new ScrollFlavor();
+        new SliderBarFlavor();
+        new SoftFlavor();
+        new SolidFlavor();
+        new TabFlavor();
+        new VerticalBuldgeFlavor();
+        new WindowFlavor();
+        new ZonesFlavor();
+    }
 
     /**
      * 
@@ -1292,8 +1328,8 @@ public class UV {
         IView parent = child;
         while (_parent != parent &&
                 parent != null &&
-                parent != NullView.cNull &&
-                !(parent instanceof IRootView)) {
+                parent != NullView.cNull && !(parent instanceof IRootView)
+                ) {
             if (parent instanceof VClip) {
                 x += parent.getX() + ((VClip) parent).ox();
                 y += parent.getY() + ((VClip) parent).oy();
@@ -1945,55 +1981,38 @@ public class UV {
         });
         UV.frame(c, "Fatal Exception", false, false);
     }
-
-
-    /**
-     *
-     * @param _reference
-     * @param _placePopup
-     * @param _view
-     * @param _hideOnExit
-     * @return
-     */
-    public static WindowPopup popup(IView _reference, Place _placePopup, IView _view, boolean _hideOnExit) {
-        return WindowPopup.clicked(_reference,_placePopup,_view,_hideOnExit);
+    
+    public static void popup(IView ref,Place place,IView popup,boolean _hideOnExit, boolean _hideOnLost) {
+        XY_I p = new XY_I(0,0);
+        p.x += (int) (place.getParentX() * ref.getW());
+        p.y += (int) (place.getParentY() * ref.getH());
+        p.x -= (int) (place.getChildX() * popup.getW());
+        p.y -= (int) (place.getChildY() * popup.getH());
+        popup(ref,p,popup,_hideOnExit,_hideOnLost);
     }
     
-    /**
-     *
-     * @param _reference
-     * @param _placePopup
-     * @param _view
-     * @param _hideOnExit
-     * @param _hideOnLost
-     * @return
-     */
-    public static WindowPopup popup(IView _reference, Place _placePopup, IView _view, boolean _hideOnExit, boolean _hideOnLost) {
-         return WindowPopup.clicked(_reference,_placePopup,_view,_hideOnExit,_hideOnLost);
+    public static void popup(IView ref,IEvent event,IView popup,boolean _hideOnExit, boolean _hideOnLost) {
+        XY_I p = new XY_I(0,0);
+        if (event instanceof AMouseEvent)
+        {
+            XY_I ep = ((AMouseEvent) event).getPoint();
+            if (p != null)
+            {
+                p.x += ep.x;
+                p.y += ep.y;
+            }
+        }
+        popup(ref,p,popup,_hideOnExit,_hideOnLost);
     }
     
-    /**
-     *
-     * @param _reference
-     * @param _event
-     * @param _view
-     * @param _hideOnExit
-     * @return
-     */
-    public static WindowPopup popup(IView _reference, IEvent _event, IView _view, boolean _hideOnExit) {
-         return WindowPopup.clicked(_reference,_event,_view,_hideOnExit);
-    }
-  
-    /**
-     *
-     * @param _reference
-     * @param _p
-     * @param _view
-     * @param _hideOnExit
-     * @return
-     */
-    public static WindowPopup popup(IView _reference, XY_I _p, IView _view, boolean _hideOnExit) {
-         return WindowPopup.clicked(_reference,_p,_view,_hideOnExit);
+    public static void popup(IView ref,XY_I place,IView popup,boolean _hideOnExit, boolean _hideOnLost) {
+        IView at = ref;
+        for (; at != NullView.cNull && !(at instanceof VPopupViewer); ) {
+            at = at.getParentView();
+        }
+        if (at instanceof VPopupViewer) {
+            ((VPopupViewer)at).popup(ref, popup, place,_hideOnExit,_hideOnLost);
+        }
     }
 
     /**

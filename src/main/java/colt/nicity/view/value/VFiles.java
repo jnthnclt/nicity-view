@@ -53,7 +53,17 @@ import java.io.File;
  * @author Administrator
  */
 public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDependecy { //IKeyedValues
-
+    
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+        ViewColor.onBlack();
+        VFiles files = new VFiles();
+        files.init(false, true, 600, 600);
+        UV.exitFrame(files, "File Browser");
+    }
     /**
      *
      */

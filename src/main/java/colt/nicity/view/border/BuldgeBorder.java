@@ -124,7 +124,7 @@ public class BuldgeBorder extends AFlaggedBorder {
      */
     @Override
     public void paintBackground(ICanvas _g, int x, int y, int _w, int _h) {
-        new ScrollFlavor().paintFlavor(_g, x, y, _w, _h, color);
+        _g.paintFlavor(new ScrollFlavor(), x, y, _w, _h, color);
     }
 
     /**

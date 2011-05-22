@@ -337,31 +337,31 @@ public class VRange extends AItem implements IMouseMotionEvents {
             int th = _h;
             _g.setColor(ViewColor.cThemeSelected);
             if (_solid) {
-                flavor.paintFlavor(_g, _x, _y, _w, th, ViewColor.cTheme);
+                _g.paintFlavor(flavor, _x, _y, _w, th, ViewColor.cTheme);
             }
-            flavor.paintFlavor(_g, _x + fx, _y + (th / 4), (tx - fx), th / 2, ViewColor.cThemeSelected);
-            RoundFlavor.flavor.paintFlavor(_g, _x + fx - (th / 4), _y + (th / 4), th / 2, th / 2, AColor.green);
-            RoundFlavor.flavor.paintFlavor(_g, _x + tx - (th / 4), _y + (th / 4), th / 2, th / 2, AColor.red);
+            _g.paintFlavor(flavor, _x + fx, _y + (th / 4), (tx - fx), th / 2, ViewColor.cThemeSelected);
+            _g.paintFlavor(RoundFlavor.flavor, _x + fx - (th / 4), _y + (th / 4), th / 2, th / 2, AColor.green);
+            _g.paintFlavor(RoundFlavor.flavor, _x + tx - (th / 4), _y + (th / 4), th / 2, th / 2, AColor.red);
 
         }
         else {
             if (_min == Double.MAX_VALUE && _max == Double.MAX_VALUE) {
                 int th = (_h);
                 int ax = (int) (_at * (_w));
-                SliderBarFlavor.pointingUp.paintFlavor(_g, _x + ax - 4, _y, 11, th, AColor.red);
+                _g.paintFlavor(SliderBarFlavor.pointingUp, _x + ax - 4, _y, 11, th, AColor.red);
             }
             else {
                 int th = (_h / 2);
                 _g.setColor(ViewColor.cThemeSelected);
                 if (_solid) {
-                    flavor.paintFlavor(_g, _x, _y, _w, th, ViewColor.cTheme);
+                    _g.paintFlavor(flavor, _x, _y, _w, th, ViewColor.cTheme);
                 }
-                flavor.paintFlavor(_g, _x + fx, _y + (th / 4), (tx - fx), th / 2, ViewColor.cThemeSelected);
-                RoundFlavor.flavor.paintFlavor(_g, _x + fx - (th / 4), _y + (th / 2) - (th / 4), th / 2, th / 2, AColor.green);
-                RoundFlavor.flavor.paintFlavor(_g, _x + tx - (th / 4), _y + (th / 2) - (th / 4), th / 2, th / 2, AColor.red);
+                _g.paintFlavor(flavor, _x + fx, _y + (th / 4), (tx - fx), th / 2, ViewColor.cThemeSelected);
+                _g.paintFlavor(RoundFlavor.flavor, _x + fx - (th / 4), _y + (th / 2) - (th / 4), th / 2, th / 2, AColor.green);
+                _g.paintFlavor(RoundFlavor.flavor, _x + tx - (th / 4), _y + (th / 2) - (th / 4), th / 2, th / 2, AColor.red);
 
                 int ax = (int) (_at * (_w));
-                SliderBarFlavor.pointingUp.paintFlavor(_g, _x + ax - 4, _y + th, 11, th, AColor.red);
+                _g.paintFlavor(SliderBarFlavor.pointingUp, _x + ax - 4, _y + th, 11, th, AColor.red);
             }
         }
         _g.setAlpha(1f, 0);
@@ -389,38 +389,38 @@ public class VRange extends AItem implements IMouseMotionEvents {
             int tw = (_w / 2);
             _g.setColor(ViewColor.cThemeSelected);
             int my = fy + ((ty - fy) / 2);
-            SliderBarFlavor.pointingRight.paintFlavor(_g, _x + 4, _y + my - 4, tw - 9, 11, ViewColor.cThemeSelected);
+            _g.paintFlavor(SliderBarFlavor.pointingRight, _x + 4, _y + my - 4, tw - 9, 11, ViewColor.cThemeSelected);
 
             _g.line(_x + (tw / 2), _y + fy, _x + tw, _y + fy);
             _g.line(_x + (tw / 2), _y + ty, _x + tw, _y + ty);
             _g.line(_x + (tw / 2), _y + fy, _x + (tw / 2), _y + ty);
-            SliderBarFlavor.pointingRight.paintFlavor(_g, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
-            SliderBarFlavor.pointingRight.paintFlavor(_g, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
+            _g.paintFlavor(SliderBarFlavor.pointingRight, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
+            _g.paintFlavor(SliderBarFlavor.pointingRight, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
         }
         /*
         _g.setAlpha(0.5f,0);
         if (_at == Double.MAX_VALUE) {
         int tw = _w ;
         _g.setColor(ViewColor.cThemeSelected);
-        if (_solid) flavor.paintFlavor(_g, _x, _y+4,tw-8,_h-8, ViewColor.cTheme);
-        flavor.paintFlavor(_g, _x+fy, _y+(tw/4),(ty-fy),tw/2, ViewColor.cThemeSelected);
-        RoundFlavor.flavor.paintFlavor(_g, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
-        RoundFlavor.flavor.paintFlavor(_g, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
+        if (_solid) _g.paintFlavor(flavor, _x, _y+4,tw-8,_h-8, ViewColor.cTheme);
+        _g.paintFlavor(flavor, _x+fy, _y+(tw/4),(ty-fy),tw/2, ViewColor.cThemeSelected);
+        _g.paintFlavor(RoundFlavor.flavor, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
+        _g.paintFlavor(RoundFlavor.flavor, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
         } else {
         if (_min == Double.MAX_VALUE && _max == Double.MAX_VALUE) {
         int tw = _w ;
         int ay = (int) (_at * (_h));
-        SliderBarFlavor.pointingUp.paintFlavor(_g, _x + ay - 4, _y + 4, 11, tw - 9, AColor.red);
+        _g.paintFlavor(SliderBarFlavor.pointingUp, _x + ay - 4, _y + 4, 11, tw - 9, AColor.red);
         } else {
         int tw = _w/2;
         _g.setColor(ViewColor.cThemeSelected);
-        if (_solid) flavor.paintFlavor(_g, _x, _y+4,_w,tw-8, ViewColor.cTheme);
-        flavor.paintFlavor(_g, _x+fy, _y+(tw/4),(ty-fy),tw/2, ViewColor.cThemeSelected);
-        RoundFlavor.flavor.paintFlavor(_g, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
-        RoundFlavor.flavor.paintFlavor(_g, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
+        if (_solid) _g.paintFlavor(flavor, _x, _y+4,_w,tw-8, ViewColor.cTheme);
+        _g.paintFlavor(flavor, _x+fy, _y+(tw/4),(ty-fy),tw/2, ViewColor.cThemeSelected);
+        _g.paintFlavor(RoundFlavor.flavor, _x + tw + 4, _y + fy - 4, tw - 9, 11, ViewColor.cThemeSelected);
+        _g.paintFlavor(RoundFlavor.flavor, _x + tw + 4, _y + ty - 4, tw - 9, 11, ViewColor.cThemeSelected);
 
         int ax = (int) (_at * (_w));
-        SliderBarFlavor.pointingUp.paintFlavor(_g, _x + ax - 4, _y + tw + 4, 11, tw - 9, AColor.red);
+        _g.paintFlavor(SliderBarFlavor.pointingUp, _x + ax - 4, _y + tw + 4, 11, tw - 9, AColor.red);
         }
         }
         _g.setAlpha(1f,0);*/

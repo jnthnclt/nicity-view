@@ -161,7 +161,7 @@ public class NGEnvAnim extends Viewer {
             public void mouseReleased(final MouseReleased _e) {
                 super.mouseReleased(_e);
                 if (_e.isRightClick()) {
-                    UV.popup(this, _e, NGEnvAnim.this.popupView(), true);
+                    UV.popup(this, _e, NGEnvAnim.this.popupView(),true, true);
                 }
             }
 

@@ -243,6 +243,6 @@ public class VIncDecTime extends AItem {
      */
     @Override
     public void picked(IEvent _e) {
-        UV.popup(this, UV.cCC, new VDate(time), false);
+        UV.popup(this, UV.cCC, new VDate(time), false,true);
     }
 }

@@ -11,6 +11,7 @@ import colt.nicity.view.core.AViewer;
 import colt.nicity.view.core.NullPlacer;
 import colt.nicity.view.core.NullRootView;
 import colt.nicity.view.core.PrimativeEvent;
+import colt.nicity.view.core.VPopupViewer;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPeerView;
@@ -38,7 +39,7 @@ public class RPPWindow extends AViewer implements IRootView {
      * @param _view
      */
     public RPPWindow(IView _view) {
-        super(_view);
+        super(new VPopupViewer(_view));
         init();
         show();
     }
