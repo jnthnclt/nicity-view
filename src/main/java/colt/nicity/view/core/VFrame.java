@@ -55,6 +55,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
     public static AColor active = null;
     private XY_I offset;
     private VString title;
+    private VPopupViewer popupViewer;
 
     /**
      *
@@ -99,7 +100,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
                     close();
                 }
             };
-            close.setBorder(new LineBorder(AColor.red.darken(0.3f).desaturate(0.4f), 1,4,2));
+            close.setBorder(new LineBorder(AColor.red.darken(0.3f).desaturate(0.4f), 1, 4, 2));
             buttons.add(close);
         }
         if (_canMinimize) {
@@ -109,14 +110,14 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
                     maximize();
                 }
             };
-            maximize.setBorder(new LineBorder( AColor.orange.darken(0.3f).desaturate(0.4f),1,4,2));
-            VItem minimize = new VItem(new VString(" _ ", UV.fonts[UV.cText] )) {
+            maximize.setBorder(new LineBorder(AColor.orange.darken(0.3f).desaturate(0.4f), 1, 4, 2));
+            VItem minimize = new VItem(new VString(" _ ", UV.fonts[UV.cText])) {
 
                 public void picked(IEvent _e) {
                     minimize();
                 }
             };
-            minimize.setBorder(new LineBorder(AColor.yellow.darken(0.3f).desaturate(0.4f), 1,4,2));
+            minimize.setBorder(new LineBorder(AColor.yellow.darken(0.3f).desaturate(0.4f), 1, 4, 2));
             buttons.add(maximize);
             buttons.add(minimize);
         }
@@ -132,7 +133,8 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
 
         VChain main = new VChain(UV.cSWNW);
         main.add(chain);
-        main.add(new Viewer(new VPopupViewer(_framing)));
+        popupViewer = new VPopupViewer(_framing);
+        main.add(popupViewer);
         setContent(UV.border(main, new ZonesBorder(ViewColor.cTheme, 2)));
     }
 
@@ -199,22 +201,22 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
     public void mouseReleased(MouseReleased e) {
         if (e.getClickCount() == 1 && e.isRightClick()) {
 
-            VChain presets = new VChain(UV.cEW);
-            presets.add(new VButton(" On Black ") {
+            VChain presets = new VChain(UV.cSWNW);
+            presets.add(new VItem(" On Black ") {
 
                 public void picked(IEvent _e) {
                     ViewColor.onBlack();
                     getRootView().dispose();
                 }
             });
-            presets.add(new VButton(" On Blue ") {
+            presets.add(new VItem(" On Blue ") {
 
                 public void picked(IEvent _e) {
                     ViewColor.onBlue();
                     getRootView().dispose();
                 }
             });
-            presets.add(new VButton(" On White ") {
+            presets.add(new VItem(" On White ") {
 
                 public void picked(IEvent _e) {
                     ViewColor.onWhite();
@@ -225,25 +227,32 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
             VChain fonts = new VChain(UV.cSWNW);
             for (int i = 0; i < UV.cFontUsageNames.length; i++) {
                 final int index = i;
-                Value v = new Value(UV.fonts[index]) {
+                final Value v = new Value(UV.fonts[index]) {
 
                     public void setValue(Object _value) {
                         super.setValue(_value);
                         UV.fonts[index] = (AFont) _value;
                     }
                 };
-                fonts.add(new VFloater(new VString(UV.cFontUsageNames[i]), new VFontBrowser(v)));
+                fonts.add(new VItem(new VString(UV.cFontUsageNames[i])) {
+
+                    @Override
+                    public void picked(IEvent _e) {
+                        UV.popup(this, _e,  new VFontBrowser(v), true, true);
+                    }
+                    
+                });
             }
 
-            VChain cs = new VChain(UV.cSN);
-            cs.add(presets);
-            cs.add(new VPan(ViewColor.edit(), -1, 300), UV.cSN);
-
             VChain m = new VChain(UV.cNENW);
+            m.add(UV.zone("Presets", new VPan(presets, -1, 300)));
             m.add(UV.zone("Fonts", new VPan(fonts, -1, 300)));
-            m.add(UV.zone("Colors", cs));
+            m.add(UV.zone("Colors", new VPan(ViewColor.edit(), -1, 300)));
             m.add(UV.zone("Missing  Icons", new VPan(new VList(VIcon.missing, 1), -1, 300)));
-            UV.frame(m, "Look and Feel");
+            
+            VPopupViewer pv = new VPopupViewer(m);
+            Viewer w = new Viewer(pv);
+            popupViewer.popup(w, w, new XY_I(0,0), true, true);
         }
     }
 
@@ -268,4 +277,3 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
         clientView.setLocation(screenPoint.x + p.x, screenPoint.y + p.y);
     }
 }
-

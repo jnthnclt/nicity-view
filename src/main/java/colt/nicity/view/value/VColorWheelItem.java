@@ -84,6 +84,6 @@ public class VColorWheelItem extends AItem {
                 value.setValue(_color);//??
             }
         };
-        UV.popup(this, _e, colorWheel, false,true);
+        UV.popup(this, _e, colorWheel, true,true);
     }
 }

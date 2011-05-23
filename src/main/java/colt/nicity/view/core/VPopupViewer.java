@@ -96,19 +96,23 @@ public class VPopupViewer extends Viewer implements IRootView {
      * @param _popup
      * @param _place
      */
-    public void popup(IView _relativeTo, IView _popup, XY_I pp,boolean _hideOnExit, boolean _hideOnLost) {
+    synchronized public void popup(IView _relativeTo, IView _popup, XY_I pp,boolean _hideOnExit, boolean _hideOnLost) {
+        int cw = (int)getParentView().getW();
+        int ch = (int)getParentView().getH();
+        
         _popup.layoutInterior();
+        int pw = (int)_popup.getW();
+        int ph = (int)_popup.getH();
         
         XY_I p = getLocationInView(this,_relativeTo);
+        if (p == null) p = new XY_I(0,0);
         p.x += pp.x;
         p.y += pp.y;
         
-        int pw = (int)getW();
-        int ph = (int)getH();
         if (p.x < 0) p.x = 0;
         if (p.y < 0) p.y = 0;
-        if (p.x+_popup.getW() > pw) p.x -= ((p.x+_popup.getW())-(pw));
-        if (p.y+_popup.getH() > ph) p.y -= ((p.y+_popup.getH())-(ph));
+        if (p.x+_popup.getW() > cw) p.x -= ((p.x+pw)-(cw));
+        if (p.y+_popup.getH() > ch) p.y -= ((p.y+ph)-(ch));
         
         over.setPlacer(new Placer(new VPopUp(_popup,_hideOnExit,_hideOnLost),new Place(UV.cOrigin,p.x,p.y)));
         over.layoutInterior();

@@ -87,29 +87,39 @@ public abstract class AViewableParentFlagsXY extends AViewable {
     }
 
     @Override
-    synchronized public IView spans(int spanMasks) {
-        flags |= spanMasks;
+    public IView spans(int spanMasks) {
+        synchronized (this) {
+            flags |= spanMasks;
+        }
         return this;
     }
 
     @Override
-    synchronized public void unspans(int spanMasks) {
-        flags &= ~spanMasks;
+    public void unspans(int spanMasks) {
+        synchronized (this) {
+            flags &= ~spanMasks;
+        }
     }
 
     @Override
-    synchronized public void enableFlag(int flagsToEnable) {
-        flags |= flagsToEnable;
+    public void enableFlag(int flagsToEnable) {
+        synchronized (this) {
+            flags |= flagsToEnable;
+        }
     }
 
     @Override
-    synchronized public void disableFlag(int flagsToDisable) {
-        flags &= ~flagsToDisable;
+    public void disableFlag(int flagsToDisable) {
+        synchronized (this) {
+            flags &= ~flagsToDisable;
+        }
     }
 
     @Override
-    synchronized public boolean hasFlag(int flag) {
-        return (flags & flag) == flag;
+    public boolean hasFlag(int flag) {
+        synchronized (this) {
+            return (flags & flag) == flag;
+        }
     }
 
     /**
@@ -123,10 +133,12 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public void mend() {
-        if ((flags & UV.cMend) == UV.cMend) {
-            return;
+        synchronized (this) {
+            if ((flags & UV.cMend) == UV.cMend) {
+                return;
+            }
+            flags |= UV.cMend;
         }
-        flags |= UV.cMend;
         parent.mend();
     }
 
@@ -255,12 +267,14 @@ public abstract class AViewableParentFlagsXY extends AViewable {
     }
 
     @Override
-    synchronized public void setLocation(float _x, float _y) {
+    public void setLocation(float _x, float _y) {
         if (x != _x || y != _y) {
             parent.repair();
         }
-        x = _x;
-        y = _y;
+        synchronized (this) {
+            x = _x;
+            y = _y;
+        }
     }
 
     @Override

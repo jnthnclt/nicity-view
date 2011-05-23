@@ -175,7 +175,7 @@ public class VEditHSBColor extends VClip implements IMouseEvents, IMouseMotionEv
             paint();
         }
         if (e.isRightClick()) {
-            UV.popup(this, e, UV.zone(new VEditNumericColor(name, color)), false,true);
+            UV.popup(this, e, UV.zone(new VEditNumericColor(name, color)), true,true);
         }
     }
 
