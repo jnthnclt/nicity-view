@@ -62,6 +62,7 @@ import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IToolTip;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -72,13 +73,9 @@ import linloglayout.LinLogProgress;
  *
  * @author Administrator
  */
-public class NGEnv extends AItem {
-
-    /**
-     *
-     * @param _args
-     */
-    public static void main(String[] _args) {
+public class NGEnv extends AItem implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
         ViewColor.onBlack();
         NG ng = new NG();
         for (int i = 0; i < 40; i++) {
@@ -86,8 +83,19 @@ public class NGEnv extends AItem {
         }
         NGEnv g = new NGEnv(800, 600);
         g.set(NullOut.cNull, ng);
-        UV.exitFrame(new Viewer(g), "");
+        return g;
     }
+
+
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+        UV.exitFrame(new Viewer(viewable(_args)), "");
+    }
+    
+    
     Object[] links = new Object[0];
     long maxNodeCount = 0;
     double minNode = 0;

@@ -24,12 +24,19 @@ import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.Viewer;
+import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class VEditFont extends Viewer {
+public class VEditFont extends Viewer implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        ViewColor.onBlack();
+        return new VEditFont(new Value<AFont>(UV.fonts[UV.cText]));
+    }
     /**
      *
      * @param _args
@@ -37,7 +44,7 @@ public class VEditFont extends Viewer {
     public static void main(String[] _args) {
         ViewColor.onBlack();
         //VOpenWindowsGraph.frame(null, new Viewer(new VEditFont(new Value<AFont>(UV.fonts[UV.cText]))), "");
-        UV.exitFrame(new Viewer(new VEditFont(new Value<AFont>(UV.fonts[UV.cText]))), "");
+        UV.exitFrame(new Viewer(viewable(_args)), "");
     }
     Value<AFont> font;
 

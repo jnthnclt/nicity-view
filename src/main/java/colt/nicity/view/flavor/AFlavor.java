@@ -23,8 +23,6 @@ import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.UString;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.ICanvas;
-import java.io.File;
-import java.util.ArrayList;
 
 /**
  *

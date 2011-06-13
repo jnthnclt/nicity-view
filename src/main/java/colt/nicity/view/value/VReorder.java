@@ -20,18 +20,16 @@ import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IDropMode;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
+import colt.nicity.view.rpp.IRRPDescription;
 
 /**
  *
  * @author Administrator
  */
-abstract public class VReorder extends Viewer {
-    /**
-     *
-     * @param _args
-     */
-    public static void main(String[] _args) {
-        //ViewColor.onBlack();
+abstract public class VReorder extends Viewer implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
         VReorder ro = new VReorder() {
             Object[] order = new Object[]{"five","two","seven","nine","one","a","b","c","d","e","f","g","h","i"};
             @Override
@@ -45,7 +43,16 @@ abstract public class VReorder extends Viewer {
             }
         };
         ro.refresh();
-        UV.exitFrame(new Viewer(ro), "");
+        return ro;
+    }
+
+    
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+        UV.exitFrame(new Viewer(viewable(_args)), "");
     }
 
     /**

@@ -26,6 +26,7 @@ import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_D;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.UV;
+import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.flavor.OutlineFlavor;
 import colt.nicity.view.flavor.RoundFlavor;
 import colt.nicity.view.flavor.SoftFlavor;
@@ -33,14 +34,22 @@ import colt.nicity.view.flavor.StringFlavor;
 import colt.nicity.view.flavor.TabFlavor;
 import colt.nicity.view.flavor.ZonesFlavor;
 import colt.nicity.view.interfaces.ICanvas;
+import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.paint.lens.OffestLens;
 import colt.nicity.view.paint.lens.ZoomLens;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class TestPainter {
+public class TestPainter implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        ViewColor.onBlack();
+        return painter();
+    }
+    
     static Painter painter;
     /**
      *
@@ -48,7 +57,7 @@ public class TestPainter {
      */
     public static void main(String[] _args) {
         
-        UV.exitFrame(painter(), "");
+        UV.exitFrame(viewable(_args), "");
     }
     
     public static Painter painter() {

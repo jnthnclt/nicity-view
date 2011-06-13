@@ -37,6 +37,11 @@ import colt.nicity.view.interfaces.ICanvas;
  * @author Administrator
  */
 public class VPreviewFont extends Viewer implements IObserver {
+    
+    public static void main(String[] _args) {
+        VPreviewFont v = new VPreviewFont(new Value("Name"),new Value(UV.fonts[UV.cText]),new Value(AColor.blue),128,128);
+        UV.exitFrame(v, VPreviewColor.class.getSimpleName());
+    }
 
     private Value name, font, color;
 

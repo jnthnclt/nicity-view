@@ -58,8 +58,8 @@ import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IToolTip;
-import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 import java.util.HashMap;
 import java.util.Map;
 import linloglayout.LinLogLayout;
@@ -70,21 +70,26 @@ import linloglayout.MinimizerBarnesHut;
  *
  * @author Administrator
  */
-public class NGEnvAnim extends Viewer {
-
-    /**
-     *
-     * @param _args
-     */
-    public static void main(String[] _args) {
-        ViewColor.onBlack();
+public class NGEnvAnim extends Viewer implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+         ViewColor.onBlack();
         NG ng = new NG();
         for (int i = 0; i < 40; i++) {
             ng.order(URandom.randomLowerCaseAlphaString(1), URandom.randomLowerCaseAlphaString(1), ULinkDrawer.inout("", AColor.blue));
         }
         NGEnvAnim g = new NGEnvAnim(800, 600);
         g.set(NullOut.cNull, ng);
-        UV.exitFrame(new Viewer(g), "");
+        return g;
+    }
+
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+       
+        UV.exitFrame(new Viewer(viewable(_args)), "");
     }
 
     /**

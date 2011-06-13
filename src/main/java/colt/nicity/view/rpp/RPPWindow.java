@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
  * @author jonathan
  */
 public class RPPWindow extends AViewer implements IRootView {
-
+   
     /**
      * 
      */

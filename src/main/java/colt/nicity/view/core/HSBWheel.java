@@ -40,6 +40,8 @@ import colt.nicity.core.value.Value;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
+import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 
 
 
@@ -47,14 +49,18 @@ import colt.nicity.view.interfaces.IMouseMotionEvents;
  *
  * @author Administrator
  */
-public class HSBWheel extends AItem implements IMouseEvents, IMouseMotionEvents {
+public class HSBWheel extends AItem implements IMouseEvents, IMouseMotionEvents, IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        return new HSBWheel(new Value(new AColor(53, 53, 70)), 256);
+    }
 
     /**
      *
      * @param _args
      */
     public static void main(String[] _args) {
-        UV.exitFrame(new HSBWheel(new Value(new AColor(53, 53, 70)), 256), "");
+        UV.exitFrame(viewable(_args), "");
     }
 
     // Overridable

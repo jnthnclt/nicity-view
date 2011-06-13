@@ -20,6 +20,7 @@
 package colt.nicity.view.value;
 
 import colt.nicity.core.value.IValue;
+import colt.nicity.core.value.Value;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VButton;
 import colt.nicity.view.core.VChain;
@@ -32,6 +33,11 @@ import java.io.File;
  * @author Administrator
  */
 public class VEditPath extends Viewer {
+    
+    public static void main(String[] _args) {
+        VEditPath v = new VEditPath("Path ",new Value(),128,true,true);
+        UV.exitFrame(v, VEditPath.class.getSimpleName());
+    }
 
     /**
      *
@@ -55,7 +61,7 @@ public class VEditPath extends Viewer {
             public void picked(IEvent _e) {
                 VFiles selectFile = new VFiles(lastDir, _name, false);
                 selectFile.init(false, true, 500, 600);
-                selectFile.toFront(_name);
+                selectFile.popup(this,_name);
                 File got = selectFile.waitForSet();
                 if (got != null) {
                     if (_fileOk && !got.isDirectory()) {

@@ -44,18 +44,15 @@ import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IFocusEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class VZoneMenu extends Viewer {
-
-    /**
-     *
-     * @param _args
-     */
-    public static void main(String[] _args) {
+public class VZoneMenu extends Viewer implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
         ViewColor.onBlack();
         VZoneMenu zoneMenu = new VZoneMenu(new VString("Hello"), new RigidBox(300, 300), true, true) {
 
@@ -64,7 +61,16 @@ public class VZoneMenu extends Viewer {
                 return new VChain(UV.cSWNW, new VItem("A"), new VItem("B"), new VItem("C"), new VItem("D"));
             }
         };
-        UV.exitFrame(zoneMenu, "Test");
+        return zoneMenu;
+    }
+
+    /**
+     *
+     * @param _args
+     */
+    public static void main(String[] _args) {
+        
+        UV.exitFrame(viewable(_args), "Test");
     }
 
     /**

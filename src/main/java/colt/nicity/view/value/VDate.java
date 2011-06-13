@@ -35,6 +35,7 @@ import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -43,7 +44,14 @@ import java.util.TimeZone;
  *
  * @author Administrator
  */
-public class VDate extends AItem {
+public class VDate extends AItem implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        ViewColor.onBlack();
+        return new VDate(new Value(UTime.currentGMT()));
+    }
+    
+    
 
     /**
      *
@@ -51,7 +59,7 @@ public class VDate extends AItem {
      */
     public static void main(String[] _args) {
         ViewColor.onBlack();
-        UV.exitFrame(new VDate(new Value(UTime.currentGMT())), "Date");
+        UV.exitFrame(viewable(_args), "Date");
     }
     IValue value;
     Viewer c = new Viewer();

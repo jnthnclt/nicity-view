@@ -37,6 +37,7 @@ import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VButton;
 import colt.nicity.view.core.VChain;
 import colt.nicity.view.core.VFixed;
+import colt.nicity.view.core.VFrame;
 import colt.nicity.view.core.VPan;
 import colt.nicity.view.core.VString;
 import colt.nicity.view.core.VTrapFlex;
@@ -46,23 +47,29 @@ import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.ISizeable;
 import colt.nicity.view.interfaces.ISupportSizeDependecy;
+import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 import java.io.File;
 
 /**
  *
  * @author Administrator
  */
-public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDependecy { //IKeyedValues
+public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDependecy, IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        VFiles files = new VFiles();
+        files.init(false, true, 600, 600);
+        return files;
+    }
     
     /**
      *
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
-        VFiles files = new VFiles();
-        files.init(false, true, 600, 600);
-        UV.exitFrame(files, "File Browser");
+        
+        UV.exitFrame(viewable(_args), "File Browser");
     }
     /**
      *
@@ -167,6 +174,14 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      */
     public void toFront(Object _title) {
         UV.frame(this, _title);
+    }
+    
+    /**
+     *
+     * @param _title
+     */
+    public void popup(IView ref,Object _title) {
+        UV.popup(ref, UV.cCC, new VFrame(this, _title,true,false), false, false);
     }
 
     /**

@@ -40,6 +40,11 @@ import colt.nicity.view.interfaces.IMouseEvents;
  * @author Administrator
  */
 public class VPreviewColor extends Viewer implements IMouseEvents, IObserver {
+    
+    public static void main(String[] _args) {
+        VPreviewColor v = new VPreviewColor(new Value("Name"),new Value(AColor.blue),128,128);
+        UV.exitFrame(v, VPreviewColor.class.getSimpleName());
+    }
 
     private Value name;
     private Value color;

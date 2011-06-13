@@ -38,7 +38,7 @@ public class RPPViews {
         
         RPPWindow view = KeyedValue.get(views,_key);
         if (view == null) {
-            register(new RPPHome(this),_key);
+            register(new RPPHome(""),_key);
             view =  KeyedValue.get(views,_key);
         }
         return view;
