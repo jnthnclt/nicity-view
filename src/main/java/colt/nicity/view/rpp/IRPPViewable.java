@@ -4,8 +4,6 @@
  */
 package colt.nicity.view.rpp;
 
-import colt.nicity.view.interfaces.IView;
-
 /**
  *
  * @author jonathan

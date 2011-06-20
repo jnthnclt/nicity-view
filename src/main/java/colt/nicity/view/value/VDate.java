@@ -19,12 +19,14 @@
  */
 package colt.nicity.view.value;
 
+import colt.nicity.core.lang.UThread;
 import colt.nicity.view.border.ItemBorder;
 import colt.nicity.view.list.AItem;
 import colt.nicity.view.list.VItem;
 import colt.nicity.core.time.UTime;
 import colt.nicity.core.value.IValue;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.border.BuldgeBorder;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VButton;
 import colt.nicity.view.core.VChain;
@@ -48,7 +50,21 @@ public class VDate extends AItem implements IRPPViewable {
     
     public static IView viewable(String[] args) {
         ViewColor.onBlack();
-        return new VDate(new Value(UTime.currentGMT()));
+        final Value v = new Value(UTime.currentGMT());
+        final VDate date = new VDate(v);
+        new Thread() {
+
+            @Override
+            public void run() {
+                while(true) {
+                    v.setValue(UTime.currentGMT());
+                    date.paint();
+                    UThread.sleep(1000);
+                }
+            }
+            
+        }.start();
+        return date;
     }
     
     
@@ -144,7 +160,7 @@ public class VDate extends AItem implements IRPPViewable {
             IView button = time(yearTime, year + y, 40);
             yearLabel.add(button);
             if (y == 0) {
-                button.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                button.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
             }
         }
 
@@ -159,7 +175,7 @@ public class VDate extends AItem implements IRPPViewable {
             IView button = time(monthsTime, m1[m], 32);
             monthLabels1.add(button);
             if (_month == month) {
-                button.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                button.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
             }
             _month++;
 
@@ -187,7 +203,7 @@ public class VDate extends AItem implements IRPPViewable {
                     IView dayItem = time(dayTime, dayTable[d][w], weekGridW);
                     week.add(dayItem);
                     if (day == v) {
-                        dayItem.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                        dayItem.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
                     }
                 }
             }
@@ -208,7 +224,7 @@ public class VDate extends AItem implements IRPPViewable {
             IView vi = time(t, hn, 40);
             hoursLabel.add(vi);
             if (h == hour) {
-                vi.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                vi.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
             }
         }
         chain.add(UV.zone("Hours", hoursLabel));
@@ -223,7 +239,7 @@ public class VDate extends AItem implements IRPPViewable {
             IView vi = time(t, m, 20);
             minLabel.add(vi);
             if (m == minute) {
-                vi.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                vi.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
             }
         }
         chain.add(UV.zone("Minutes", minLabel));
@@ -238,7 +254,7 @@ public class VDate extends AItem implements IRPPViewable {
             IView vi = time(t, s, 20);
             secLabel.add(vi);
             if (s == second) {
-                vi.setBorder(new ItemBorder(ViewColor.cThemeSelected));
+                vi.setBorder(new BuldgeBorder(ViewColor.cThemeSelected));
             }
         }
         chain.add(UV.zone("Seconds", secLabel));

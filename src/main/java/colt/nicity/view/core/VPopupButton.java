@@ -42,7 +42,7 @@ public class VPopupButton extends VButton {
      * @param _popupView
      */
     public VPopupButton(IView _view, Object _popupView) {
-        this(_view, _popupView, false);
+        this(_view, _popupView, true);
     }
 
     /**

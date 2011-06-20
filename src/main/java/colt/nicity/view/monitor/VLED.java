@@ -19,6 +19,8 @@
  */
 package colt.nicity.view.monitor;
 
+import colt.nicity.core.lang.URandom;
+import colt.nicity.core.lang.UThread;
 import colt.nicity.view.border.RoundButtonBorder;
 import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.list.AItem;
@@ -30,12 +32,30 @@ import colt.nicity.view.core.VButton;
 import colt.nicity.view.core.VChain;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.interfaces.ICanvas;
+import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class VLED extends AItem {
+public class VLED extends AItem implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        final VLED c = new VLED("Example", AColor.yellow, 600, 200, 100, true);
+        new Thread() {
+
+            @Override
+            public void run() {
+                while(true) {
+                    c.pulse(URandom.rand(1000), false);
+                    UThread.sleep(1000);
+                }
+            }
+            
+        }.start();
+        return c;
+    }
 
     Object key;
     /**

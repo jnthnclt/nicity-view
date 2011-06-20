@@ -46,6 +46,8 @@ import colt.nicity.view.list.VList;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.IOut;
+import colt.nicity.core.lang.URandom;
+import colt.nicity.core.lang.UThread;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.time.UTime;
 import colt.nicity.core.value.LockValue;
@@ -70,12 +72,29 @@ import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.interfaces.IWindowEvents;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, IMouseEvents, IMouseMotionEvents {
+public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, IMouseEvents, IMouseMotionEvents, IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        final VOut c = new VOut(300, "Example");
+        new Thread() {
+
+            @Override
+            public void run() {
+                while(!c.canceled()) {
+                    c.out(URandom.rand(100), 100);
+                    UThread.sleep(1000);
+                }
+            }
+            
+        }.start();
+        return c;
+    }
 
     private static CSet pulseSet = new CSet();
 

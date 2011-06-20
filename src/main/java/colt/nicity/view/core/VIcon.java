@@ -84,7 +84,7 @@ public class VIcon {
             return null;
         }
         ViewByteArrayImage vi = image(_name);
-        vi.scaleTo(_size,_size);
+        //vi.scaleTo(_size,_size);
         if (vi == null) {
             return null;
         }

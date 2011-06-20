@@ -26,12 +26,18 @@ import colt.nicity.view.core.VString;
 import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.rpp.IRPPViewable;
 
 /**
  *
  * @author Administrator
  */
-public class VMemory extends Viewer {
+public class VMemory extends Viewer implements IRPPViewable {
+    
+    public static IView viewable(String[] args) {
+        VMemory c = new VMemory();
+        return c;
+    }
 
     /**
      *
