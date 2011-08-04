@@ -18,20 +18,19 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------
+
 /**
  *
  * @author Administrator
  */
 public interface ICorrelateHSB {
-	// 0 == worst 1 == best
+    // 0 == worst 1 == best
+
     /**
      *
      * @param _a
      * @param _b
      * @return
      */
-    public double correlateHSB(float[] _a,float[] _b);
+    public double correlateHSB(float[] _a, float[] _b);
 }
-
-

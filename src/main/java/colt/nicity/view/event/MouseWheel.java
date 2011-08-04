@@ -24,75 +24,76 @@ package colt.nicity.view.event;
  * @author Administrator
  */
 public class MouseWheel extends AMouseEvent {
-	private int scrollType;
-	private int scrollAmount;
-	private int wheelRotation;
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @param _who
-         * @param source
-         * @param x
-         * @param y
-         * @param clickCount
-         * @param modifiers
-         * @param _scrollType
-         * @param _scrollAmount
-         * @param _wheelRotation
-         * @param _cx
-         * @param _cy
-         * @param _cw
-         * @param _ch
-         * @return
-         */
-        public static AMouseEvent newInstance(
+
+    private int scrollType;
+    private int scrollAmount;
+    private int wheelRotation;
+
+    /**
+     *
+     * @param _who
+     * @param source
+     * @param x
+     * @param y
+     * @param clickCount
+     * @param modifiers
+     * @param _scrollType
+     * @param _scrollAmount
+     * @param _wheelRotation
+     * @param _cx
+     * @param _cy
+     * @param _cw
+     * @param _ch
+     * @return
+     */
+    public static AMouseEvent newInstance(
             long _who,
-		Object source,
-		int x,int y,
-		int clickCount,int modifiers,
-		int _scrollType,int _scrollAmount,int _wheelRotation,
-		float _cx,float _cy,float _cw,float _ch
-	) {
-		MouseWheel e = new MouseWheel();
+            Object source,
+            int x, int y,
+            int clickCount, int modifiers,
+            int _scrollType, int _scrollAmount, int _wheelRotation,
+            float _cx, float _cy, float _cw, float _ch) {
+        MouseWheel e = new MouseWheel();
         e.who = _who;
-		e.setSource(source);
-		e.setX(x);
-		e.setY(y);
-		e.setClickCount(clickCount);
-		e.setModifiers(modifiers);
-		
-		e.scrollType = _scrollType;
-		e.scrollAmount = _scrollAmount;
-		e.wheelRotation = _wheelRotation;
-		
-		e.cx = _cx;
-		e.cy = _cy;
-		e.cw = _cw;
-		e.ch = _ch;
-		e.isDragging = false;
-		return e;
-	}
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public int getScrollType() {
-		return scrollType;
-	}
-        /**
-         *
-         * @return
-         */
-        public int getScrollAmount() {
-		return scrollAmount;
-	}
-        /**
-         *
-         * @return
-         */
-        public int getWheelRotation() {
-		return wheelRotation;
-	}
-	//----------------------------------------------------------------------------	
+        e.setSource(source);
+        e.setX(x);
+        e.setY(y);
+        e.setClickCount(clickCount);
+        e.setModifiers(modifiers);
+
+        e.scrollType = _scrollType;
+        e.scrollAmount = _scrollAmount;
+        e.wheelRotation = _wheelRotation;
+
+        e.cx = _cx;
+        e.cy = _cy;
+        e.cw = _cw;
+        e.ch = _ch;
+        e.isDragging = false;
+        return e;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getScrollType() {
+        return scrollType;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getScrollAmount() {
+        return scrollAmount;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getWheelRotation() {
+        return wheelRotation;
+    }
 }

@@ -18,12 +18,13 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------
+
 /**
  *
  * @author Administrator
  */
 public interface IFocusable {
+
     /**
      *
      */

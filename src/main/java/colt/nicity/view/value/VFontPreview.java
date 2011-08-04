@@ -48,10 +48,12 @@ import colt.nicity.view.interfaces.IMouseMotionEvents;
  * @author Administrator
  */
 public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, IMouseMotionEvents {
+
     /**
      *
      */
     protected ViewString fontString;
+
     /**
      *
      * @param _font
@@ -75,6 +77,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
         setBorder(new ViewBorder());
         spans(UV.cXE);
     }
+
     /**
      *
      * @param _font
@@ -87,6 +90,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
         repair();
         flush();
     }
+
     /**
      *
      * @return
@@ -94,9 +98,8 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public AFont getFont() {
         return fontString.getFont();
     }
-    //----------------------------------------------------------------------------
+
     // IDrag
-    //----------------------------------------------------------------------------
     /**
      *
      * @return
@@ -104,9 +107,8 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public Object getParcel() {
         return new VFontPreview(fontString.getFont(), fontString.getText());
     }
-    //----------------------------------------------------------------------------
+
     // IDrop
-    //----------------------------------------------------------------------------
     /**
      *
      * @param object
@@ -116,6 +118,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public IDropMode accepts(Object object, AInputEvent _e) {
         return UDrop.accepts(new Class[]{VFontPreview.class}, object);
     }
+
     /**
      *
      * @param object
@@ -129,9 +132,8 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
             setFont(((VFontPreview) object).getFont());
         }
     }
-    //----------------------------------------------------------------------------
+
     // IMouseEvents
-    //----------------------------------------------------------------------------
     /**
      *
      * @param e
@@ -139,6 +141,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public void mouseEntered(MouseEntered e) {
         DragAndDrop.cDefault.mouseEntered(e);
     }
+
     /**
      *
      * @param e
@@ -146,6 +149,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public void mouseExited(MouseExited e) {
         DragAndDrop.cDefault.mouseExited(e);
     }
+
     /**
      *
      * @param e
@@ -153,6 +157,7 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public void mousePressed(MousePressed e) {
         DragAndDrop.cDefault.mousePressed(e);
     }
+
     /**
      *
      * @param e
@@ -165,15 +170,15 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
         VFontBrowser fb = new VFontBrowser(new Value(getFont()), fontString.getText());
         UV.frame(fb, " FontBrowser ");
     }
-    //----------------------------------------------------------------------------
+
     // IMouseMotionEvents
-    //----------------------------------------------------------------------------
     /**
      *
      * @param e
      */
     public void mouseMoved(MouseMoved e) {
     }
+
     /**
      *
      * @param e

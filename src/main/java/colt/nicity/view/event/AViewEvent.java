@@ -28,6 +28,7 @@ import java.awt.AWTEvent;
  * @author Administrator
  */
 abstract public class AViewEvent extends AEvent {
+
     /**
      *
      */
@@ -36,41 +37,49 @@ abstract public class AViewEvent extends AEvent {
      *
      */
     public final static long cKeyEvent = AWTEvent.KEY_EVENT_MASK;
-        /**
-         *
-         */
-        public final static long cMouseEvent = AWTEvent.MOUSE_EVENT_MASK;
-        /**
-         *
-         */
-        public final static long cMouseMotionEvent = AWTEvent.MOUSE_MOTION_EVENT_MASK;
-        /**
-         *
-         */
-        public final static long cWindowEvent = AWTEvent.WINDOW_EVENT_MASK;
+    /**
+     *
+     */
+    public final static long cMouseEvent = AWTEvent.MOUSE_EVENT_MASK;
+    /**
+     *
+     */
+    public final static long cMouseMotionEvent = AWTEvent.MOUSE_MOTION_EVENT_MASK;
+    /**
+     *
+     */
+    public final static long cWindowEvent = AWTEvent.WINDOW_EVENT_MASK;
 
-        /**
-         *
-         */
-        public AViewEvent() {}
+    /**
+     *
+     */
+    public AViewEvent() {
+    }
+
     /**
      *
      * @param _source
      */
-    public AViewEvent(Object _source) { super(_source); }
-	// Usually overriden
+    public AViewEvent(Object _source) {
+        super(_source);
+    }
+    // Usually overriden
+
     /**
      *
      * @param parent
      * @param view
      * @return
      */
-    public IView disbatchEvent(IView parent,IView view) { return NullView.cNull; }
+    public IView disbatchEvent(IView parent, IView view) {
+        return NullView.cNull;
+    }
+
     /**
      *
      * @param _e
      */
     public void inherit(AViewEvent _e) {
-		source = _e.source;
-	}
+        source = _e.source;
+    }
 }

@@ -18,27 +18,26 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------
 
 /**
  *
  * @author Administrator
  */
 public interface IOrientable {
-	//----------------------------------------------------------------------------
+
     /**
      *
      * @param _caller
      * @param _align
      * @return
      */
-    public IView getVertical(IView _caller,float _align);
-        /**
-         *
-         * @param _caller
-         * @param _align
-         * @return
-         */
-        public IView getHorizontal(IView _caller,float _align);
-	//----------------------------------------------------------------------------
+    public IView getVertical(IView _caller, float _align);
+
+    /**
+     *
+     * @param _caller
+     * @param _align
+     * @return
+     */
+    public IView getHorizontal(IView _caller, float _align);
 }

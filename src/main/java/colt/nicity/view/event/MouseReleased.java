@@ -24,69 +24,68 @@ package colt.nicity.view.event;
  * @author Administrator
  */
 public class MouseReleased extends AMouseEvent {
+
     /**
      *
      */
     protected MouseDragged lastDrag = null;
-	//----------------------------------------------------------------------------	
-	//protected int pressedx;
-	//protected int pressedy;
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @param _who
-         * @param source
-         * @param x
-         * @param y
-         * @param z
-         * @param clickCount
-         * @param modifiers
-         * @param _cx
-         * @param _cy
-         * @param _cw
-         * @param _ch
-         * @param _isDragging
-         * @param _lastDrag
-         * @return
-         */
-        public static AMouseEvent newInstance(
+
+    //protected int pressedx;
+    //protected int pressedy;
+    /**
+     *
+     * @param _who
+     * @param source
+     * @param x
+     * @param y
+     * @param z
+     * @param clickCount
+     * @param modifiers
+     * @param _cx
+     * @param _cy
+     * @param _cw
+     * @param _ch
+     * @param _isDragging
+     * @param _lastDrag
+     * @return
+     */
+    public static AMouseEvent newInstance(
             long _who,
-		Object source,
-		int x,int y,int z,
-		int clickCount,int modifiers,
-		//int _pressedx,int _pressedy,
-		float _cx,float _cy,float _cw,float _ch,
-		boolean _isDragging,
-		MouseDragged _lastDrag
-	) {
-		MouseReleased e = new MouseReleased();
+            Object source,
+            int x, int y, int z,
+            int clickCount, int modifiers,
+            //int _pressedx,int _pressedy,
+            float _cx, float _cy, float _cw, float _ch,
+            boolean _isDragging,
+            MouseDragged _lastDrag) {
+        MouseReleased e = new MouseReleased();
         e.who = _who;
-		e.setSource(source);
-		e.setX(x);
-		e.setY(y);
-		e.setZ(z);
-		e.setClickCount(clickCount);
-		e.setModifiers(modifiers);
-		
-		//e.pressedx = _pressedx;
-		//e.pressedy = _pressedy;
-		
-		e.cx = _cx;
-		e.cy = _cy;
-		e.cw = _cw;
-		e.ch = _ch;
-		e.isDragging = _isDragging;
-		e.lastDrag = _lastDrag;
-		return e;
-	}
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public MouseDragged getLastDrag() { return lastDrag; }
-	//----------------------------------------------------------------------------	
-	//public int getPressedX() { return pressedx; }
-	//public int getPressedY() { return pressedy; }
-	//----------------------------------------------------------------------------	
+        e.setSource(source);
+        e.setX(x);
+        e.setY(y);
+        e.setZ(z);
+        e.setClickCount(clickCount);
+        e.setModifiers(modifiers);
+
+        //e.pressedx = _pressedx;
+        //e.pressedy = _pressedy;
+
+        e.cx = _cx;
+        e.cy = _cy;
+        e.cw = _cw;
+        e.ch = _ch;
+        e.isDragging = _isDragging;
+        e.lastDrag = _lastDrag;
+        return e;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public MouseDragged getLastDrag() {
+        return lastDrag;
+    }
+    //public int getPressedX() { return pressedx; }
+    //public int getPressedY() { return pressedy; }
 }

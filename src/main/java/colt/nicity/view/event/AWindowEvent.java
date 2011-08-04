@@ -27,21 +27,25 @@ import colt.nicity.view.interfaces.IView;
  * @author Administrator
  */
 abstract public class AWindowEvent extends AViewEvent {
-	//----------------------------------------------------------------------------	
+
     /**
      *
      * @param parent
      * @param view
      * @return
      */
-    public IView disbatchEvent(IView parent,IView view) {
-		if (parent != NullView.cNull && parent != view) view.setParentView(parent);
-		return view.disbatchEvent(parent,this);
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public long getMask() { return AViewEvent.cWindowEvent; }
+    public IView disbatchEvent(IView parent, IView view) {
+        if (parent != NullView.cNull && parent != view) {
+            view.setParentView(parent);
+        }
+        return view.disbatchEvent(parent, this);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getMask() {
+        return AViewEvent.cWindowEvent;
+    }
 }

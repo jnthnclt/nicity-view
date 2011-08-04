@@ -44,7 +44,6 @@ public class VHueShifter extends AItem implements IMouseEvents, IMouseMotionEven
 
     float[] shiftHues;
     int xres;
-    //----------------------------------------------------
 
     /**
      *
@@ -64,7 +63,6 @@ public class VHueShifter extends AItem implements IMouseEvents, IMouseMotionEven
         setContent(c);
         setBorder(new ViewBorder());
     }
-    //----------------------------------------------------------------
 
     /**
      *
@@ -81,7 +79,6 @@ public class VHueShifter extends AItem implements IMouseEvents, IMouseMotionEven
     public void setShifts(float[] _shifts) {
         shiftHues = _shifts;
     }
-    //----------------------------------------------------------------
 
     /**
      *
@@ -93,9 +90,7 @@ public class VHueShifter extends AItem implements IMouseEvents, IMouseMotionEven
         float shift = shiftHues[index];
         return shift;
     }
-    //----------------------------------------------------------------
     IImage hueMap;
-    //----------------------------------------------------------------
 
     /**
      *

@@ -33,100 +33,127 @@ import java.awt.Insets;
  * @author Administrator
  */
 public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, IActiveBorder, IBorder {
-	//----------------------------------------------------------------------------
-	private IPeerView peerView;
-	private Insets insets = null;
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param peerView
-         */
-        public PeerViewBorder(IPeerView peerView) {
-		if (peerView == null) throw new RuntimeException();
-		this.peerView = peerView;
-		insets = peerView.getInsets();
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param g
-         * @param x
-         * @param y
-         * @param w
-         * @param h
-         */
-        public void paintBorder(ICanvas g,int x,int y, int w, int h) {
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param g
-         * @param x
-         * @param y
-         * @param w
-         * @param h
-         */
-        public void paintBackground(ICanvas g,int x,int y,int w, int h) {
-		g.setColor(AColor.white);
-		g.rect(true,x,y,w,h);
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public boolean isActive() { return false; }
-        /**
-         *
-         * @return
-         */
-        public boolean isSelected() { return false; }
-	//----------------------------------------------------------------------------
-	private Insets insets() { 
-		return peerView.getInsets();
-	}
-    //----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public float getX() { return (float)insets().left; }
-        /**
-         *
-         * @return
-         */
-        public float getY() { return (float)insets().top; }
-        /**
-         *
-         * @return
-         */
-        public float getW() { return (float)insets().left+insets().right; }
-        /**
-         *
-         * @return
-         */
-        public float getH() { return (float)insets().top+insets().bottom; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public IBorder getDefaultBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public IActiveBorder getActiveBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public ISelectedBorder getSelectedBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public IActiveSelectedBorder getActiveSelectedBorder() { return this; }
-   //----------------------------------------------------------------------------
-   
+
+    private IPeerView peerView;
+    private Insets insets = null;
+
+    /**
+     *
+     * @param peerView
+     */
+    public PeerViewBorder(IPeerView peerView) {
+        if (peerView == null) {
+            throw new RuntimeException();
+        }
+        this.peerView = peerView;
+        insets = peerView.getInsets();
+    }
+
+    /**
+     *
+     * @param g
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public void paintBorder(ICanvas g, int x, int y, int w, int h) {
+    }
+
+    /**
+     *
+     * @param g
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public void paintBackground(ICanvas g, int x, int y, int w, int h) {
+        g.setColor(AColor.white);
+        g.rect(true, x, y, w, h);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isActive() {
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isSelected() {
+        return false;
+    }
+
+    private Insets insets() {
+        return peerView.getInsets();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getX() {
+        return (float) insets().left;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getY() {
+        return (float) insets().top;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getW() {
+        return (float) insets().left + insets().right;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getH() {
+        return (float) insets().top + insets().bottom;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IBorder getDefaultBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveBorder getActiveBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ISelectedBorder getSelectedBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveSelectedBorder getActiveSelectedBorder() {
+        return this;
+    }
 }

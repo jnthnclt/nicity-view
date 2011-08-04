@@ -29,35 +29,42 @@ import colt.nicity.view.interfaces.IView;
  * @author Administrator
  */
 public class AApplet extends AWindow {
-	//----------------------------------------------------------------------------		
+
     /**
      *
      * @param _view
      * @param _peer
      */
-    public AApplet(IView _view,PApplet _peer) {
-		setPlacer(new Placer(_view));
-		peer = _peer;
+    public AApplet(IView _view, PApplet _peer) {
+        setPlacer(new Placer(_view));
+        peer = _peer;
         _peer.setClient(this);
-		init();
-	}
-	//----------------------------------------------------------------------------
-	public IPeerView getPeerView() { return peer; }
-        /**
-         *
-         * @param _peer
-         */
-        public void setPeer(PApplet _peer) { peer = _peer; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public IPeerView getPeer() {
-		if (peer == null) throw new RuntimeException();
-		return peer;
-	}
-	//----------------------------------------------------------------------------
-	public void setBorder(IBorder border) {}
-	//----------------------------------------------------------------------------
+        init();
+    }
+
+    public IPeerView getPeerView() {
+        return peer;
+    }
+
+    /**
+     *
+     * @param _peer
+     */
+    public void setPeer(PApplet _peer) {
+        peer = _peer;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IPeerView getPeer() {
+        if (peer == null) {
+            throw new RuntimeException();
+        }
+        return peer;
+    }
+
+    public void setBorder(IBorder border) {
+    }
 }

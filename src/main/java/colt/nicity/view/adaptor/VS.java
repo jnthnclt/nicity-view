@@ -20,7 +20,6 @@
 package colt.nicity.view.adaptor;
 
 // Virtual System
-
 import colt.nicity.core.process.IAsyncResponse;
 import colt.nicity.core.lang.IOut;
 import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
@@ -47,36 +46,38 @@ public class VS {
     // File
     // Sound
     // Color
+
     /**
      *
      * @param _
      * @param _file
      * @param _image
      */
-    static public void systemImage(IOut _,final File _file,IAsyncResponse<IImage> _image) {
+    static public void systemImage(IOut _, final File _file, IAsyncResponse<IImage> _image) {
         try {
             final BufferedImage image = ImageIO.read(_file);
-            _image.response(_,new IImage() {
+            _image.response(_, new IImage() {
 
                 public ICanvas canvas(long _who) {
-                    return new GlueAWTGraphicsToCanvas(0,image.createGraphics());
+                    return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
                 }
+
                 public Object data(long _who) {
                     return image;
                 }
+
                 public int getWidth() {
                     return image.getWidth();
                 }
+
                 public int getHeight() {
                     return image.getHeight();
                 }
-               
             });
-        } catch(Exception _x) {
+        } catch (Exception _x) {
             _image.error(_, _x);
         }
     }
-
 
     /**
      *
@@ -84,9 +85,8 @@ public class VS {
      * @return
      */
     public static Color systemColor(AColor _color) {
-        return new Color(_color.intValue(),true);
+        return new Color(_color.intValue(), true);
     }
-
     /**
      *
      */
@@ -107,27 +107,36 @@ public class VS {
      * @param _type
      * @return
      */
-    public static IImage systemImage(int _w,int _h,int _type) {
+    public static IImage systemImage(int _w, int _h, int _type) {
         int type = BufferedImage.TYPE_INT_RGB;
-        if (_type == c32BitARGB) type = BufferedImage.TYPE_INT_ARGB;
-        if (_type == c8BitGrey) type = BufferedImage.TYPE_BYTE_GRAY;
+        if (_type == c32BitARGB) {
+            type = BufferedImage.TYPE_INT_ARGB;
+        }
+        if (_type == c8BitGrey) {
+            type = BufferedImage.TYPE_BYTE_GRAY;
+        }
 
-        final BufferedImage image = new BufferedImage(_w, _h,type);
+        final BufferedImage image = new BufferedImage(_w, _h, type);
         return new IImage() {
+
             public ICanvas canvas(long _who) {
-                return new GlueAWTGraphicsToCanvas(0,image.createGraphics());
+                return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
             }
+
             public Object data(long _who) {
                 return image;
             }
+
             public int getWidth() {
                 return image.getWidth();
             }
+
             public int getHeight() {
                 return image.getHeight();
             }
         };
     }
+
     /**
      * 
      * @param _w
@@ -136,21 +145,27 @@ public class VS {
      * @param _pixels
      * @return
      */
-    public static IImage systemImage(int _w,int _h,int _type,int[] _pixels) {
+    public static IImage systemImage(int _w, int _h, int _type, int[] _pixels) {
         int type = BufferedImage.TYPE_INT_RGB;
-        if (_type == c32BitARGB) type = BufferedImage.TYPE_INT_ARGB;
-        final BufferedImage image = new BufferedImage(_w, _h,type);
+        if (_type == c32BitARGB) {
+            type = BufferedImage.TYPE_INT_ARGB;
+        }
+        final BufferedImage image = new BufferedImage(_w, _h, type);
         image.setRGB(0, 0, _w, _h, _pixels, 0, _w);
         return new IImage() {
+
             public ICanvas canvas(long _who) {
-                return new GlueAWTGraphicsToCanvas(0,image.createGraphics());
+                return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
             }
+
             public Object data(long _who) {
                 return image;
             }
+
             public int getWidth() {
                 return image.getWidth();
             }
+
             public int getHeight() {
                 return image.getHeight();
             }
@@ -165,16 +180,17 @@ public class VS {
      * @return
      */
     public static boolean writeImageToFile(IImage _image, String _type, File _file) {
-        return writeImageToFile((BufferedImage)_image.data(0),_type,_file);
+        return writeImageToFile((BufferedImage) _image.data(0), _type, _file);
     }
-     /**
-      *
-      * @param _image
-      * @param _type
-      * @param _file
-      * @return
-      */
-     public static boolean writeImageToFile(BufferedImage _image, String _type, File _file) {
+
+    /**
+     *
+     * @param _image
+     * @param _type
+     * @param _file
+     * @return
+     */
+    public static boolean writeImageToFile(BufferedImage _image, String _type, File _file) {
 
         try {
             ImageIO.write(_image, _type, _file);

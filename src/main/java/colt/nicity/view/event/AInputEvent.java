@@ -27,88 +27,116 @@ import java.awt.event.InputEvent;
  * @author Administrator
  */
 abstract public class AInputEvent extends AViewEvent {
-	//----------------------------------------------------------------------------	
+
     /**
      *
      */
     protected int modifiers;
-	//----------------------------------------------------------------------------	
+
     /**
      *
      * @return
      */
-    public int getModifiers() { return modifiers; }
+    public int getModifiers() {
+        return modifiers;
+    }
+
     /**
      *
      * @param modifiers
      */
-    public void setModifiers(int modifiers) { this.modifiers = modifiers; }
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public boolean isModifierDown() {
-		if (
-			isShiftDown() ||
-			isAltDown() ||
-			isControlDown() ||
-			isMetaDown()
-		) return true;
-		return false;
-	}
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public boolean isShiftDown() { return (modifiers & Event.SHIFT_MASK) != 0; }
-        /**
-         *
-         * @return
-         */
-        public boolean isControlDown() { return (modifiers & Event.CTRL_MASK) != 0; }
-        /**
-         *
-         * @return
-         */
-        public boolean isMetaDown() { return (modifiers & Event.META_MASK) != 0; }
-        /**
-         *
-         * @return
-         */
-        public boolean isAltDown() { return (modifiers & Event.ALT_MASK) != 0; }
-        /**
-         *
-         * @return
-         */
-        public boolean isLeftMouseDown() { return ((modifiers & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK); }
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public boolean isLeftClick() { return ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK); }
-        /**
-         *
-         * @return
-         */
-        public boolean isMiddleClick() { return ((modifiers & InputEvent.BUTTON2_MASK) == InputEvent.BUTTON2_MASK); }
-        /**
-         *
-         * @return
-         */
-        public boolean isRightClick() { return ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK); }
-	//----------------------------------------------------------------------------	
-	public String toString() { return "mod = "+modifiers; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _e
-         */
-        public void inherit(AInputEvent _e) {
-		modifiers = _e.modifiers;
-		super.inherit(_e);
-	}
-	
+    public void setModifiers(int modifiers) {
+        this.modifiers = modifiers;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isModifierDown() {
+        if (isShiftDown()
+                || isAltDown()
+                || isControlDown()
+                || isMetaDown()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isShiftDown() {
+        return (modifiers & Event.SHIFT_MASK) != 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isControlDown() {
+        return (modifiers & Event.CTRL_MASK) != 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isMetaDown() {
+        return (modifiers & Event.META_MASK) != 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isAltDown() {
+        return (modifiers & Event.ALT_MASK) != 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isLeftMouseDown() {
+        return ((modifiers & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isLeftClick() {
+        return ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isMiddleClick() {
+        return ((modifiers & InputEvent.BUTTON2_MASK) == InputEvent.BUTTON2_MASK);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRightClick() {
+        return ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK);
+    }
+
+    public String toString() {
+        return "mod = " + modifiers;
+    }
+
+    /**
+     *
+     * @param _e
+     */
+    public void inherit(AInputEvent _e) {
+        modifiers = _e.modifiers;
+        super.inherit(_e);
+    }
 }

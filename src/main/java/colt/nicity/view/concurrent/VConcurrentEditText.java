@@ -50,7 +50,7 @@ import java.awt.event.KeyEvent;
  * 
  * @author jonathan
  */
-public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
+public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
 
     // Convienient overloadable methods
     /**
@@ -117,7 +117,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
      * 
      * @param _text
      */
-    public VCText(String[] _text) {
+    public VConcurrentEditText(String[] _text) {
         super(_text);
     }
 
@@ -126,7 +126,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
      * @param _text
      * @param _font
      */
-    public VCText(String[] _text, AFont _font) {
+    public VConcurrentEditText(String[] _text, AFont _font) {
         super(_text, _font);
     }
 
@@ -135,7 +135,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
      * @param _text
      * @param _color
      */
-    public VCText(String[] _text, AColor _color) {
+    public VConcurrentEditText(String[] _text, AColor _color) {
         super(_text, _color);
     }
 
@@ -145,7 +145,7 @@ public class VCText extends ViewText implements IFocusEvents, IKeyEvents, IMouse
      * @param _font
      * @param _color
      */
-    public VCText(String[] _text, AFont _font, AColor _color) {
+    public VConcurrentEditText(String[] _text, AFont _font, AColor _color) {
         super(_text, _font, _color);
     }
 

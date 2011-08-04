@@ -27,7 +27,6 @@ import java.awt.event.KeyEvent;
  * @author Administrator
  */
 public class UKey {
-    //----------------------------------------------------------------------------
 
     /**
      *
@@ -35,35 +34,34 @@ public class UKey {
      * @param view
      */
     public static void arrowKeys(AKeyEvent e, IView view) {
-        //----------------------------------------------------------------------------
+
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_RIGHT) {
             autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_RIGHT));
-            if (e.isShiftDown())
+            if (e.isShiftDown()) {
                 view.selectBorder();
-        }
-        else if (code == KeyEvent.VK_LEFT) {
+            }
+        } else if (code == KeyEvent.VK_LEFT) {
             autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_LEFT));
-            if (e.isShiftDown())
+            if (e.isShiftDown()) {
                 view.selectBorder();
-        }
-        else if (code == KeyEvent.VK_UP) {
+            }
+        } else if (code == KeyEvent.VK_UP) {
             autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_UP));
-            if (e.isShiftDown())
+            if (e.isShiftDown()) {
                 view.selectBorder();
-        }
-        else if (code == KeyEvent.VK_DOWN) {
+            }
+        } else if (code == KeyEvent.VK_DOWN) {
             autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_DOWN));
-            if (e.isShiftDown())
+            if (e.isShiftDown()) {
                 view.selectBorder();
+            }
         }
     }
-    //----------------------------------------------------------------------------
 
     private static void autoScroll(IView view) {
         if (!view.isVisible()) {
             view.scrollTo(0, 0, view.getW(), view.getH());
         }
     }
-    //----------------------------------------------------------------------------
 }

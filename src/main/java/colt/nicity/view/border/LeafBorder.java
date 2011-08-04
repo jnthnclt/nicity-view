@@ -24,7 +24,6 @@ import colt.nicity.view.core.Place;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.interfaces.ICanvas;
-import java.awt.geom.GeneralPath;
 
 /**
  *
@@ -92,27 +91,10 @@ public class LeafBorder extends AFlaggedBorder {
         w -= 1;
         h -= 1;
         if (place == UV.cEW) {
-            //g.line(x + size, y + 0, x + size, y + h);
-            //g.line(x + size, y + 0, x + size * 2, y + 0);
-            //g.line(x + size, y + h - 1, x + size * 2, y + h - 1);
-            //g.line(x + 0, y + (h / 2), x + size, y + (h / 2));
-
-            GeneralPath p = new GeneralPath();
-            p.moveTo(x, y + (h / 2));
-            p.curveTo(x + (size * 1.5f), y + (h / 2), x - (size / 2), y, x + size, y);
-            p.lineTo(x + w - size, y);
-            p.quadTo(x + w, y, x + w, y + size);
-            p.lineTo(x + w, y + h - size);
-            p.quadTo(x + w, y + h, x + w - size, y + h);
-            p.lineTo(x + size, y + h);
-
-            g.draw(p);
-
-            p = new GeneralPath();
-            p.moveTo(x, y + (h / 2));
-            p.curveTo(x + (size * 1.5f), y + (h / 2), x - (size / 2), y + h, x + size, y + h);
-            g.draw(p);
-
+            g.line(x + size, y + 0, x + size, y + h);
+            g.line(x + size, y + 0, x + size * 2, y + 0);
+            g.line(x + size, y + h - 1, x + size * 2, y + h - 1);
+            g.line(x + 0, y + (h / 2), x + size, y + (h / 2));
         } else if (place == UV.cWE) {
             g.line(x + w - size, y + 0, x + w - size, y + h);
             g.line(x + w - size, y + 0, x + w - size * 2, y + 0);

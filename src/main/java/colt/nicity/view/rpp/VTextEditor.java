@@ -6,7 +6,7 @@ import colt.nicity.core.lang.UString;
 import colt.nicity.core.lang.UText;
 import colt.nicity.view.border.LineBorder;
 import colt.nicity.view.border.ViewBorder;
-import colt.nicity.view.concurrent.VCText;
+import colt.nicity.view.concurrent.VConcurrentEditText;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VButton;
@@ -46,7 +46,7 @@ public class VTextEditor extends Viewer implements IRPPViewable {
             "and our Posterity, do ordain and establish this Constitution for the United States",
             "of America."
         };
-        final VCText text = new VCText(t, new AFont(Font.MONOSPACED, Font.PLAIN, 14));
+        final VConcurrentEditText text = new VConcurrentEditText(t, new AFont(Font.MONOSPACED, Font.PLAIN, 14));
         final VPan pan = new VPan(text, 600, 800);
         pan.setBorder(new LineBorder());
 

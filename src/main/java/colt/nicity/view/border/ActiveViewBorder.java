@@ -26,18 +26,22 @@ import colt.nicity.view.interfaces.IActiveBorder;
  * @author Administrator
  */
 public class ActiveViewBorder extends ViewBorder implements IActiveBorder {
-   //----------------------------------------------------------------------------
+
     /**
      *
      * @return
      */
     @Override
-	public boolean isActive() { return true; }
-        /**
-         *
-         * @return
-         */
-        @Override
-   public boolean isSelected() { return false; }
-	//----------------------------------------------------------------------------
+    public boolean isActive() {
+        return true;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
 }

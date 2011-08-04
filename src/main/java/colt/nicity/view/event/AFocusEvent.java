@@ -27,36 +27,47 @@ import colt.nicity.view.interfaces.IView;
  * @author Administrator
  */
 abstract public class AFocusEvent extends AViewEvent {
-	//----------------------------------------------------------------------------	
-	private boolean isHardFocus = false;
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @param _isHardFocus
-         */
-        public void setHardFocus(boolean _isHardFocus) { isHardFocus = _isHardFocus; }
-        /**
-         *
-         * @return
-         */
-        public boolean isHardFocus() { return isHardFocus; }
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @param parent
-         * @param view
-         * @return
-         */
-        public IView disbatchEvent(IView parent,IView view) {
-		if (!(view.isEventEnabled(AViewEvent.cFocusEvent))) return NullView.cNull;
-		return view.disbatchEvent(parent,this);
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public long getMask() { return AViewEvent.cFocusEvent; }
-	//----------------------------------------------------------------------------
-	public String toString() { return super.toString()+" isHardFocus="+isHardFocus; }
+
+    private boolean isHardFocus = false;
+
+    /**
+     *
+     * @param _isHardFocus
+     */
+    public void setHardFocus(boolean _isHardFocus) {
+        isHardFocus = _isHardFocus;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isHardFocus() {
+        return isHardFocus;
+    }
+
+    /**
+     *
+     * @param parent
+     * @param view
+     * @return
+     */
+    public IView disbatchEvent(IView parent, IView view) {
+        if (!(view.isEventEnabled(AViewEvent.cFocusEvent))) {
+            return NullView.cNull;
+        }
+        return view.disbatchEvent(parent, this);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getMask() {
+        return AViewEvent.cFocusEvent;
+    }
+
+    public String toString() {
+        return super.toString() + " isHardFocus=" + isHardFocus;
+    }
 }

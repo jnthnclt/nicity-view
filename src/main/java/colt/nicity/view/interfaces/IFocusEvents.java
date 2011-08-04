@@ -18,25 +18,25 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------
+
 import colt.nicity.view.event.FocusGained;
 import colt.nicity.view.event.FocusLost;
-//----------------------------------------------------------------------------
+
 /**
  *
  * @author Administrator
  */
 public interface IFocusEvents {
-	//----------------------------------------------------------------------------
+
     /**
      *
      * @param e
      */
     public void focusGained(FocusGained e);
-        /**
-         *
-         * @param e
-         */
-        public void focusLost(FocusLost e);
-	//----------------------------------------------------------------------------
+
+    /**
+     *
+     * @param e
+     */
+    public void focusLost(FocusLost e);
 }

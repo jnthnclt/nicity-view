@@ -22,11 +22,11 @@ package colt.nicity.view.canvas;
 import colt.nicity.core.io.IFiler;
 import colt.nicity.core.io.UIO;
 import colt.nicity.core.lang.ICallback;
+import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.flavor.AFlavor;
 import colt.nicity.view.interfaces.ICanvas;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
@@ -463,7 +463,7 @@ public class FilerCanvas implements ICanvas {
             UIO.writeInt(f, y, "y");
             UIO.writeInt(f, w, "w");
             UIO.writeInt(f, h, "h");
-            clip = new Rectangle(x, y, w, h);
+            clip = new XYWH_I(x, y, w, h);
             UIO.writeBoolean(f, false, "done");
         } catch (Exception ex) {
             exceptions.callback(ex);

@@ -18,25 +18,28 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------	
+
 /**
  *
  * @author Administrator
  */
 public interface IEvent {
+
     /**
      *
      * @return
      */
     public Object getSource();
-        /**
-         *
-         * @return
-         */
-        public long getMask();
-        /**
-         *
-         * @return
-         */
-        public long who();
+
+    /**
+     *
+     * @return
+     */
+    public long getMask();
+
+    /**
+     *
+     * @return
+     */
+    public long who();
 }

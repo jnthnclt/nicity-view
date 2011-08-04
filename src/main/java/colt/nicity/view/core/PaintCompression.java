@@ -29,7 +29,6 @@ import colt.nicity.view.interfaces.ICanvas;
  * @author Administrator
  */
 public class PaintCompression {
-    //----------------------------------------------------------------------
 
     /**
      *
@@ -43,7 +42,6 @@ public class PaintCompression {
      *
      */
     public static String cModeY = "Mode Y";
-    //----------------------------------------------------------------------
     /**
      *
      */
@@ -252,7 +250,6 @@ public class PaintCompression {
         //VRange.paintVertical(_g,_x+_w-_size,_y,_size,_h-_size,_compression.minY,Double.MAX_VALUE,_compression.maxY);
         VRange.paintVertical(_g, _x, _y + _size, _size, _h - _size, _compression.minY, Double.MAX_VALUE, _compression.maxY, _solid);
     }
-    //----------------------------------------------------------------------
 
     /**
      *
@@ -267,10 +264,8 @@ public class PaintCompression {
      */
     public static void paintBackground(PaintCompression _compression, ICanvas _g, int _x, int _y, int _w, int _h, double _time, int _size) {
     }
-    //----------------------------------------------------------------------
-    // Events
-    //----------------------------------------------------------------------
 
+    // Events
     /**
      *
      * @param _compression
@@ -300,7 +295,6 @@ public class PaintCompression {
         }
         return true;
     }
-    //----------------------------------------------------------------------
 
     /**
      *
@@ -379,4 +373,3 @@ public class PaintCompression {
         _compression.pointMode = cModeless;
     }
 }
-

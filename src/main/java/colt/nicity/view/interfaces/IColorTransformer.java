@@ -18,12 +18,13 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------
+
 /**
  *
  * @author Administrator
  */
 public interface IColorTransformer {
+
     /**
      *
      * @param aOver
@@ -32,5 +33,5 @@ public interface IColorTransformer {
      * @param _alpha
      * @return
      */
-    public int[] transform(int[] aOver,int[] bUnder,int[] out,double _alpha);
+    public int[] transform(int[] aOver, int[] bUnder, int[] out, double _alpha);
 }

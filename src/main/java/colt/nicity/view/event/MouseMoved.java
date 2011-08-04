@@ -24,6 +24,7 @@ package colt.nicity.view.event;
  * @author Administrator
  */
 public class MouseMoved extends AMouseEvent {
+
     /**
      *
      */
@@ -32,7 +33,7 @@ public class MouseMoved extends AMouseEvent {
      *
      */
     protected int dy;
-	//----------------------------------------------------------------------------	
+
     /**
      *
      * @param _who
@@ -52,39 +53,42 @@ public class MouseMoved extends AMouseEvent {
      */
     public static AMouseEvent newInstance(
             long _who,
-		Object source,
-		int x,int y,int z,
-		int clickCount,int modifiers,
-		int _dx,int _dy,
-		float _cx,float _cy,float _cw,float _ch
-	) {
-		MouseMoved e = new MouseMoved();
+            Object source,
+            int x, int y, int z,
+            int clickCount, int modifiers,
+            int _dx, int _dy,
+            float _cx, float _cy, float _cw, float _ch) {
+        MouseMoved e = new MouseMoved();
         e.who = _who;
-		e.setSource(source);
-		e.setX(x);
-		e.setY(y);
-		e.setZ(z);
-		e.setClickCount(clickCount);
-		e.setModifiers(modifiers);
-		e.cx = _cx;
-		e.cy = _cy;
-		e.cw = _cw;
-		e.ch = _ch;
-		e.isDragging = false;
-		e.dx = _dx;
-		e.dy = _dy;
-		return e;
-	}
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public int getDeltaX() { return dx; }
-        /**
-         *
-         * @return
-         */
-        public int getDeltaY() { return dy; }
-	//----------------------------------------------------------------------------	
+        e.setSource(source);
+        e.setX(x);
+        e.setY(y);
+        e.setZ(z);
+        e.setClickCount(clickCount);
+        e.setModifiers(modifiers);
+        e.cx = _cx;
+        e.cy = _cy;
+        e.cw = _cw;
+        e.ch = _ch;
+        e.isDragging = false;
+        e.dx = _dx;
+        e.dy = _dy;
+        return e;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getDeltaX() {
+        return dx;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getDeltaY() {
+        return dy;
+    }
 }

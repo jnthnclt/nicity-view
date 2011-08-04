@@ -30,85 +30,114 @@ import colt.nicity.view.interfaces.ISelectedBorder;
  * @author Administrator
  */
 public class NullBorder implements IActiveSelectedBorder {
-	//----------------------------------------------------------------------------
+
     /**
      *
      */
     public static final IActiveSelectedBorder cNull = new NullBorder();
-	//----------------------------------------------------------------------------
-	private NullBorder() {}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param g
-         * @param x
-         * @param y
-         * @param w
-         * @param h
-         */
-        public void paintBorder(ICanvas g,int x,int y, int w, int h) {}
-        /**
-         *
-         * @param g
-         * @param x
-         * @param y
-         * @param w
-         * @param h
-         */
-        public void paintBackground(ICanvas g,int x,int y,int w, int h) {}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public boolean isActive() { return false; }
-        /**
-         *
-         * @return
-         */
-        public boolean isSelected() { return false; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public float getX() { return 0; }
-        /**
-         *
-         * @return
-         */
-        public float getY() { return 0; }
-        /**
-         *
-         * @return
-         */
-        public float getW() { return 0; }
-        /**
-         *
-         * @return
-         */
-        public float getH() { return 0; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public IBorder getDefaultBorder() { return cNull; }
-        /**
-         *
-         * @return
-         */
-        public IActiveBorder getActiveBorder() { return cNull; }
-        /**
-         *
-         * @return
-         */
-        public ISelectedBorder getSelectedBorder() { return cNull; }
-   /**
-    *
-    * @return
-    */
-   public IActiveSelectedBorder getActiveSelectedBorder() { return cNull; }
-   //----------------------------------------------------------------------------
-   
+
+    private NullBorder() {
+    }
+
+    /**
+     *
+     * @param g
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public void paintBorder(ICanvas g, int x, int y, int w, int h) {
+    }
+
+    /**
+     *
+     * @param g
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public void paintBackground(ICanvas g, int x, int y, int w, int h) {
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isActive() {
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isSelected() {
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getX() {
+        return 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getY() {
+        return 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getW() {
+        return 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getH() {
+        return 0;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IBorder getDefaultBorder() {
+        return cNull;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveBorder getActiveBorder() {
+        return cNull;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ISelectedBorder getSelectedBorder() {
+        return cNull;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveSelectedBorder getActiveSelectedBorder() {
+        return cNull;
+    }
 }

@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
  * @author jonathan
  */
 public class RPPWindow extends AViewer implements IRootView {
-   
+
     /**
      * 
      */
@@ -192,9 +192,7 @@ public class RPPWindow extends AViewer implements IRootView {
         }
     }
 
-    //----------------------------------------------------------------------------
     // This is intentionally not synchronized
-    //----------------------------------------------------------------------------
     @Override
     public void addToRepaint(IView _view) {
         ADisplay _display = display;
@@ -218,9 +216,7 @@ public class RPPWindow extends AViewer implements IRootView {
         getPeer().fullscreen();
     }
 
-    //----------------------------------------------------------------------------
     // IView overloading
-    //----------------------------------------------------------------------------
     @Override
     public boolean isVisible(int _x, int _y, int _w, int _h) {
         XYWH_I r = UXYWH_I.intersection(_x, _y, _w, _h, 0, 0, (int) getW(), (int) getH());
@@ -282,8 +278,11 @@ public class RPPWindow extends AViewer implements IRootView {
     @Override
     public IView getFocusedView(long _who) {
         AInput _input = input;
-        if (_input != null) return _input.getFocusedView(_who);
-        else return null;
+        if (_input != null) {
+            return _input.getFocusedView(_who);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -297,8 +296,11 @@ public class RPPWindow extends AViewer implements IRootView {
     @Override
     public IView getHardFocusedView(long _who) {
         AInput _input = input;
-        if (_input != null) return _input.getHardFocusedView(_who);
-        else return null;
+        if (_input != null) {
+            return _input.getHardFocusedView(_who);
+        } else {
+            return null;
+        }
     }
 
     @Override

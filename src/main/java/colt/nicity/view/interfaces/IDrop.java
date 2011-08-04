@@ -18,25 +18,27 @@
  * limitations under the License.
  */
 package colt.nicity.view.interfaces;
-//----------------------------------------------------------------------------		
+
 import colt.nicity.view.event.AInputEvent;
-//----------------------------------------------------------------------------		
+
 /**
  *
  * @author Administrator
  */
 public interface IDrop {
+
     /**
      *
      * @param object
      * @param _e
      * @return
      */
-    public IDropMode accepts(Object object,AInputEvent _e);
-        /**
-         *
-         * @param object
-         * @param mode
-         */
-        public void dropParcel(Object object,IDropMode mode);
+    public IDropMode accepts(Object object, AInputEvent _e);
+
+    /**
+     *
+     * @param object
+     * @param mode
+     */
+    public void dropParcel(Object object, IDropMode mode);
 }

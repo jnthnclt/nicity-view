@@ -18,117 +18,152 @@
  * limitations under the License.
  */
 package colt.nicity.view.paint;
+
 /**
  *
  * @author Administrator
  */
 public class Flip {
-	//----------------------------------------------------------------------------
+
     /**
      *
      */
-    public boolean x=false;//read only please
-        /**
-         *
-         */
-        public boolean y=false;//read only please
-        /**
-         *
-         */
-        public boolean z=false;//read only please
-	//----------------------------------------------------------------------------
-        /**
-         *
-         */
-        public Flip() {}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _x
-         * @param _y
-         * @param _z
-         */
-        public Flip(boolean _x,boolean _y,boolean _z) {
-		x = _x;y = _y;z = _z;  
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public boolean flipX() { return x; }
-        /**
-         *
-         * @return
-         */
-        public boolean flipY() { return y; }
-        /**
-         *
-         * @return
-         */
-        public boolean flipZ() { return z; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double addX(double _a,double _b) { return (x) ? _a-_b : _a+_b; }
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double addY(double _a,double _b) { return (y) ? _a-_b : _a+_b; }
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double addZ(double _a,double _b) { return (z) ? _a-_b : _a+_b; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double subtractX(double _a,double _b) { return (x) ? _a+_b : _a-_b; }
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double subtractY(double _a,double _b) { return (y) ? _a+_b : _a-_b; }
-        /**
-         *
-         * @param _a
-         * @param _b
-         * @return
-         */
-        public double subtractZ(double _a,double _b) { return (z) ? _a+_b : _a-_b; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _x
-         * @return
-         */
-        public double flipX(double _x) { return (x) ? 1-_x : _x; }
-        /**
-         *
-         * @param _y
-         * @return
-         */
-        public double flipY(double _y) { return (y) ? 1-_y : _y; }
-        /**
-         *
-         * @param _z
-         * @return
-         */
-        public double flipZ(double _z) { return (z) ? 1-_z : _z; }
-	
+    public boolean x = false;//read only please
+    /**
+     *
+     */
+    public boolean y = false;//read only please
+    /**
+     *
+     */
+    public boolean z = false;//read only please
+
+    /**
+     *
+     */
+    public Flip() {
+    }
+
+    /**
+     *
+     * @param _x
+     * @param _y
+     * @param _z
+     */
+    public Flip(boolean _x, boolean _y, boolean _z) {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean flipX() {
+        return x;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean flipY() {
+        return y;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean flipZ() {
+        return z;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double addX(double _a, double _b) {
+        return (x) ? _a - _b : _a + _b;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double addY(double _a, double _b) {
+        return (y) ? _a - _b : _a + _b;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double addZ(double _a, double _b) {
+        return (z) ? _a - _b : _a + _b;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double subtractX(double _a, double _b) {
+        return (x) ? _a + _b : _a - _b;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double subtractY(double _a, double _b) {
+        return (y) ? _a + _b : _a - _b;
+    }
+
+    /**
+     *
+     * @param _a
+     * @param _b
+     * @return
+     */
+    public double subtractZ(double _a, double _b) {
+        return (z) ? _a + _b : _a - _b;
+    }
+
+    /**
+     *
+     * @param _x
+     * @return
+     */
+    public double flipX(double _x) {
+        return (x) ? 1 - _x : _x;
+    }
+
+    /**
+     *
+     * @param _y
+     * @return
+     */
+    public double flipY(double _y) {
+        return (y) ? 1 - _y : _y;
+    }
+
+    /**
+     *
+     * @param _z
+     * @return
+     */
+    public double flipZ(double _z) {
+        return (z) ? 1 - _z : _z;
+    }
 }

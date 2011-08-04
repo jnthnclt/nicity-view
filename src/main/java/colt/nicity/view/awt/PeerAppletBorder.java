@@ -32,100 +32,120 @@ import java.awt.Graphics;
  * @author Administrator
  */
 public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder, IActiveBorder, IBorder {
-	//----------------------------------------------------------------------------
-	private PApplet peerApplet;
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param _peerApplet
-         */
-        public PeerAppletBorder(PApplet _peerApplet) {
-		if (_peerApplet == null) throw new RuntimeException();
-		peerApplet = _peerApplet;
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @param g
-         * @param w
-         * @param h
-         */
-        public void paintBorder(Graphics g, int w, int h) {}
-        /**
-         *
-         * @param g
-         * @param w
-         * @param h
-         */
-        public void paintBackground(Graphics g,int w, int h) {
-		
-		g.setColor(Color.white);
-		g.fillRect(0,0,w,h);
-		
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public boolean isActive() { return false; }
-        /**
-         *
-         * @return
-         */
-        public boolean isSelected() { return false; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public float getX() { return peerApplet.getLocationOnScreen().x; }
-        /**
-         *
-         * @return
-         */
-        public float getY() { return peerApplet.getLocationOnScreen().y; }
-        /**
-         *
-         * @return
-         */
-        public float getW() { return peerApplet.getLocationOnScreen().x; }
-        /**
-         *
-         * @return
-         */
-        public float getH() { return peerApplet.getLocationOnScreen().y; }
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public IBorder getDefaultBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public IActiveBorder getActiveBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public ISelectedBorder getSelectedBorder() { return this; }
-   /**
-    *
-    * @return
-    */
-   public IActiveSelectedBorder getActiveSelectedBorder() { return this; }
 
-   /**
-    *
-    * @param g
-    * @param x
-    * @param y
-    * @param w
-    * @param h
-    */
-   public void paintBorder(ICanvas g,int x,int y, int w, int h) {
+    private PApplet peerApplet;
+
+    /**
+     *
+     * @param _peerApplet
+     */
+    public PeerAppletBorder(PApplet _peerApplet) {
+        if (_peerApplet == null) {
+            throw new RuntimeException();
+        }
+        peerApplet = _peerApplet;
+    }
+
+    /**
+     *
+     * @param g
+     * @param w
+     * @param h
+     */
+    public void paintBorder(Graphics g, int w, int h) {
+    }
+
+    /**
+     *
+     * @param g
+     * @param w
+     * @param h
+     */
+    public void paintBackground(Graphics g, int w, int h) {
+
+        g.setColor(Color.white);
+        g.fillRect(0, 0, w, h);
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isActive() {
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isSelected() {
+        return false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getX() {
+        return peerApplet.getLocationOnScreen().x;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getY() {
+        return peerApplet.getLocationOnScreen().y;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getW() {
+        return peerApplet.getLocationOnScreen().x;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getH() {
+        return peerApplet.getLocationOnScreen().y;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IBorder getDefaultBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveBorder getActiveBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ISelectedBorder getSelectedBorder() {
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public IActiveSelectedBorder getActiveSelectedBorder() {
+        return this;
     }
 
     /**
@@ -136,8 +156,17 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      * @param w
      * @param h
      */
-    public void paintBackground(ICanvas g,int x,int y, int w, int h) {
+    public void paintBorder(ICanvas g, int x, int y, int w, int h) {
     }
-   //----------------------------------------------------------------------------
-   
+
+    /**
+     *
+     * @param g
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public void paintBackground(ICanvas g, int x, int y, int w, int h) {
+    }
 }

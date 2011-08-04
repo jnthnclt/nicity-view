@@ -18,16 +18,16 @@
  * limitations under the License.
  */
 package colt.nicity.view.list;
-//----------------------------------------------------------------------------
+
 /**
  *
  * @author Administrator
  */
 public interface IHideable {
+
     /**
      *
      * @return
      */
     public boolean isHidden();
 }
-

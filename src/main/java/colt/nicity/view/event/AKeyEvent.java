@@ -27,52 +27,68 @@ import colt.nicity.view.interfaces.IView;
  * @author Administrator
  */
 abstract public class AKeyEvent extends AInputEvent {
-	//----------------------------------------------------------------------------	
-	private int  keyCode;
-	private char keyChar;
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public int getKeyCode() { return keyCode; }
-        /**
-         *
-         * @param keyCode
-         */
-        public void setKeyCode(int keyCode) { this.keyCode = keyCode; }
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @return
-         */
-        public char getKeyChar() { return keyChar; }
-        /**
-         *
-         * @param keyChar
-         */
-        public void setKeyChar(char keyChar) { this.keyChar = keyChar; }
-	//----------------------------------------------------------------------------	
-        /**
-         *
-         * @param parent
-         * @param view
-         * @return
-         */
-        public IView disbatchEvent(IView parent,IView view) {
-		if (view == null) return NullView.cNull;
-		if (!(view.isEventEnabled(AViewEvent.cKeyEvent))) return NullView.cNull;
-		this.setSource(view);
-		return view;
-	}
-	//----------------------------------------------------------------------------
-        /**
-         *
-         * @return
-         */
-        public long getMask() { return AViewEvent.cKeyEvent; }
-	//----------------------------------------------------------------------------
-	public String toString() {
-		return super.toString()+" keyCode="+keyCode+" keyChar="+(char)keyChar;
-	}
+
+    private int keyCode;
+    private char keyChar;
+
+    /**
+     *
+     * @return
+     */
+    public int getKeyCode() {
+        return keyCode;
+    }
+
+    /**
+     *
+     * @param keyCode
+     */
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public char getKeyChar() {
+        return keyChar;
+    }
+
+    /**
+     *
+     * @param keyChar
+     */
+    public void setKeyChar(char keyChar) {
+        this.keyChar = keyChar;
+    }
+
+    /**
+     *
+     * @param parent
+     * @param view
+     * @return
+     */
+    public IView disbatchEvent(IView parent, IView view) {
+        if (view == null) {
+            return NullView.cNull;
+        }
+        if (!(view.isEventEnabled(AViewEvent.cKeyEvent))) {
+            return NullView.cNull;
+        }
+        this.setSource(view);
+        return view;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public long getMask() {
+        return AViewEvent.cKeyEvent;
+    }
+
+    public String toString() {
+        return super.toString() + " keyCode=" + keyCode + " keyChar=" + (char) keyChar;
+    }
 }
