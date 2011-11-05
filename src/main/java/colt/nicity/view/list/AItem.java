@@ -400,6 +400,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void focusGained(FocusGained e) {
         activateBorder();
     }
@@ -408,8 +409,9 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void focusLost(FocusLost e) {
-        deactivateBorder();
+        deactivateBorder((IView)e.getSource());
     }
 
     private IListController getListController() {

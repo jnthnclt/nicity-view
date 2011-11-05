@@ -74,9 +74,7 @@ public class TabBorder extends AFlaggedBorder {
      */
     @Override
     public void paintBackground(ICanvas g, int x, int y, int _w, int _h) {
-        _w -= 1;
-        _h -= 1;
-
+        
         if (fromColor == null) {
             return;
         }

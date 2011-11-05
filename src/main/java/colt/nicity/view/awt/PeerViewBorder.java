@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.awt;
 
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.IActiveBorder;
 import colt.nicity.view.interfaces.IActiveSelectedBorder;
@@ -26,7 +27,6 @@ import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPeerView;
 import colt.nicity.view.interfaces.ISelectedBorder;
-import java.awt.Insets;
 
 /**
  *
@@ -35,7 +35,7 @@ import java.awt.Insets;
 public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, IActiveBorder, IBorder {
 
     private IPeerView peerView;
-    private Insets insets = null;
+    private TRLB_I insets = null;
 
     /**
      *
@@ -46,7 +46,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
             throw new RuntimeException();
         }
         this.peerView = peerView;
-        insets = peerView.getInsets();
+        insets = peerView.getTRLB();
     }
 
     /**
@@ -57,6 +57,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      * @param w
      * @param h
      */
+    @Override
     public void paintBorder(ICanvas g, int x, int y, int w, int h) {
     }
 
@@ -68,6 +69,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      * @param w
      * @param h
      */
+    @Override
     public void paintBackground(ICanvas g, int x, int y, int w, int h) {
         g.setColor(AColor.white);
         g.rect(true, x, y, w, h);
@@ -77,6 +79,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public boolean isActive() {
         return false;
     }
@@ -85,18 +88,20 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public boolean isSelected() {
         return false;
     }
 
-    private Insets insets() {
-        return peerView.getInsets();
+    private TRLB_I insets() {
+        return peerView.getTRLB();
     }
 
     /**
      *
      * @return
      */
+    @Override
     public float getX() {
         return (float) insets().left;
     }
@@ -105,6 +110,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public float getY() {
         return (float) insets().top;
     }
@@ -113,6 +119,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public float getW() {
         return (float) insets().left + insets().right;
     }
@@ -121,6 +128,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public float getH() {
         return (float) insets().top + insets().bottom;
     }
@@ -129,6 +137,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public IBorder getDefaultBorder() {
         return this;
     }
@@ -137,6 +146,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public IActiveBorder getActiveBorder() {
         return this;
     }
@@ -145,6 +155,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public ISelectedBorder getSelectedBorder() {
         return this;
     }
@@ -153,6 +164,7 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
      *
      * @return
      */
+    @Override
     public IActiveSelectedBorder getActiveSelectedBorder() {
         return this;
     }

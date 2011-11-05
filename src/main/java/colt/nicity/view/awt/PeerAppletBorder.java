@@ -72,6 +72,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public boolean isActive() {
         return false;
     }
@@ -80,6 +81,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public boolean isSelected() {
         return false;
     }
@@ -88,6 +90,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public float getX() {
         return peerApplet.getLocationOnScreen().x;
     }
@@ -96,6 +99,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public float getY() {
         return peerApplet.getLocationOnScreen().y;
     }
@@ -104,6 +108,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public float getW() {
         return peerApplet.getLocationOnScreen().x;
     }
@@ -112,6 +117,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public float getH() {
         return peerApplet.getLocationOnScreen().y;
     }
@@ -120,6 +126,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public IBorder getDefaultBorder() {
         return this;
     }
@@ -128,6 +135,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public IActiveBorder getActiveBorder() {
         return this;
     }
@@ -136,6 +144,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public ISelectedBorder getSelectedBorder() {
         return this;
     }
@@ -144,6 +153,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      *
      * @return
      */
+    @Override
     public IActiveSelectedBorder getActiveSelectedBorder() {
         return this;
     }
@@ -156,6 +166,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      * @param w
      * @param h
      */
+    @Override
     public void paintBorder(ICanvas g, int x, int y, int w, int h) {
     }
 
@@ -167,6 +178,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      * @param w
      * @param h
      */
+    @Override
     public void paintBackground(ICanvas g, int x, int y, int w, int h) {
     }
 }

@@ -53,7 +53,7 @@ import colt.nicity.view.rpp.IRPPViewable;
 public class VZoneMenu extends Viewer implements IRPPViewable {
     
     public static IView viewable(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         VZoneMenu zoneMenu = new VZoneMenu(new VString("Hello"), new RigidBox(300, 300), true, true) {
 
             @Override

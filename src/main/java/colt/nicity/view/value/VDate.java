@@ -49,7 +49,7 @@ import java.util.TimeZone;
 public class VDate extends AItem implements IRPPViewable {
     
     public static IView viewable(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         final Value v = new Value(UTime.currentGMT());
         final VDate date = new VDate(v);
         new Thread() {
@@ -74,7 +74,7 @@ public class VDate extends AItem implements IRPPViewable {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(viewable(_args), "Date");
     }
     IValue value;

@@ -46,7 +46,7 @@ import colt.nicity.view.rpp.IRPPViewable;
 public class TestPainter implements IRPPViewable {
     
     public static IView viewable(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         return painter();
     }
     

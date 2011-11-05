@@ -370,7 +370,7 @@ public class NullView implements IView {
     public void activateBorder() {
     }
 
-    public void deactivateBorder() {
+    public void deactivateBorder(IView view) {
     }
 
     public IPopup getPopup() {

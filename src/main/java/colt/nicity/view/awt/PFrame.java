@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.awt;
 
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.monitor.VException;
 import colt.nicity.core.lang.IOut;
@@ -114,6 +115,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @param _modal
      */
+    @Override
     public void setModal(boolean _modal) {
     }
     
@@ -131,18 +133,21 @@ public class PFrame extends Frame implements IPeerView {
     /**
      *
      */
+    @Override
     public void iconify() {
         setState(Frame.ICONIFIED);
     }
     /**
      *
      */
+    @Override
     public void deiconify() {
         setState(Frame.NORMAL);
     }
     /**
      *
      */
+    @Override
     public void maximize() {
         setExtendedState(Frame.MAXIMIZED_BOTH);
     }
@@ -151,6 +156,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @return
      */
+    @Override
     public IEventClient getClientView() {
         return client;
     }
@@ -159,6 +165,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @param eventsToEnable
      */
+    @Override
     public void enablePeerEvents(long eventsToEnable) {
         super.enableEvents(eventsToEnable);
     }
@@ -166,6 +173,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @param eventsToDisable
      */
+    @Override
     public void disablePeerEvents(long eventsToDisable) {
         super.disableEvents(eventsToDisable);
     }
@@ -202,6 +210,7 @@ public class PFrame extends Frame implements IPeerView {
     /**
      *
      */
+    @Override
     public void fullscreen() {
     }
     
@@ -211,6 +220,7 @@ public class PFrame extends Frame implements IPeerView {
      * @param _h
      * @return
      */
+    @Override
     public Graphics ensureSize(int _w, int _h) {
         Insets insets = getInsets();
         _w += (insets.left + insets.right);
@@ -245,15 +255,17 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @param _region
      */
+    @Override
     public void modifiedRegion(XYWH_I _region) {
         //System.out.println("modifiedRegion:"+_region);
-        UAWT.modifiedRegion(getInsets(), getGraphics(), _region, buffer);
+        UAWT.modifiedRegion(getTRLB(), getGraphics(), _region, buffer);
     }
     
     /**
      *
      * @return
      */
+    @Override
     public XY_I getCorner() {
         Point p = super.getLocation();
         return new XY_I(p.x, p.y);
@@ -262,6 +274,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @return
      */
+    @Override
     public XY_I getCornerOnScreen() {
         Point p = super.getLocationOnScreen();
         return new XY_I(p.x, p.y);
@@ -270,6 +283,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @return
      */
+    @Override
     public WH_F getWH() {
         Dimension d = super.getSize();
         return new WH_F(d.width, d.height);
@@ -279,6 +293,7 @@ public class PFrame extends Frame implements IPeerView {
      * @param x
      * @param y
      */
+    @Override
     public void setCorner(int x, int y) {
         super.setLocation(x, y);
     }
@@ -287,6 +302,7 @@ public class PFrame extends Frame implements IPeerView {
      * @param w
      * @param h
      */
+    @Override
     public void setWH(int w, int h) {
         super.setSize(w, h);
     }
@@ -294,6 +310,7 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getW() {
         return super.getWidth();
     }
@@ -301,7 +318,14 @@ public class PFrame extends Frame implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getH() {
         return super.getHeight();
+    }
+
+    @Override
+    public TRLB_I getTRLB() {
+        Insets insert = super.getInsets();
+        return new TRLB_I(insert.top, insert.right, insert.left, insert.bottom);
     }
 }

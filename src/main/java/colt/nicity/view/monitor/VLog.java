@@ -31,8 +31,7 @@ import colt.nicity.core.lang.UString;
 import colt.nicity.core.lang.UText;
 import colt.nicity.core.lang.UTrace;
 import colt.nicity.core.time.UTime;
-import colt.nicity.view.border.RoundBorder;
-import colt.nicity.view.border.WindowBorder;
+import colt.nicity.view.border.ButtonBorder;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.RigidBox;
 import colt.nicity.view.core.UV;
@@ -67,7 +66,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
      */
     public static void main(String[] _args) {
         // Make Gargage as fast as you can
-        ViewColor.onBlack();
+        ViewColor.onGray();
         VChain c = new VChain(UV.cSN);
         c.add(new VLog("", 1000, null));
         UV.exitFrame(c, "Test");
@@ -177,7 +176,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
                 clear();
             }
         };
-        clear.setBorder(new RoundBorder(ViewColor.cItemTheme, 1));
+        clear.setBorder(new ButtonBorder(ViewColor.cItemTheme, 1));
         m.add(clear);
 
         if (logMailer != null) {
@@ -253,7 +252,7 @@ public class VLog extends Viewer implements IOut, ISizeable {
         };
         pan = new VPan(r, _w, _h);
         pan.setPositionY(1f);
-        c.add(UV.zone(pan));
+        c.add(pan);
         setContent(c);
         layoutInterior();
         paint();

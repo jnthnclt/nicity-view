@@ -78,7 +78,7 @@ public class LinkViewer extends Viewer implements IMouseEvents {
     }
 
     public void mouseExited(MouseExited _e) {
-        deactivateBorder();
+        deactivateBorder(null);
     }
 
     public void mousePressed(MousePressed _e) {

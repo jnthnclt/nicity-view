@@ -37,16 +37,17 @@ public class WindowFlavor extends AFlavor {
      * @param _h
      * @param _color
      */
+    @Override
     public void paintFlavor(ICanvas g, int _x, int _y, int _w, int _h, AColor _color) {
 
         AColor color = _color;
         int r = 3;
 
         g.setColor(color.desaturate(0.5f).darken(0.2f));
-        g.roundRect(true, _x + 0, _y + 0, _w - 1, _h - 1, r, r);
+        g.roundRect(true, _x + 0, _y + 0, _w , _h , r, r);
 
         g.setColor(color.desaturate(0.2f).darken(0.05f));
-        g.roundRect(true, _x + 1, _y + 1, _w - 3, _h - 3, r, r);
+        g.roundRect(true, _x + 1, _y + 1, _w - 2, _h - 2, r, r);
 
         int h = _h - 5;
         int t = (int) (h * 0.2);
@@ -65,13 +66,13 @@ public class WindowFlavor extends AFlavor {
         AColor light = color.desaturate(0.15f).lighten(0.25f);
 
         g.setGradient(light, cl, _y, middle, cl, _y + t);
-        g.roundRect(true, _x + 2, _y + 2, _w - 5, t, r - 1, r - 1);
+        g.roundRect(true, _x + 2, _y + 2, _w - 4, t, r - 1, r - 1);
 
         g.setGradient(middle, cl, _y + t, light, cl, _y + t + m);
-        g.roundRect(true, _x + 2, _y + 2 + t, _w - 5, m, r - 1, r - 1);
+        g.roundRect(true, _x + 2, _y + 2 + t, _w - 4, m, r - 1, r - 1);
 
         g.setGradient(light, cl, _y + t + m, dark, cl, _y + t + m + b);
-        g.roundRect(true, _x + 2, _y + 2 + t + m, _w - 5, b, r - 1, r - 1);
+        g.roundRect(true, _x + 2, _y + 2 + t + m, _w - 4, b, r - 1, r - 1);
 
 
     }

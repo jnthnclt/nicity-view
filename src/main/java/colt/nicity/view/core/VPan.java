@@ -45,6 +45,7 @@ import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IMouseWheelEvents;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.paint.UPaint;
+import java.awt.Polygon;
 import java.awt.geom.GeneralPath;
 
 /**
@@ -54,13 +55,13 @@ import java.awt.geom.GeneralPath;
 public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvents, IMouseMotionEvents {
 
     public static void main(String[] args) {
-        UV.exitFrame(UV.zones(UV.zone("Pan",new VPan(new VChain(UV.cSN,new VButton("Button"),new VBox(800, 800) {
+        UV.exitFrame(new VPan(new VChain(UV.cSN,new VButton("Button"),new VBox(800, 800) {
 
             @Override
             public void paintBorder(ICanvas g, int _x, int _y, int _w, int _h) {
                 UPaint.checked(g, _x, _y, _w, _h, AColor.lightGray, AColor.darkGray);
             }
-        }), 400, 400))), "Pan");
+        }), 400, 400), "Pan");
     }
     static ScrollFlavor flavor = new ScrollFlavor();
     float maxWBeforePan = -1;
@@ -108,7 +109,6 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      */
     protected boolean scrollingY = false;
-    private boolean pan = false;
     private boolean paintYScrollbar = false;
     private boolean paintXScrollbar = false;
     private boolean paintXResizing = false;
@@ -242,7 +242,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
             if (alignY > -1 && view.getH() > getH()) {//paintYScrollbar
                 c = barColor;
                 if (scrollingY || paintYScrollbar) {
-                    c = ViewColor.cThemeActive;
+                    c = ViewColor.cThemeAccent;
                 }
                 _g.setColor(barColor);
 
@@ -293,30 +293,35 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
 
             }
             if (resizeable && (alignX > -1 || alignY > -1)) {
+                int xr = resize;
+                if (alignX < 0) xr = 0;
+                int yr = resize;
+                if (alignY < 0) yr = 0;
                 c = barColor;
                 if (resizingX && resizingY) {
                     c = ViewColor.cThemeActive;
                 }
-                _g.paintFlavor(flavor, _x + _w - scrollBarSize - resize, _y + _h - scrollBarSize - resize, scrollBarSize, scrollBarSize, c);
+                _g.paintFlavor(flavor, _x + _w - scrollBarSize - xr, _y + _h - scrollBarSize - yr, scrollBarSize, scrollBarSize, c);
             }
 
             c = barColor;
             if (resizingX || resizingX) {
                 c = ViewColor.cThemeActive;
             }
-            XYWH_I r = resizeX();
+            XYWH_I rx = resizeX();
+            XYWH_I ry = resizeY();
+            
             c = barColor;
-            if (resizingX || paintXResizing) {
+            if (paintXResizing) {
                 c = ViewColor.cThemeActive;
+                _g.paintFlavor(flavor, rx.x, rx.y, rx.w, rx.h, c);
             }
-            _g.paintFlavor(flavor, r.x, r.y, r.w, r.h, c);
             c = barColor;
-            if (resizingY || paintYResizing) {
+            if (paintYResizing) {
                 c = ViewColor.cThemeActive;
+                _g.paintFlavor(flavor, ry.x, ry.y, ry.w, ry.h, c);
             }
-            r = resizeY();
-            _g.paintFlavor(flavor, r.x, r.y, r.w, r.h, c);
-
+            
         }
     }
 
@@ -325,8 +330,10 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I incUp() {
+        int r = resize;
+        if (alignX < 0) r = 0;
         float _w = getW();
-        return new XYWH_I(_w - (scrollBarSize + resize), 0, scrollBarSize, scrollBarSize);
+        return new XYWH_I(_w - (scrollBarSize + r), 0, scrollBarSize, scrollBarSize);
     }
 
     /**
@@ -334,9 +341,11 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I incDown() {
+        int r = resize;
+        if (alignX < 0) r = 0;
         float _w = getW();
         float _h = getH();
-        return new XYWH_I(_w - (scrollBarSize + resize), _h - (scrollBarSize + scrollBarSize + resize), scrollBarSize, scrollBarSize);
+        return new XYWH_I(_w - (scrollBarSize + r), _h - (scrollBarSize + scrollBarSize + r), scrollBarSize, scrollBarSize);
     }
 
     /**
@@ -344,9 +353,11 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I incRight() {
+        int r = resize;
+        if (alignY < 0) r = 0;
         float _w = getW();
         float _h = getH();
-        return new XYWH_I(_w - (scrollBarSize + scrollBarSize + resize), _h - (scrollBarSize + resize), scrollBarSize, scrollBarSize);
+        return new XYWH_I(_w - (scrollBarSize + scrollBarSize + r), _h - (scrollBarSize + r), scrollBarSize, scrollBarSize);
     }
 
     /**
@@ -354,8 +365,10 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I incLeft() {
+        int r = resize;
+        if (alignY < 0) r = 0;
         float _h = getH();
-        return new XYWH_I(0, _h - (scrollBarSize + resize), scrollBarSize, scrollBarSize);
+        return new XYWH_I(0, _h - (scrollBarSize + r), scrollBarSize, scrollBarSize);
     }
 
     /**
@@ -363,7 +376,9 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I panY() {
-        float _h = getH() - ((scrollBarSize * 3) + resize);// top botton and resize areas = scrollBarSize*3
+        int r = resize;
+        if (alignX < 0) r = 0;
+        float _h = getH() - ((scrollBarSize * 3) + r);// top botton and resize areas = scrollBarSize*3
         int _y = (int) (alignY * _h);
         int ph = 0;
         if (hSlack != 0) {
@@ -372,7 +387,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
         if (ph < scrollBarSize) {
             ph = scrollBarSize;
         }
-        return new XYWH_I((int) (getW() - (scrollBarSize + resize)), scrollBarSize + (int) (_y - (ph * alignY)), scrollBarSize, ph);
+        return new XYWH_I((int) (getW() - (scrollBarSize + r)), scrollBarSize + (int) (_y - (ph * alignY)), scrollBarSize, ph);
     }
 
     /**
@@ -380,6 +395,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I resizeY() {
+        if (alignX < 0) return new XYWH_I(getW(), 0, resize, getH());
         return new XYWH_I((int) (getW() - resize), 0, resize, getH());
     }
 
@@ -388,6 +404,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I resizeX() {
+        if (alignY < 0) return new XYWH_I(0, getH(), getW(), resize);
         return new XYWH_I(0, (int) (getH() - resize), getW(), resize);
     }
 
@@ -396,7 +413,9 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @return
      */
     public XYWH_I panX() {
-        float _w = getW() - ((scrollBarSize * 3) + resize);// top botton and resize areas = scrollBarSize*3
+        int r = resize;
+        if (alignY < 0) r = 0;
+        float _w = getW() - ((scrollBarSize * 3) + r);// top botton and resize areas = scrollBarSize*3
         int _x = (int) (alignX * _w);
         int pw = 0;
         if (wSlack != 0) {
@@ -405,7 +424,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
         if (pw < scrollBarSize) {
             pw = scrollBarSize;
         }
-        return new XYWH_I(scrollBarSize + (int) (_x - (pw * alignX)), (int) (getH() - (scrollBarSize + resize)), pw, scrollBarSize);
+        return new XYWH_I(scrollBarSize + (int) (_x - (pw * alignX)), (int) (getH() - (scrollBarSize + r)), pw, scrollBarSize);
     }
 
     @Override
@@ -677,7 +696,6 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _pan
      */
     public void setPan(boolean _pan) {
-        pan = _pan;
         //grabFocus();
         //getRootView().setMouseWheelFocus(0,this);//!!
     }
@@ -724,10 +742,15 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _panXY
      */
     public void setModePoint(XY_I _p, boolean _panXY) {
+        int xr = resize;
+        if (alignX < 0) xr = 0;
+        int yr = resize;
+        if (alignY < 0) yr = 0;
+        
         if (_panXY) {
             scrollingX = true;
             scrollingY = true;
-        } else if (resizeable && (_p.x > getW() - scrollBarSize - resize && _p.y > getH() - scrollBarSize - resize)) {
+        } else if (resizeable && (_p.x > getW() - scrollBarSize - xr && _p.y > getH() - scrollBarSize - yr)) {
             resizingX = true;
             resizingY = true;
             scrollingX = false;

@@ -36,6 +36,10 @@ import colt.nicity.core.lang.BitMasks;
 import colt.nicity.core.lang.UMath;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.border.BevelBorder;
+import colt.nicity.view.border.BuldgeBorder;
+import colt.nicity.view.border.SolidBorder;
+import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.event.AMouseEvent;
 import colt.nicity.view.flavor.BevelFlavor;
@@ -859,50 +863,10 @@ public class UV {
      */
     public static IView zone(final Object _name, IView _view, AColor _color) {
         Viewer v = new Viewer(_view);
-        Viewer area = new Viewer(v) {
-            @Override
-            public String toString() {
-                if (_name == null) return "Null";
-                return _name.toString();
-            }
-            @Override
-            public void mend() {
-                enableFlag(UV.cRepair);//??
-                super.mend();
-            }
-        };
-        area.setBorder(new LineBorder(ViewColor.cItemTheme,AColor.gray,1,1,1,1) {
-            @Override
-            public void paintBackground(ICanvas g, int x, int y, int _w, int _h) {
-                g.setColor(ViewColor.cThemeShadow);
-                g.rect(true, x, y, _w, _h);
-                super.paintBackground(g, x, y, _w, _h);
-            }
-            
-            @Override
-            public void paintBorder(ICanvas g,int x,int y, int w, int h) {
-                super.paintBorder(g,x,y, w, h);
-                
-                String s = "";
-                if (_name != null) s = _name.toString();
-                if (s.length() > 0) {
-                    
-                    int sw = (int)UV.fonts[UV.cSmall].getW(s);
-                    int sh = (int)UV.fonts[UV.cSmall].getH(s);
-
-                    g.setColor(ViewColor.cTheme);
-                    g.roundRect(true,x+padL+6, y+((10)-sh)+3, sw+4, sh, 8, 8);
-
-                    g.setColor(ViewColor.cTheme.darken(0.2f));
-                    g.roundRect(false,x+padL+6, y+((10)-sh)+3, sw+4, sh, 8, 8);
-
-                    g.setFont(UV.fonts[UV.cSmall]);
-                    g.setColor(ViewColor.cThemeFont);
-                    g.drawString(s,x+padL+8,y+(10));
-                }
-            }
-        });
-        return area;
+        VChain c = new VChain(UV.cSWNW);
+        c.add(UV.border(new VString(_name,UV.fonts[UV.cSmall]),new SolidBorder(ViewColor.cTheme,2)));
+        c.add(UV.border(v,new BuldgeBorder(ViewColor.cTheme,2)));
+        return c;
     }
     
     /**

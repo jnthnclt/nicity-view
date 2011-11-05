@@ -37,6 +37,7 @@ public class TabFlavor extends AFlavor {
      * @param _h
      * @param _color
      */
+    @Override
     public void paintFlavor(ICanvas g, int _x, int _y, int _w, int _h, AColor _color) {
 
         AColor color = _color;
@@ -44,17 +45,14 @@ public class TabFlavor extends AFlavor {
         int r = 10;
 
         g.setColor(color.desaturate(0.1f).darken(0.2f));
-        g.roundRect(true, _x + 0, _y + 0, _w, _h + r - 1, r, r);
-
-        g.setColor(color.desaturate(0.1f).lighten(0.2f));
-        g.roundRect(false, _x + 1, _y + 1, _w - 2, _h + r - 3, r - 1, r - 1);
+        g.roundRect(true, _x + 0, _y + 0, _w - 1, _h , r, r);
 
         AColor fc = color.desaturate(0.1f).lighten(0.2f);
         AColor tc = color.desaturate(0.1f).darken(0.2f);
 
         int cl = _x + (_w / 2);
         g.setGradient(fc, cl, _y, tc, cl, _y + _h);
-        g.roundRect(true, _x + 2, _y + 2, _w - 4, _h + r - 5, r - 2, r - 2);
+        g.roundRect(true, _x + 1, _y + 1, _w - 2, _h, r - 2, r - 2);
 
     }
 }

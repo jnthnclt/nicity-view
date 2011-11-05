@@ -223,7 +223,7 @@ public class VButton extends AItem {
     public void mouseExited(MouseExited _e) {
         if (!isDisabled) {
             super.mouseExited(_e);
-            deactivateBorder();
+            deactivateBorder(null);
         }
     }
 
@@ -239,7 +239,7 @@ public class VButton extends AItem {
     public void mouseReleased(MouseReleased _e) {
         if (!isDisabled) {
             super.mouseReleased(_e);
-            deactivateBorder();
+            deactivateBorder(null);
             deselectBorder();
         }
     }

@@ -39,7 +39,7 @@ public class VEditDate extends Viewer {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new Viewer(new VEditDate(new Value<Long>(System.currentTimeMillis()))), "");
     }
 

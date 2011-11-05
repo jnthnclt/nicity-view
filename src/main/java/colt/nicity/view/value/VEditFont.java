@@ -34,7 +34,7 @@ import colt.nicity.view.rpp.IRPPViewable;
 public class VEditFont extends Viewer implements IRPPViewable {
     
     public static IView viewable(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         return new VEditFont(new Value<AFont>(UV.fonts[UV.cText]));
     }
     /**
@@ -42,7 +42,7 @@ public class VEditFont extends Viewer implements IRPPViewable {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         //VOpenWindowsGraph.frame(null, new Viewer(new VEditFont(new Value<AFont>(UV.fonts[UV.cText]))), "");
         UV.exitFrame(new Viewer(viewable(_args)), "");
     }

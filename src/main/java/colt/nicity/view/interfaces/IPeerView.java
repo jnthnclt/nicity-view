@@ -19,10 +19,10 @@
  */
 package colt.nicity.view.interfaces;
 
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
-import java.awt.Insets;
 import java.awt.Graphics;
 
 /**
@@ -142,7 +142,7 @@ public interface IPeerView {
      *
      * @return
      */
-    public Insets getInsets();
+    public TRLB_I getTRLB();
 
     /**
      *

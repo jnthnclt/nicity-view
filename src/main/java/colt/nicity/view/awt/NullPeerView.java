@@ -19,13 +19,13 @@
  */
 package colt.nicity.view.awt;
 
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
 import java.awt.Graphics;
-import java.awt.Insets;
 
 /**
  *
@@ -48,6 +48,7 @@ public class NullPeerView implements IPeerView {
      *
      * @param tasksToEnable
      */
+    @Override
     public void enablePeerEvents(long tasksToEnable) {
     }
 
@@ -55,6 +56,7 @@ public class NullPeerView implements IPeerView {
      *
      * @param tasksToDisable
      */
+    @Override
     public void disablePeerEvents(long tasksToDisable) {
     }
 
@@ -62,6 +64,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public IEventClient getClientView() {
         return null;
     }
@@ -70,6 +73,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public String getTitle() {
         return "stale";
     }
@@ -78,6 +82,7 @@ public class NullPeerView implements IPeerView {
      *
      * @param _title
      */
+    @Override
     public void setTitle(String _title) {
     }
 
@@ -85,36 +90,42 @@ public class NullPeerView implements IPeerView {
      *
      * @param _modal
      */
+    @Override
     public void setModal(boolean _modal) {
     }
 
     /**
      *
      */
+    @Override
     public void toFront() {
     }
 
     /**
      *
      */
+    @Override
     public void toBack() {
     }
 
     /**
      *
      */
+    @Override
     public void show() {
     }
 
     /**
      *
      */
+    @Override
     public void hide() {
     }
 
     /**
      *
      */
+    @Override
     public void dispose() {
     }
 
@@ -122,6 +133,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public boolean isDisplayable() {
         return false;
     }
@@ -130,24 +142,28 @@ public class NullPeerView implements IPeerView {
      *
      * @param _visible
      */
+    @Override
     public void setVisible(boolean _visible) {
     }
 
     /**
      *
      */
+    @Override
     public void iconify() {
     }
 
     /**
      *
      */
+    @Override
     public void deiconify() {
     }
 
     /**
      *
      */
+    @Override
     public void maximize() {
     }
 
@@ -155,6 +171,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public XY_I getCorner() {
         return new XY_I(0, 0);
     }
@@ -163,6 +180,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public XY_I getCornerOnScreen() {
         return new XY_I(0, 0);
     }
@@ -172,6 +190,7 @@ public class NullPeerView implements IPeerView {
      * @param x
      * @param y
      */
+    @Override
     public void setCorner(int x, int y) {
     }
 
@@ -179,14 +198,16 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
-    public Insets getInsets() {
-        return new Insets(0, 0, 0, 0);
+    @Override
+    public TRLB_I getTRLB() {
+        return new TRLB_I(0, 0, 0, 0);
     }
 
     /**
      *
      * @return
      */
+    @Override
     public WH_F getWH() {
         return new WH_F(0, 0);
     }
@@ -196,6 +217,7 @@ public class NullPeerView implements IPeerView {
      * @param w
      * @param h
      */
+    @Override
     public void setWH(int w, int h) {
     }
 
@@ -203,6 +225,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getW() {
         return 0;
     }
@@ -211,6 +234,7 @@ public class NullPeerView implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getH() {
         return 0;
     }
@@ -221,6 +245,7 @@ public class NullPeerView implements IPeerView {
      * @param _h
      * @return
      */
+    @Override
     public Graphics ensureSize(int _w, int _h) {
         return null;
     }
@@ -228,6 +253,7 @@ public class NullPeerView implements IPeerView {
     /**
      *
      */
+    @Override
     public void fullscreen() {
     }
 
@@ -235,6 +261,7 @@ public class NullPeerView implements IPeerView {
      *
      * @param _region
      */
+    @Override
     public void modifiedRegion(XYWH_I _region) {
     }
 }

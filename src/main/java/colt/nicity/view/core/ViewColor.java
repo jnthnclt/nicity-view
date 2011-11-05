@@ -189,6 +189,30 @@ public class ViewColor {
         ViewColor.cItemTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
         ViewColor.cThemeScroll.set8BitColor(new AColor(120, 120, 120).get8BitRGBA());
     }
+    
+    /**
+     *
+     */
+    public static void onGray() {
+        inverted = false;
+        ViewColor.cThemeImportant.set8BitColor(new AColor(170, 170, 200).get8BitRGBA());
+        ViewColor.cThemeShadow.set8BitColor(new AColor(0.7f).get8BitRGBA());
+        ViewColor.cTheme.set8BitColor(new AColor(220, 220, 220).get8BitRGBA());
+        ViewColor.cThemeFont.set8BitColor(AColor.black.get8BitRGBA());
+        ViewColor.cThemeEditFont.set8BitColor(AColor.black.get8BitRGBA());
+        ViewColor.cButtonTheme.set8BitColor(new AColor(160, 200, 240).get8BitRGBA());
+        ViewColor.cButtonFont.set8BitColor(AColor.black.get8BitRGBA());
+        ViewColor.cWindowTheme.set8BitColor(new AColor(120, 120, 120).get8BitRGBA());
+        ViewColor.cWindowThemeFont.set8BitColor(AColor.black.get8BitRGBA());
+        ViewColor.cVisualizeTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
+        ViewColor.cVisualizeThemeFont.set8BitColor(new AColor(20, 20, 20).get8BitRGBA());
+        ViewColor.cItemTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
+        ViewColor.cThemeAccent.set8BitColor(new AColor(122,173,255).get8BitRGBA());
+        
+        ViewColor.cThemeActive.set8BitColor(new AColor(112,163,255).get8BitRGBA());
+        ViewColor.cThemeSelected.set8BitColor(new AColor(102,153,255).get8BitRGBA());
+        ViewColor.cThemeScroll.set8BitColor(new AColor(102,153,255).get8BitRGBA());
+    }
 
     /**
      *

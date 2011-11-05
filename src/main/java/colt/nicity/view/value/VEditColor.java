@@ -36,7 +36,7 @@ public class VEditColor extends Viewer {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new Viewer(new VEditColor(new Value<AColor>(AColor.blue))), "");
     }
 

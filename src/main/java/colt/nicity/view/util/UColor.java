@@ -52,8 +52,7 @@ public class UColor {
         float max = Math.max(Math.max(r, g), Math.max(g, b));
         float min = Math.min(Math.min(r, g), Math.min(g, b));
         float diff = (max - min);
-        float sum = (float) ((max + min) / 2.);
-
+        
         float hue = 0;
         if (diff == 0) {
             hue = 0;

@@ -73,7 +73,7 @@ import linloglayout.MinimizerBarnesHut;
 public class NGEnvAnim extends Viewer implements IRPPViewable {
     
     public static IView viewable(String[] args) {
-         ViewColor.onBlack();
+         ViewColor.onGray();
         NG ng = new NG();
         for (int i = 0; i < 40; i++) {
             ng.order(URandom.randomLowerCaseAlphaString(1), URandom.randomLowerCaseAlphaString(1), ULinkDrawer.inout("", AColor.blue));

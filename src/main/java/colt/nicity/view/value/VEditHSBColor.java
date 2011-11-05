@@ -48,7 +48,7 @@ public class VEditHSBColor extends VClip implements IMouseEvents, IMouseMotionEv
      * @param args
      */
     public static void main(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new VEditHSBColor("test", new Value<AColor>(new AColor(.5f, 0.5f, 0.5f)), 200, 80), "test");
     }
     Object name;

@@ -50,7 +50,7 @@ public class VFontBrowser extends Viewer {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new VFontBrowser(new Value(UV.fonts[UV.cText])), "Font Browser");
     }
     /**

@@ -508,7 +508,7 @@ public interface IView extends IViewable {
     /**
      *
      */
-    public void deactivateBorder();
+    public void deactivateBorder(IView view);
 
     /**
      *

@@ -48,7 +48,7 @@ public class VEditFontSlim extends Viewer implements IObserver {
      * @param _args
      */
     public static void main(String[] _args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new Viewer(new VEditFontSlim(new Value<AFont>(UV.fonts[UV.cText]))), "");
     }
     Value<AFont> font;

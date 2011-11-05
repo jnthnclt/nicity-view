@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.awt;
 
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.view.event.ADK;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.view.core.PrimativeEvent;
@@ -27,7 +28,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
@@ -341,7 +341,7 @@ public class UAWT {
      * @param _region
      * @param _buffer
      */
-    static public void modifiedRegion(Insets _insets, Graphics _g, XYWH_I _region, Image _buffer) {
+    static public void modifiedRegion(TRLB_I _insets, Graphics _g, XYWH_I _region, Image _buffer) {
         if (_insets == null) {
             return;
         }

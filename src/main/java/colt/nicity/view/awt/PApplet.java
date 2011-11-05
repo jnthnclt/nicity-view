@@ -20,6 +20,7 @@
 package colt.nicity.view.awt;
 
 import colt.nicity.core.lang.IOut;
+import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
@@ -43,7 +44,7 @@ import java.awt.image.BufferedImage;
 public class PApplet extends Applet implements IPeerView {
 
     private AApplet client;
-    private IOut _;
+    final private IOut _;
     /**
      *
      */
@@ -55,14 +56,17 @@ public class PApplet extends Applet implements IPeerView {
                 | AWTEvent.WINDOW_EVENT_MASK
                 | AWTEvent.FOCUS_EVENT_MASK);
         _ = new IOut() {
+            @Override
             public boolean canceled() {
                 return false;
             }
 
+            @Override
             public void out(double _at, double _outof) {
                 
             }
 
+            @Override
             public void out(Object... _status) {
                 
             }
@@ -72,18 +76,21 @@ public class PApplet extends Applet implements IPeerView {
     /**
      *
      */
+    @Override
     public void iconify() {
     }
 
     /**
      *
      */
+    @Override
     public void deiconify() {
     }
 
     /**
      *
      */
+    @Override
     public void maximize() {
     }
 
@@ -99,6 +106,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @param _modal
      */
+    @Override
     public void setModal(boolean _modal) {
     }
 
@@ -114,6 +122,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public String getTitle() {
         return "";
     }
@@ -122,6 +131,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @param _title
      */
+    @Override
     public void setTitle(String _title) {
     }
 
@@ -143,18 +153,21 @@ public class PApplet extends Applet implements IPeerView {
     /**
      *
      */
+    @Override
     public void toFront() {
     }
 
     /**
      *
      */
+    @Override
     public void toBack() {
     }
 
     /**
      *
      */
+    @Override
     public void dispose() {
     }
 
@@ -162,6 +175,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @param eventsToEnable
      */
+    @Override
     public void enablePeerEvents(long eventsToEnable) {
         super.enableEvents(eventsToEnable);
     }
@@ -170,6 +184,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @param eventsToDisable
      */
+    @Override
     public void disablePeerEvents(long eventsToDisable) {
         super.disableEvents(eventsToDisable);
     }
@@ -207,6 +222,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public IEventClient getClientView() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -217,8 +233,9 @@ public class PApplet extends Applet implements IPeerView {
      * @param _h
      * @return
      */
+    @Override
     public Graphics ensureSize(int _w, int _h) {
-        Insets insets = getInsets();
+        Insets insets = super.getInsets();
         _w += (insets.left + insets.right);
         _h += (insets.top + insets.bottom);
 
@@ -267,6 +284,7 @@ public class PApplet extends Applet implements IPeerView {
     /**
      *
      */
+    @Override
     public void fullscreen() {
     }
 
@@ -274,14 +292,16 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @param _region
      */
+    @Override
     public void modifiedRegion(XYWH_I _region) {
-        UAWT.modifiedRegion(getInsets(), getGraphics(), _region, buffer);
+        UAWT.modifiedRegion(getTRLB(), getGraphics(), _region, buffer);
     }
 
     /**
      *
      * @return
      */
+    @Override
     public XY_I getCorner() {
         Point p = super.getLocation();
         return new XY_I(p.x, p.y);
@@ -291,6 +311,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public XY_I getCornerOnScreen() {
         Point p = super.getLocationOnScreen();
         return new XY_I(p.x, p.y);
@@ -300,6 +321,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public WH_F getWH() {
         Dimension d = super.getSize();
         return new WH_F(d.width, d.height);
@@ -310,6 +332,7 @@ public class PApplet extends Applet implements IPeerView {
      * @param x
      * @param y
      */
+    @Override
     public void setCorner(int x, int y) {
         super.setLocation(x, y);
     }
@@ -319,6 +342,7 @@ public class PApplet extends Applet implements IPeerView {
      * @param w
      * @param h
      */
+    @Override
     public void setWH(int w, int h) {
         super.setSize(w, h);
     }
@@ -327,6 +351,7 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getW() {
         return super.getWidth();
     }
@@ -335,7 +360,14 @@ public class PApplet extends Applet implements IPeerView {
      *
      * @return
      */
+    @Override
     public int getH() {
         return super.getHeight();
+    }
+
+    @Override
+    public TRLB_I getTRLB() {
+        Insets insert = super.getInsets();
+        return new TRLB_I(insert.top, insert.right, insert.left, insert.bottom);
     }
 }

@@ -436,7 +436,8 @@ public abstract class AViewable extends ASetObject implements IView {
         UBorder.activateBorder(this);
     }
 
-    public void deactivateBorder() {
+    @Override
+    public void deactivateBorder(IView view) {
         UBorder.deactivateBorder(this);
     }
 

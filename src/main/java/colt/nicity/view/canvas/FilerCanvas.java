@@ -106,6 +106,7 @@ public class FilerCanvas implements ICanvas {
     /**
      *
      */
+    @Override
     public void dispose() {
         try {
             UIO.writeByte(f, cDispose, "method");
@@ -120,6 +121,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cDispose] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.dispose();
             }
@@ -137,6 +139,7 @@ public class FilerCanvas implements ICanvas {
      * @param start
      * @param arcAngle
      */
+    @Override
     public void arc(boolean _fill, int x, int y, int w, int h, int start, int arcAngle) {
         try {
             UIO.writeByte(f, cArc, "method");
@@ -157,6 +160,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cArc] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.arc(
                         UIO.readBoolean(f, "fill"),
@@ -178,6 +182,7 @@ public class FilerCanvas implements ICanvas {
      * @param x2
      * @param y2
      */
+    @Override
     public void line(int x1, int y1, int x2, int y2) {
         try {
             UIO.writeByte(f, cLine, "method");
@@ -194,6 +199,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cLine] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.line(
                         UIO.readInt(f, "x1"),
@@ -213,6 +219,7 @@ public class FilerCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void oval(boolean _fill, int x, int y, int w, int h) {
         try {
             UIO.writeByte(f, cOval, "method");
@@ -231,6 +238,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cOval] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.oval(
                         UIO.readBoolean(f, "fill"),
@@ -252,6 +260,7 @@ public class FilerCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void rect(boolean _fill, int x, int y, int w, int h) {
         try {
             UIO.writeByte(f, cRect, "method");
@@ -270,6 +279,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cRect] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.rect(
                         UIO.readBoolean(f, "fill"),
@@ -293,6 +303,7 @@ public class FilerCanvas implements ICanvas {
      * @param arcWidth
      * @param arcHeight
      */
+    @Override
     public void roundRect(boolean _fill, int x, int y, int w, int h, int arcWidth, int arcHeight) {
         try {
             UIO.writeByte(f, cRoundRect, "method");
@@ -313,6 +324,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cRoundRect] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.roundRect(
                         UIO.readBoolean(f, "fill"),
@@ -335,6 +347,7 @@ public class FilerCanvas implements ICanvas {
      * @param yPoints
      * @param nPoints
      */
+    @Override
     public void polyline(int[] xPoints, int[] yPoints, int nPoints) {
         try {
             UIO.writeByte(f, cPolyline, "method");
@@ -351,6 +364,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cPolyline] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.polyline(
                         UIO.readIntArray(f, "xs"),
@@ -369,6 +383,7 @@ public class FilerCanvas implements ICanvas {
      * @param yPoints
      * @param nPoints
      */
+    @Override
     public void polygon(boolean _fill, int[] xPoints, int[] yPoints, int nPoints) {
         try {
             UIO.writeByte(f, cPolygon, "method");
@@ -386,6 +401,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cPolygon] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.polygon(
                         UIO.readBoolean(f, "fill"),
@@ -404,10 +420,10 @@ public class FilerCanvas implements ICanvas {
      * @param x
      * @param y
      */
+    @Override
     public void drawString(String str, int x, int y) {
         try {
             UIO.writeByte(f, cString, "method");
-
             UIO.writeString(f, str, "string");
             UIO.writeInt(f, x, "x");
             UIO.writeInt(f, y, "y");
@@ -420,6 +436,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cString] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.drawString(
                         UIO.readString(f, "string"),
@@ -435,6 +452,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @return
      */
+    @Override
     public Object getClip() {
         return clip;
     }
@@ -443,6 +461,7 @@ public class FilerCanvas implements ICanvas {
      * 
      * @param _clip
      */
+    @Override
     public void setClip(Object _clip) {
         clip = _clip;
     }
@@ -455,10 +474,10 @@ public class FilerCanvas implements ICanvas {
      * @param w
      * @param h
      */
+    @Override
     public void setClip(int x, int y, int w, int h) {
         try {
             UIO.writeByte(f, cClipRect, "method");
-
             UIO.writeInt(f, x, "x");
             UIO.writeInt(f, y, "y");
             UIO.writeInt(f, w, "w");
@@ -473,6 +492,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cClipRect] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.setClip(
                         UIO.readInt(f, "x"),
@@ -504,6 +524,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cTranslate] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.translate(
                         UIO.readInt(f, "x"),
@@ -519,6 +540,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @param _color
      */
+    @Override
     public void setColor(AColor _color) {
         try {
             Integer c = _color.intValue();
@@ -537,6 +559,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cColor] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.setColor(
                         new AColor(UIO.readInt(f, "color")));
@@ -550,10 +573,10 @@ public class FilerCanvas implements ICanvas {
      *
      * @param _font
      */
+    @Override
     public void setFont(AFont _font) {
         try {
             UIO.writeByte(f, cFont, "method");
-
             UIO.writeString(f, _font.getFont().getFontName(), "name");
             UIO.writeInt(f, _font.getFont().getStyle(), "style");
             UIO.writeInt(f, _font.getFont().getSize(), "size");
@@ -566,6 +589,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cFont] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.setFont(
                         new AFont(UIO.readString(f, "name"), UIO.readInt(f, "size"), UIO.readInt(f, "size")));
@@ -579,6 +603,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @param _fill
      */
+    @Override
     public void fill(Object _fill) {
     }
     static byte cDraw = 16;
@@ -587,6 +612,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @param _draw
      */
+    @Override
     public void draw(Object _draw) {
     }
     static byte cPaint = 17;
@@ -595,6 +621,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @param _draw
      */
+    @Override
     public void setPaint(Object _draw) {
     }
     static byte cRotateA = 18;
@@ -603,10 +630,10 @@ public class FilerCanvas implements ICanvas {
      *
      * @param angle
      */
+    @Override
     public void rotate(double angle) {
         try {
             UIO.writeByte(f, cRotateA, "method");
-
             UIO.writeDouble(f, angle, "angle");
             UIO.writeBoolean(f, false, "done");
         } catch (Exception ex) {
@@ -617,6 +644,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cRotateA] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.rotate(
                         UIO.readDouble(f, "angle"));
@@ -629,6 +657,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @return
      */
+    @Override
     public AffineTransform getTransform() {
         return null;
     }
@@ -638,6 +667,7 @@ public class FilerCanvas implements ICanvas {
      *
      * @param restore
      */
+    @Override
     public void setTransform(Object restore) {
     }
     static byte cRotateAXY = 20;
@@ -648,10 +678,10 @@ public class FilerCanvas implements ICanvas {
      * @param x
      * @param y
      */
+    @Override
     public void rotate(double angle, double x, double y) {
         try {
             UIO.writeByte(f, cRotateAXY, "method");
-
             UIO.writeDouble(f, angle, "angle");
             UIO.writeDouble(f, x, "x");
             UIO.writeDouble(f, y, "y");
@@ -664,6 +694,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cRotateAXY] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.rotate(
                         UIO.readDouble(f, "angle"),
@@ -680,10 +711,10 @@ public class FilerCanvas implements ICanvas {
      * @param x
      * @param y
      */
+    @Override
     public void translate(double x, double y) {
         try {
             UIO.writeByte(f, cTranslateDXY, "method");
-
             UIO.writeDouble(f, x, "x");
             UIO.writeDouble(f, y, "y");
             UIO.writeBoolean(f, false, "done");
@@ -695,6 +726,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cTranslateDXY] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.translate(
                         UIO.readDouble(f, "x"),
@@ -710,10 +742,10 @@ public class FilerCanvas implements ICanvas {
      * @param _alpha
      * @param _composite
      */
+    @Override
     public void setAlpha(float _alpha, int _composite) {
         try {
             UIO.writeByte(f, cAlpha, "method");
-
             UIO.writeFloat(f, _alpha, "alpha");
             UIO.writeInt(f, _composite, "composite");
             UIO.writeBoolean(f, false, "done");
@@ -725,6 +757,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cAlpha] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.setAlpha(
                         UIO.readFloat(f, "alpha"),
@@ -744,10 +777,10 @@ public class FilerCanvas implements ICanvas {
      * @param _tx
      * @param _ty
      */
+    @Override
     public void setGradient(AColor _from, int _fx, int _fy, AColor _to, int _tx, int _ty) {
         try {
             UIO.writeByte(f, cGradient, "method");
-
             UIO.writeInt(f, _from.intValue(), "fromColor");
             UIO.writeInt(f, _fx, "fx");
             UIO.writeInt(f, _fy, "fy");
@@ -763,6 +796,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cGradient] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.setGradient(
                         new AColor(UIO.readInt(f, "fromColor")),
@@ -784,10 +818,10 @@ public class FilerCanvas implements ICanvas {
      * @param _y
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image, int _x, int _y, Object _observer) {
         try {
             UIO.writeByte(f, cImageXY, "method");
-
             UIO.writeInt(f, _x, "x");
             UIO.writeInt(f, _y, "y");
             UIO.writeBoolean(f, false, "done");
@@ -799,6 +833,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cImageXY] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.drawImage(
                         null,
@@ -820,10 +855,10 @@ public class FilerCanvas implements ICanvas {
      * @param _h
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image, int _x, int _y, int _w, int _h, Object _observer) {
         try {
             UIO.writeByte(f, cImageXYWH, "method");
-
             UIO.writeInt(f, _x, "x");
             UIO.writeInt(f, _y, "y");
             UIO.writeInt(f, _w, "w");
@@ -837,6 +872,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cImageXYWH] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.drawImage(
                         null,
@@ -864,10 +900,10 @@ public class FilerCanvas implements ICanvas {
      * @param _sy2
      * @param _observer
      */
+    @Override
     public void drawImage(Object _image, int _dx1, int _dy1, int _dx2, int _dy2, int _sx1, int _sy1, int _sx2, int _sy2, Object _observer) {
         try {
             UIO.writeByte(f, cImageDXYSXY, "method");
-
             UIO.writeInt(f, _dx1, "dx1");
             UIO.writeInt(f, _dy1, "dy1");
             UIO.writeInt(f, _dx2, "dx2");
@@ -885,6 +921,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cImageDXYSXY] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.drawImage(
                         null,
@@ -921,6 +958,7 @@ public class FilerCanvas implements ICanvas {
     static {
         methods[cPaintFlavor] = new CanvasMethod() {
 
+            @Override
             public void render(IFiler f, ICanvas _c) throws Exception {
                 _c.paintFlavor(
                         AFlavor.getFlavor(UIO.readLong(f, "flavor")),

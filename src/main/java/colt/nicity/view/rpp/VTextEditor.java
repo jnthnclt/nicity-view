@@ -16,7 +16,6 @@ import colt.nicity.view.core.VString;
 import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
-import colt.nicity.view.list.VList;
 import colt.nicity.view.ngraph.NG;
 import colt.nicity.view.ngraph.NGEnvAnim;
 import colt.nicity.view.value.VFiles;

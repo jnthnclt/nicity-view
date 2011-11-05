@@ -58,18 +58,22 @@ public class VS {
             final BufferedImage image = ImageIO.read(_file);
             _image.response(_, new IImage() {
 
+                @Override
                 public ICanvas canvas(long _who) {
                     return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
                 }
 
+                @Override
                 public Object data(long _who) {
                     return image;
                 }
 
+                @Override
                 public int getWidth() {
                     return image.getWidth();
                 }
 
+                @Override
                 public int getHeight() {
                     return image.getHeight();
                 }
@@ -90,15 +94,15 @@ public class VS {
     /**
      *
      */
-    public static int c32BitRGB = 0;
+    final public static int c32BitRGB = 0;
     /**
      *
      */
-    public static int c32BitARGB = 1;
+    final public static int c32BitARGB = 1;
     /**
      *
      */
-    public static int c8BitGrey = 2;
+    final public static int c8BitGrey = 2;
 
     /**
      *
@@ -119,18 +123,22 @@ public class VS {
         final BufferedImage image = new BufferedImage(_w, _h, type);
         return new IImage() {
 
+            @Override
             public ICanvas canvas(long _who) {
                 return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
             }
 
+            @Override
             public Object data(long _who) {
                 return image;
             }
 
+            @Override
             public int getWidth() {
                 return image.getWidth();
             }
 
+            @Override
             public int getHeight() {
                 return image.getHeight();
             }
@@ -154,18 +162,22 @@ public class VS {
         image.setRGB(0, 0, _w, _h, _pixels, 0, _w);
         return new IImage() {
 
+            @Override
             public ICanvas canvas(long _who) {
                 return new GlueAWTGraphicsToCanvas(0, image.createGraphics());
             }
 
+            @Override
             public Object data(long _who) {
                 return image;
             }
 
+            @Override
             public int getWidth() {
                 return image.getWidth();
             }
 
+            @Override
             public int getHeight() {
                 return image.getHeight();
             }

@@ -43,7 +43,7 @@ public class VEditNumericColor extends Viewer {
      * @param args
      */
     public static void main(String[] args) {
-        ViewColor.onBlack();
+        ViewColor.onGray();
         UV.exitFrame(new VEditNumericColor("color", new Value<AColor>(new AColor(.5f, 0.5f, 0.5f))), "test");
     }
     
