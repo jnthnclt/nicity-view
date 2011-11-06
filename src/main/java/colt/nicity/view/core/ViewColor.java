@@ -175,19 +175,19 @@ public class ViewColor {
         inverted = false;
         ViewColor.cThemeImportant.set8BitColor(new AColor(255, 227, 0).get8BitRGBA());
         ViewColor.cThemeShadow.set8BitColor(new AColor(0.7f).get8BitRGBA());
-        ViewColor.cTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
+        ViewColor.cTheme.set8BitColor(new AColor(250, 250, 250).get8BitRGBA());
         ViewColor.cThemeFont.set8BitColor(AColor.black.get8BitRGBA());
         ViewColor.cThemeEditFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cThemeActive.set8BitColor(new AColor(190, 190, 190).get8BitRGBA());
-        ViewColor.cThemeSelected.set8BitColor(new AColor(160, 160, 160).get8BitRGBA());
-        ViewColor.cButtonTheme.set8BitColor(new AColor(220, 220, 220).get8BitRGBA());
+        ViewColor.cThemeActive.set8BitColor(new AColor(200, 200, 200).get8BitRGBA());
+        ViewColor.cThemeSelected.set8BitColor(new AColor(170, 170, 170).get8BitRGBA());
+        ViewColor.cButtonTheme.set8BitColor(new AColor(230, 230, 230).get8BitRGBA());
         ViewColor.cButtonFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cWindowTheme.set8BitColor(new AColor(120, 120, 120).get8BitRGBA());
+        ViewColor.cWindowTheme.set8BitColor(new AColor(240, 240, 240).get8BitRGBA());
         ViewColor.cWindowThemeFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cVisualizeTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
+        ViewColor.cVisualizeTheme.set8BitColor(new AColor(255, 255, 255).get8BitRGBA());
         ViewColor.cVisualizeThemeFont.set8BitColor(new AColor(20, 20, 20).get8BitRGBA());
         ViewColor.cItemTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
-        ViewColor.cThemeScroll.set8BitColor(new AColor(120, 120, 120).get8BitRGBA());
+        ViewColor.cThemeScroll.set8BitColor(new AColor(130, 130, 130).get8BitRGBA());
     }
     
     /**
@@ -202,7 +202,7 @@ public class ViewColor {
         ViewColor.cThemeEditFont.set8BitColor(AColor.black.get8BitRGBA());
         ViewColor.cButtonTheme.set8BitColor(new AColor(160, 200, 240).get8BitRGBA());
         ViewColor.cButtonFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cWindowTheme.set8BitColor(new AColor(120, 120, 120).get8BitRGBA());
+        ViewColor.cWindowTheme.set8BitColor(new AColor(102,153,255).get8BitRGBA());
         ViewColor.cWindowThemeFont.set8BitColor(AColor.black.get8BitRGBA());
         ViewColor.cVisualizeTheme.set8BitColor(new AColor(245, 245, 245).get8BitRGBA());
         ViewColor.cVisualizeThemeFont.set8BitColor(new AColor(20, 20, 20).get8BitRGBA());
@@ -214,30 +214,6 @@ public class ViewColor {
         ViewColor.cThemeScroll.set8BitColor(new AColor(102,153,255).get8BitRGBA());
     }
 
-    /**
-     *
-     */
-    public static void onBlue() {
-        inverted = false;
-        ViewColor.cThemeImportant.set8BitColor(new AColor(0, 227, 220).get8BitRGBA());
-        ViewColor.cThemeShadow.set8BitColor(new AColor(0.7f).get8BitRGBA());
-        ViewColor.cTheme.set8BitColor(new AColor(215, 215, 255).get8BitRGBA());
-        ViewColor.cThemeFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cThemeEditFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cThemeActive.set8BitColor(new AColor(185, 185, 215).get8BitRGBA());
-        ViewColor.cThemeSelected.set8BitColor(new AColor(160, 160, 190).get8BitRGBA());
-        ViewColor.cButtonTheme.set8BitColor(new AColor(150, 150, 230).get8BitRGBA());
-        ViewColor.cButtonThemeHighlight.set8BitColor(new AColor(140, 140, 220).get8BitRGBA());
-        ViewColor.cButtonThemeShadow.set8BitColor(new AColor(100, 100, 180).get8BitRGBA());
-        ViewColor.cButtonFont.set8BitColor(AColor.black.get8BitRGBA());
-
-        ViewColor.cWindowTheme.set8BitColor(new AColor(120, 120, 220).get8BitRGBA());
-        ViewColor.cWindowThemeFont.set8BitColor(AColor.black.get8BitRGBA());
-        ViewColor.cVisualizeTheme.set8BitColor(new AColor(245, 245, 255).get8BitRGBA());
-        ViewColor.cVisualizeThemeFont.set8BitColor(new AColor(20, 20, 60).get8BitRGBA());
-        ViewColor.cItemTheme.set8BitColor(new AColor(245, 245, 255).get8BitRGBA());
-        ViewColor.cThemeScroll.set8BitColor(new AColor(120, 120, 140).get8BitRGBA());
-    }
 
     /**
      *

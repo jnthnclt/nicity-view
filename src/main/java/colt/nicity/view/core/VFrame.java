@@ -34,6 +34,7 @@ import colt.nicity.view.value.VFontBrowser;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.Value;
 import colt.nicity.view.border.BuldgeBorder;
+import colt.nicity.view.border.ButtonBorder;
 import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IKeyEvents;
@@ -91,33 +92,33 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
 
         VChain buttons = new VChain(UV.cEW);
         if (_canClose) {
-            VItem close = new VItem(new VString(" X ", UV.fonts[UV.cText])) {
+            VItem close = new VItem(new VString(" X ", UV.fonts[UV.cText],ViewColor.cWindowThemeFont)) {
 
                 @Override
                 public void picked(IEvent _e) {
                     close();
                 }
             };
-            close.setBorder(new BuldgeBorder(new AColor(192,150,150), 2));
+            close.setBorder(new ButtonBorder(ViewColor.cWindowTheme, 2));
             buttons.add(close);
         }
         if (_canMinimize) {
-            VItem maximize = new VItem(new VString(" + ", UV.fonts[UV.cText])) {
+            VItem maximize = new VItem(new VString(" + ", UV.fonts[UV.cText],ViewColor.cWindowThemeFont)) {
 
                 @Override
                 public void picked(IEvent _e) {
                     maximize();
                 }
             };
-            maximize.setBorder(new BuldgeBorder(new AColor(192,192,192), 2));
-            VItem minimize = new VItem(new VString(" _ ", UV.fonts[UV.cText])) {
+            maximize.setBorder(new ButtonBorder(ViewColor.cWindowTheme, 2));
+            VItem minimize = new VItem(new VString(" - ", UV.fonts[UV.cText],ViewColor.cWindowThemeFont)) {
 
                 @Override
                 public void picked(IEvent _e) {
                     minimize();
                 }
             };
-            minimize.setBorder(new BuldgeBorder(new AColor(192,192,192), 2));
+            minimize.setBorder(new ButtonBorder(ViewColor.cWindowTheme, 2));
             buttons.add(maximize);
             buttons.add(minimize);
         }
@@ -132,7 +133,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
         chain.add(4, 4);
         chain.add(title, UV.cFII);
         Viewer v = new Viewer(chain);
-        v.setBorder(new BuldgeBorder(ViewColor.cTheme, 4));
+        v.setBorder(new BuldgeBorder(ViewColor.cWindowTheme, 4));
 
         VChain main = new VChain(UV.cSWNW);
         main.add(v);
@@ -224,7 +225,7 @@ public class VFrame extends Viewer implements IKeyEvents, IMouseEvents, IMouseMo
 
                 @Override
                 public void picked(IEvent _e) {
-                    ViewColor.onGray();
+                    ViewColor.onBlack();
                     getRootView().dispose();
                 }
             });

@@ -32,9 +32,7 @@ import colt.nicity.view.interfaces.ICanvas;
  */
 public class BuldgeBorder extends AFlaggedBorder {
 
-    private Place direction = UV.cNS;
     private int pad = 2;
-    private double rate = 0.2;
     private AColor color = ViewColor.cTheme;
 
     /**
@@ -98,8 +96,6 @@ public class BuldgeBorder extends AFlaggedBorder {
     public BuldgeBorder(AColor _color, int _pad, Place _direction, double _rate) {
         color = _color;
         pad = _pad;
-        direction = _direction;
-        rate = _rate;
     }
 
     /**

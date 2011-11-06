@@ -44,35 +44,35 @@ public class ScrollFlavor extends AFlavor {
      */
     @Override
     public void paintFlavor(ICanvas g, int _x, int _y, int _w, int _h, AColor _color) {
-
+        
+        int range = 15;
         AColor color = _color;
-
-
+        AColor darker = new AColor(color.getR()-range,color.getG()-range,color.getB()-range);
+        AColor brighter = new AColor(color.getR()+range,color.getG()+range,color.getB()+range);
         int r = 5;
-
         if (_w >= _h) {
-            g.setColor(color.desaturate(0.15f).darken(0.1f));
+            g.setColor(darker);
             g.roundRect(true, _x + 0, _y + 0, _w - 0, _h - 0, r, r);
 
-            g.setColor(color.desaturate(0.15f).lighten(0.1f));
+            g.setColor(brighter);
             g.roundRect(false, _x + 1, _y + 1, _w - 2, _h - 2, r - 1, r - 1);
 
-            AColor fc = color.desaturate(0.15f).lighten(0.1f);
-            AColor tc = color.desaturate(0.15f).darken(0.1f);
+            AColor fc = brighter;
+            AColor tc = darker;
 
             int cl = _x + (_w / 2);
             g.setGradient(fc, cl, _y, tc, cl, _y + _h);
             g.roundRect(true, _x + 2, _y + 2, _w - 4, _h - 4, r - 2, r - 2);
 
         } else {
-            g.setColor(color.desaturate(0.15f).darken(0.1f));
+            g.setColor(darker);
             g.roundRect(true, _x + 0, _y + 0, _w - 0, _h - 0, r, r);
 
-            g.setColor(color.desaturate(0.15f).lighten(0.1f));
+            g.setColor(brighter);
             g.roundRect(false, _x + 1, _y + 1, _w - 2, _h - 2, r - 1, r - 1);
 
-            AColor fc = color.desaturate(0.15f).lighten(0.1f);
-            AColor tc = color.desaturate(0.15f).darken(0.1f);
+            AColor fc = brighter;
+            AColor tc = darker;
 
             int cl = _y + (_h / 2);
             g.setGradient(fc, _x, cl, tc, _x + _w, cl);
