@@ -537,7 +537,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
             }
         } else if (event instanceof  MouseExited) {
             if (!mouseIsDown) {
-                XY_I p = ((MouseReleased) event).getPoint();
+                XY_I p = ((MouseExited) event).getPoint();
                 setModePoint(p, isPanEvent(event));
             }
             return super.disbatchEvent(parent, event);
