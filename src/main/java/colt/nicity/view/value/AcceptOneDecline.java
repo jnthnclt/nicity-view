@@ -114,7 +114,6 @@ public class AcceptOneDecline extends Viewer implements IWindowEvents {
         chain.add(accept);
         chain.add(menu);
         setPlacer(new Placer(chain));
-        setBorder(new PopupBorder(20));
     }
 
     private void pleaseWait() {
@@ -180,7 +179,8 @@ public class AcceptOneDecline extends Viewer implements IWindowEvents {
      * @param _centerRelativeTo
      */
     public void toFront(IView _centerRelativeTo) {
-        if (window == null) {
+        UV.popup(_centerRelativeTo, UV.cCC, this, true, true);
+        /*if (window == null) {
             VFrame frameViewer = new VFrame(this, this);
             window = new AWindow(frameViewer);
             window.setTitle(this.toString());
@@ -192,7 +192,7 @@ public class AcceptOneDecline extends Viewer implements IWindowEvents {
             window.show();
         } else {
             window.toFront();
-        }
+        }*/
     }
 
     // IWindowEvents

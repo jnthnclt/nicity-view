@@ -155,8 +155,7 @@ public class AcceptRejectDecline extends Viewer implements IWindowEvents {
         menu.setBorder(new PopupBorder(null, 20));
         chain.add(menu, UV.cSN);
         setPlacer(new Placer(chain));
-        setBorder(new PopupBorder(20));
-
+   
     }
 
     private void pleaseWait() {
@@ -253,7 +252,8 @@ public class AcceptRejectDecline extends Viewer implements IWindowEvents {
             _accept();
             return;
         }
-        if (window == null) {
+        UV.popup(_centerRelativeTo, UV.cCC, this, true, true);
+        /*if (window == null) {
             VFrame frameViewer = new VFrame(null, this, this, false, false);
             window = new AWindow(frameViewer);
             window.setTitle(this.toString());
@@ -265,7 +265,7 @@ public class AcceptRejectDecline extends Viewer implements IWindowEvents {
             window.show();
         } else {
             window.toFront();
-        }
+        }*/
     }
 
     // IWindowEvents

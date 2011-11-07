@@ -22,6 +22,7 @@ package colt.nicity.view.core;
 import colt.nicity.core.lang.IOut;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.border.PopupBorder;
+import colt.nicity.view.event.AMouseEvent;
 import colt.nicity.view.event.AViewEvent;
 import colt.nicity.view.event.MouseDragged;
 import colt.nicity.view.event.MouseEntered;
@@ -42,53 +43,67 @@ import colt.nicity.view.value.VAlwaysOver;
  * @author Administrator
  */
 public class VPopupViewer extends Viewer implements IRootView {
-    
+
     public static void main(String[] args) {
         VChain x = new VChain(UV.cSN);
-        for(int i=0;i<100;i++) {
-            x.add(new VButton("popup "+i) {
+        for (int i = 0; i < 100; i++) {
+            x.add(new VButton("popup " + i) {
 
                 @Override
                 public void picked(IEvent _e) {
                     VChain pop = new VChain(UV.cSN);
-                    for(int p=0;p<10;p++) {
-                        pop.add(new VButton("nested "+p) {
+                    for (int p = 0; p < 10; p++) {
+                        pop.add(new VButton("nested " + p) {
 
                             @Override
                             public void picked(IEvent _e) {
-                                UV.popup(this,UV.cSENW, new VButton("end of line") {
+                                UV.popup(this, UV.cSENW, new VButton("end of line") {
 
                                     @Override
                                     public void picked(IEvent _e) {
                                         getRootView().dispose();
                                     }
-
-                                },true,true);
+                                }, true, true);
                             }
-
                         });
                     }
-                    UV.popup(this,UV.cSENW, pop,true,true);
+                    UV.popup(this, UV.cSENW, pop, true, true);
                 }
-
             });
         }
-        
-        UV.exitFrame(new VPopupViewer(new VPan(x,600,600)), "view pop test");
+
+        UV.exitFrame(new VPopupViewer(new VPan(x, 600, 600)), "view pop test");
     }
     
+    
+    
     private Viewer over;
-    public VPopupViewer(IView _view) {
-       over = new Viewer();
-       setContent(new VAlwaysOver(new VTrapFlex(over), _view, UV.cOrigin));
-    }
+    private boolean hadChildEvent = false;
 
+    public VPopupViewer(IView _view) {
+        over = new Viewer();
+        setContent(new VAlwaysOver(new VTrapFlex(over), _view, UV.cOrigin));
+    }
+    
+    @Override
+    public IView disbatchEvent(IView parent, AViewEvent event) {
+        IView v = super.disbatchEvent(parent, event);
+        if (!UV.isChild(over, v)) {
+            if (event instanceof AMouseEvent && ((AMouseEvent)event).isDragging()) return v;
+            if (!hadChildEvent) return v;
+            over.setView(new RigidBox(1, 1));
+            layoutAllInterior();
+            paint();
+        } else {
+            hadChildEvent = true;
+        }
+        return v;
+    }
     
     @Override
     public void flush() {
         getParentView().getRootView().flush();
     }
-    
 
     /**
      *
@@ -96,37 +111,71 @@ public class VPopupViewer extends Viewer implements IRootView {
      * @param _popup
      * @param _place
      */
-    synchronized public void popup(IView _relativeTo, IView _popup, XY_I pp,boolean _hideOnExit, boolean _hideOnLost) {
-        int cw = (int)getParentView().getW();
-        int ch = (int)getParentView().getH();
+    synchronized public void popup(IView _relativeTo, IView _popup, XY_I pp, boolean _hideOnExit, boolean _hideOnLost) {
+        hadChildEvent = false;
+        int pad = 8;
         
-        _popup.layoutInterior();
-        int pw = (int)_popup.getW();
-        int ph = (int)_popup.getH();
+        //IView parent = getParentView();
+        //int cw = (int) parent.getW() - (pad * 2);
+        //int ch = (int) parent.getH() - (pad * 2);
         
-        XY_I p = getLocationInView(this,_relativeTo);
-        if (p == null) p = new XY_I(0,0);
+        int cw = (int) getW() - (pad * 2);
+        int ch = (int) getH() - (pad * 2);
+
+        VPopUp popUp = new VPopUp(_popup, _hideOnExit, _hideOnLost);
+        popUp.layoutInterior();
+        int pw = (int) popUp.getW();
+        int ph = (int) popUp.getH();
+
+        XY_I p = getLocationInView(this, _relativeTo);
+        if (p == null) {
+            p = new XY_I(pad, pad);
+        }
         p.x += pp.x;
         p.y += pp.y;
-        
-        if (p.x < 0) p.x = 0;
-        if (p.y < 0) p.y = 0;
-        if (p.x+_popup.getW() > cw) p.x -= ((p.x+pw)-(cw));
-        if (p.y+_popup.getH() > ch) p.y -= ((p.y+ph)-(ch));
-        
-        over.setPlacer(new Placer(new VPopUp(_popup,_hideOnExit,_hideOnLost),new Place(UV.cOrigin,p.x,p.y)));
+
+        if (p.x + pw > cw) {
+            p.x -= ((p.x + pw) - (cw));
+        }
+        if (p.y + ph > ch) {
+            p.y -= ((p.y + ph) - (ch));
+        }
+
+        if (p.x < 0 || p.y < 0) {
+            int ppw = -1;
+            int pph = -1;
+            if (p.x < 0) {
+                p.x = 0;
+                if (p.x + pw > cw) {
+                    ppw = cw;
+
+                }
+            }
+            if (p.y < 0) {
+                p.y = 0;
+                if (p.y + ph > ch) {
+                    pph = ch;
+
+                }
+            }
+            if (ppw != -1 || pph != -1) {
+                popUp = new VPopUp(new VPan(_popup, ppw, pph), _hideOnExit, _hideOnLost);
+                popUp.layoutAllInterior();
+            }
+        }
+
+        over.setPlacer(new Placer(popUp, new Place(UV.cOrigin, p.x, p.y)));
         over.layoutInterior();
         over.paint();
     }
-    
+
     private static XY_I getLocationInView(IView _parent, IView child) {
         int x = 0;
         int y = 0;
         IView parent = child;
-        while (_parent != parent &&
-                parent != null &&
-                parent != NullView.cNull
-                ) {
+        while (_parent != parent
+                && parent != null
+                && parent != NullView.cNull) {
             if (parent instanceof VClip) {
                 x += parent.getX() + ((VClip) parent).ox();
                 y += parent.getY() + ((VClip) parent).oy();
@@ -143,24 +192,24 @@ public class VPopupViewer extends Viewer implements IRootView {
     }
 
     static private class VPopUp extends Viewer implements IMouseEvents, IMouseMotionEvents {
+
         boolean closeOnFocusLost;
         boolean closeOnMouseExited;
-        VPopUp(IView view,boolean closeOnMouseExited,boolean closeOnFocusLost) {
+
+        VPopUp(IView view, boolean closeOnMouseExited, boolean closeOnFocusLost) {
             this.closeOnMouseExited = closeOnMouseExited;
             this.closeOnFocusLost = closeOnFocusLost;
             setContent(view);
-            setBorder(new PopupBorder(5));
+            setBorder(new PopupBorder(8));
         }
-        
+
         @Override
         public IView disbatchEvent(IView parent, AViewEvent event) {
             IView v = super.disbatchEvent(parent, event);
             if (event instanceof MouseMoved) {
-                
             }
             return v;
         }
-        
 
         @Override
         public void mouseEntered(MouseEntered e) {
@@ -170,9 +219,13 @@ public class VPopupViewer extends Viewer implements IRootView {
         @Override
         public void mouseExited(MouseExited e) {
             if (e.getEntered() instanceof IView) {
-                if (UV.isChild(this, (IView)e.getEntered())) return;
+                if (UV.isChild(this, (IView) e.getEntered())) {
+                    return;
+                }
             }
-            if (closeOnMouseExited) getParentView().setView(new RigidBox(1,1));
+            if (closeOnMouseExited) {
+                getParentView().setView(new RigidBox(1, 1));
+            }
         }
 
         @Override
@@ -185,17 +238,13 @@ public class VPopupViewer extends Viewer implements IRootView {
 
         @Override
         public void mouseMoved(MouseMoved e) {
-            
         }
 
         @Override
         public void mouseDragged(MouseDragged e) {
-            
         }
-        
     }
-    
-    
+
     @Override
     public IPeerView getPeerView() {
         return getParentView().getRootView().getPeerView();
@@ -248,11 +297,11 @@ public class VPopupViewer extends Viewer implements IRootView {
 
     @Override
     public void dispose() {
-        over.setView(new RigidBox(0,0));
+        over.setView(new RigidBox(1, 1));
         getParentView().layoutInterior();
     }
-    
-     @Override
+
+    @Override
     public void maximize() {
         getParentView().getRootView().maximize();
     }
@@ -261,5 +310,4 @@ public class VPopupViewer extends Viewer implements IRootView {
     public void iconify() {
         getParentView().getRootView().iconify();
     }
-
 }
