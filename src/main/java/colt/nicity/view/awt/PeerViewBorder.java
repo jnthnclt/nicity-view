@@ -35,8 +35,7 @@ import colt.nicity.view.interfaces.ISelectedBorder;
 public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, IActiveBorder, IBorder {
 
     private IPeerView peerView;
-    private TRLB_I insets = null;
-
+    
     /**
      *
      * @param peerView
@@ -46,7 +45,6 @@ public class PeerViewBorder implements IActiveSelectedBorder, ISelectedBorder, I
             throw new RuntimeException();
         }
         this.peerView = peerView;
-        insets = peerView.getTRLB();
     }
 
     /**

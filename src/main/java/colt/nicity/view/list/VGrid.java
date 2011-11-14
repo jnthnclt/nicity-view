@@ -709,8 +709,9 @@ public class VGrid extends VList implements IMouseMotionEvents {
                 }
 
             } else {
-                float x = (int) parent.getBorder().getX();
-                float y = (int) parent.getBorder().getY();
+                IView _parent = parent.get();
+                float x = (int) _parent.getBorder().getX();
+                float y = (int) _parent.getBorder().getY();
 
                 g.setColor(lineColor);
                 if (maxW != null) {
@@ -761,8 +762,9 @@ public class VGrid extends VList implements IMouseMotionEvents {
                 }
 
             } else {
-                float x = (int) parent.getBorder().getX();
-                float y = (int) parent.getBorder().getY();
+                IView _parent = parent.get();
+                float x = (int) _parent.getBorder().getX();
+                float y = (int) _parent.getBorder().getY();
 
                 g.setColor(midLineColor);
                 if (maxW != null) {

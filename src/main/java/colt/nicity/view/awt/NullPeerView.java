@@ -23,9 +23,9 @@ import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
-import java.awt.Graphics;
 
 /**
  *
@@ -246,7 +246,7 @@ public class NullPeerView implements IPeerView {
      * @return
      */
     @Override
-    public Graphics ensureSize(int _w, int _h) {
+    public ICanvas ensureSize(long _who, int _w, int _h) {
         return null;
     }
 

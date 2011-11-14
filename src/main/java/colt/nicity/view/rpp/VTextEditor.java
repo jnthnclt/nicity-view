@@ -28,7 +28,6 @@ public class VTextEditor extends Viewer implements IRPPViewable {
         return new VTextEditor();
     }
     String name;
-    CSet editors = new CSet();
     boolean graphing = false;
 
     VTextEditor() {

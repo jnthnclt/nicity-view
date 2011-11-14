@@ -24,6 +24,8 @@ import colt.nicity.view.adaptor.VS;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
+import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
 import java.awt.Cursor;
@@ -230,7 +232,7 @@ public class FilePeerView implements IPeerView {
      * @return
      */
     @Override
-    public Graphics ensureSize(int _w, int _h) {
+    public ICanvas ensureSize(long _who, int _w, int _h) {
         TRLB_I insets = getTRLB();
         _w += (insets.left + insets.right);
         _h += (insets.top + insets.bottom);
@@ -244,7 +246,7 @@ public class FilePeerView implements IPeerView {
         if (buffer == null) {
             return null;
         }
-        return buffer.getGraphics();
+        return new GlueAWTGraphicsToCanvas(_who, buffer.getGraphics());
 
     }
 
@@ -328,9 +330,6 @@ public class FilePeerView implements IPeerView {
         saveBuffer();
     }
 
-    //public Image createImage(int x, int y) {
-    //    return newBuffer(x, y);
-    //}
     /**
      *
      * @return

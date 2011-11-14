@@ -101,7 +101,7 @@ public class VColorPalette extends AItem {
      *
      * @param _rgba
      */
-    synchronized public void addColor(int _rgba) {
+    public void addColor(int _rgba) {
         total++;
         AColor color = color(_rgba, hResolution, sResolution, bResolution);
         PaletteColor pcolor = (PaletteColor) colors.get(color);

@@ -27,8 +27,10 @@ import colt.nicity.core.lang.NullOut;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.core.PrimativeEvent;
 import colt.nicity.view.core.ViewColor;
+import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
 import java.awt.AWTEvent;
@@ -46,14 +48,14 @@ import java.awt.dnd.DropTargetListener;
  * @author Administrator
  */
 public class PFrame extends Frame implements IPeerView {
-    		
+
     /**
      *
      */
     public static boolean debugEvents = false;
     private IOut _;
     private IEventClient client;
-   
+
     /**
      *
      * @param _client
@@ -65,26 +67,26 @@ public class PFrame extends Frame implements IPeerView {
 
         client = _client;
         enableEvents(
-                AWTEvent.MOUSE_EVENT_MASK |
-                AWTEvent.MOUSE_MOTION_EVENT_MASK |
-                AWTEvent.KEY_EVENT_MASK |
-                AWTEvent.FOCUS_EVENT_MASK |
-                AWTEvent.COMPONENT_EVENT_MASK |
-                AWTEvent.WINDOW_EVENT_MASK |
-                AWTEvent.MOUSE_WHEEL_EVENT_MASK |
-                AWTEvent.WINDOW_STATE_EVENT_MASK |
-                AWTEvent.WINDOW_FOCUS_EVENT_MASK |
-                AWTEvent.ACTION_EVENT_MASK |
-                AWTEvent.PAINT_EVENT_MASK |
-                AWTEvent.ADJUSTMENT_EVENT_MASK |
-                AWTEvent.CONTAINER_EVENT_MASK |
-                AWTEvent.HIERARCHY_BOUNDS_EVENT_MASK |
-                AWTEvent.HIERARCHY_EVENT_MASK |
-                AWTEvent.INPUT_METHOD_EVENT_MASK |
-                AWTEvent.INVOCATION_EVENT_MASK |
-                AWTEvent.ITEM_EVENT_MASK);
+                AWTEvent.MOUSE_EVENT_MASK
+                | AWTEvent.MOUSE_MOTION_EVENT_MASK
+                | AWTEvent.KEY_EVENT_MASK
+                | AWTEvent.FOCUS_EVENT_MASK
+                | AWTEvent.COMPONENT_EVENT_MASK
+                | AWTEvent.WINDOW_EVENT_MASK
+                | AWTEvent.MOUSE_WHEEL_EVENT_MASK
+                | AWTEvent.WINDOW_STATE_EVENT_MASK
+                | AWTEvent.WINDOW_FOCUS_EVENT_MASK
+                | AWTEvent.ACTION_EVENT_MASK
+                | AWTEvent.PAINT_EVENT_MASK
+                | AWTEvent.ADJUSTMENT_EVENT_MASK
+                | AWTEvent.CONTAINER_EVENT_MASK
+                | AWTEvent.HIERARCHY_BOUNDS_EVENT_MASK
+                | AWTEvent.HIERARCHY_EVENT_MASK
+                | AWTEvent.INPUT_METHOD_EVENT_MASK
+                | AWTEvent.INVOCATION_EVENT_MASK
+                | AWTEvent.ITEM_EVENT_MASK);
 
-        
+
         try {
             setDropTarget(new DropTarget(this, (DropTargetListener) client));
         } catch (Exception x) {
@@ -92,7 +94,7 @@ public class PFrame extends Frame implements IPeerView {
         }
 
     }
-    		
+
     /**
      *
      */
@@ -101,8 +103,8 @@ public class PFrame extends Frame implements IPeerView {
             repaint();
         }
     }
-    
     boolean disposed = false;
+
     @Override
     public void setVisible(boolean _visible) {
         if (_visible == false) {
@@ -110,7 +112,7 @@ public class PFrame extends Frame implements IPeerView {
         }
         super.setVisible(_visible);
     }
-    
+
     /**
      *
      * @param _modal
@@ -118,7 +120,7 @@ public class PFrame extends Frame implements IPeerView {
     @Override
     public void setModal(boolean _modal) {
     }
-    
+
     @Override
     public void dispose() {
         client = null;
@@ -129,7 +131,7 @@ public class PFrame extends Frame implements IPeerView {
         }
         super.dispose();
     }
-    
+
     /**
      *
      */
@@ -137,6 +139,7 @@ public class PFrame extends Frame implements IPeerView {
     public void iconify() {
         setState(Frame.ICONIFIED);
     }
+
     /**
      *
      */
@@ -144,6 +147,7 @@ public class PFrame extends Frame implements IPeerView {
     public void deiconify() {
         setState(Frame.NORMAL);
     }
+
     /**
      *
      */
@@ -151,7 +155,7 @@ public class PFrame extends Frame implements IPeerView {
     public void maximize() {
         setExtendedState(Frame.MAXIMIZED_BOTH);
     }
-    
+
     /**
      *
      * @return
@@ -160,7 +164,7 @@ public class PFrame extends Frame implements IPeerView {
     public IEventClient getClientView() {
         return client;
     }
-    
+
     /**
      *
      * @param eventsToEnable
@@ -169,6 +173,7 @@ public class PFrame extends Frame implements IPeerView {
     public void enablePeerEvents(long eventsToEnable) {
         super.enableEvents(eventsToEnable);
     }
+
     /**
      *
      * @param eventsToDisable
@@ -177,19 +182,17 @@ public class PFrame extends Frame implements IPeerView {
     public void disablePeerEvents(long eventsToDisable) {
         super.disableEvents(eventsToDisable);
     }
-    
-    
+
     @Override
     public void update(Graphics g) {
         paintBuffer(g);
     }
+
     @Override
     public void paint(Graphics g) {
         paintBuffer(g);
     }
 
-    
-    
     @Override
     protected void processEvent(AWTEvent event) {
         if (disposed) {
@@ -198,22 +201,21 @@ public class PFrame extends Frame implements IPeerView {
         super.processEvent(event);
         PrimativeEvent _event = UAWT.toPrimativeEvent(event);
         if (client != null) {
-            client.processEvent(_,_event);
+            client.processEvent(_, _event);
         }
     }
-    
     /**
      *
      */
     public Image buffer;
-    
+
     /**
      *
      */
     @Override
     public void fullscreen() {
     }
-    
+
     /**
      *
      * @param _w
@@ -221,7 +223,7 @@ public class PFrame extends Frame implements IPeerView {
      * @return
      */
     @Override
-    public Graphics ensureSize(int _w, int _h) {
+    public ICanvas ensureSize(long _who, int _w, int _h) {
         Insets insets = getInsets();
         _w += (insets.left + insets.right);
         _h += (insets.top + insets.bottom);
@@ -235,10 +237,10 @@ public class PFrame extends Frame implements IPeerView {
         if (buffer == null) {
             return null;
         }
-        return buffer.getGraphics();
+        return new GlueAWTGraphicsToCanvas(_who, buffer.getGraphics());
 
     }
-    
+
     /**
      *
      * @param g
@@ -250,7 +252,7 @@ public class PFrame extends Frame implements IPeerView {
             g.drawImage(buffer, 0, 0, null);
         }
     }
-    
+
     /**
      *
      * @param _region
@@ -260,7 +262,7 @@ public class PFrame extends Frame implements IPeerView {
         //System.out.println("modifiedRegion:"+_region);
         UAWT.modifiedRegion(getTRLB(), getGraphics(), _region, buffer);
     }
-    
+
     /**
      *
      * @return
@@ -270,6 +272,7 @@ public class PFrame extends Frame implements IPeerView {
         Point p = super.getLocation();
         return new XY_I(p.x, p.y);
     }
+
     /**
      *
      * @return
@@ -279,6 +282,7 @@ public class PFrame extends Frame implements IPeerView {
         Point p = super.getLocationOnScreen();
         return new XY_I(p.x, p.y);
     }
+
     /**
      *
      * @return
@@ -288,6 +292,7 @@ public class PFrame extends Frame implements IPeerView {
         Dimension d = super.getSize();
         return new WH_F(d.width, d.height);
     }
+
     /**
      *
      * @param x
@@ -297,6 +302,7 @@ public class PFrame extends Frame implements IPeerView {
     public void setCorner(int x, int y) {
         super.setLocation(x, y);
     }
+
     /**
      *
      * @param w
@@ -306,6 +312,7 @@ public class PFrame extends Frame implements IPeerView {
     public void setWH(int w, int h) {
         super.setSize(w, h);
     }
+
     /**
      *
      * @return
@@ -314,6 +321,7 @@ public class PFrame extends Frame implements IPeerView {
     public int getW() {
         return super.getWidth();
     }
+
     /**
      *
      * @return

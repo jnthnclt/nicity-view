@@ -237,7 +237,7 @@ public class VList extends AVList implements IVList {
                     continue;
                 }
                 synchronized (v) {
-                    v.setParentView(this);//??
+                    v.setParentView(this);
                     v.layoutInterior(_flex);
                     v.setLocation(x, y);
                 }
@@ -255,7 +255,7 @@ public class VList extends AVList implements IVList {
 
         w = (size.getW()) + getBorder().getW();
         h = (size.getH()) + getBorder().getH();
-        parent.repair();//??2-25-09
+        parent.get().repair();//??2-25-09
     }
 }
 

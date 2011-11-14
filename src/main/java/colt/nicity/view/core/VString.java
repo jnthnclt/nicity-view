@@ -168,7 +168,8 @@ public class VString extends Viewer {
             width = _w;
             height = _h;
             layoutInterior();
-            parent.layoutInterior();
+            IView _parent = parent.get();
+            _parent.layoutInterior();
             flush();
         }
     }

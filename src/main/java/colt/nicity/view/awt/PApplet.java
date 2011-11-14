@@ -24,7 +24,9 @@ import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.core.AApplet;
+import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
 import colt.nicity.view.interfaces.IRootView;
@@ -45,6 +47,7 @@ public class PApplet extends Applet implements IPeerView {
 
     private AApplet client;
     final private IOut _;
+
     /**
      *
      */
@@ -56,6 +59,7 @@ public class PApplet extends Applet implements IPeerView {
                 | AWTEvent.WINDOW_EVENT_MASK
                 | AWTEvent.FOCUS_EVENT_MASK);
         _ = new IOut() {
+
             @Override
             public boolean canceled() {
                 return false;
@@ -63,12 +67,10 @@ public class PApplet extends Applet implements IPeerView {
 
             @Override
             public void out(double _at, double _outof) {
-                
             }
 
             @Override
             public void out(Object... _status) {
-                
             }
         };
     }
@@ -215,7 +217,7 @@ public class PApplet extends Applet implements IPeerView {
 
     @Override
     protected void processEvent(AWTEvent event) {
-        client.processEvent(_,UAWT.toPrimativeEvent(event));
+        client.processEvent(_, UAWT.toPrimativeEvent(event));
     }
 
     /**
@@ -234,7 +236,7 @@ public class PApplet extends Applet implements IPeerView {
      * @return
      */
     @Override
-    public Graphics ensureSize(int _w, int _h) {
+    public ICanvas ensureSize(long _who, int _w, int _h) {
         Insets insets = super.getInsets();
         _w += (insets.left + insets.right);
         _h += (insets.top + insets.bottom);
@@ -248,7 +250,7 @@ public class PApplet extends Applet implements IPeerView {
         if (buffer == null) {
             return null;
         }
-        return buffer.getGraphics();
+        return new GlueAWTGraphicsToCanvas(_who, buffer.getGraphics());
 
     }
 

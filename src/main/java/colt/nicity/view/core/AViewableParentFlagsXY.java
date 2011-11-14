@@ -25,6 +25,7 @@ import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  *
@@ -35,7 +36,7 @@ public abstract class AViewableParentFlagsXY extends AViewable {
     /**
      *
      */
-    protected IView parent = NullView.cNull;
+    protected AtomicReference<IView> parent = new AtomicReference<IView>(NullView.cNull);
     /**
      *
      */
@@ -58,31 +59,31 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public IView getParentView() {
-        return parent;
+        return parent.get();
     }
 
     @Override
-    synchronized public void setParentView(IView _parent) {
-        if (_parent == this || parent == _parent) {
+    public void setParentView(IView _parent) {
+        if (_parent == this || parent.get() == _parent) {
             return;
         }
         if (_parent == null) {
-            parent = NullView.cNull;
-        } else {
-            parent = _parent;
+            _parent = NullView.cNull;
         }
+        parent.set(_parent);
     }
 
     @Override
     public IView transferFocusToParent(long _who) {
-        if (parent == NullView.cNull) {
+        IView got = parent.get();
+        if (got == NullView.cNull) {
             return NullView.cNull;
         }
-        if (parent.isEventEnabled(AViewEvent.cKeyEvent)) {
-            parent.grabFocus(_who);
-            return parent;
+        if (got.isEventEnabled(AViewEvent.cKeyEvent)) {
+            got.grabFocus(_who);
+            return got;
         } else {
-            return parent.transferFocusToParent(_who);
+            return got.transferFocusToParent(_who);
         }
     }
 
@@ -127,8 +128,9 @@ public abstract class AViewableParentFlagsXY extends AViewable {
      * @param _flex
      */
     protected void layoutParent(Flex _flex) {
-        parent.disableFlag(UV.cInterior);
-        parent.layoutInterior(_flex);
+        IView got = parent.get();
+        got.disableFlag(UV.cInterior);
+        got.layoutInterior(_flex);
     }
 
     @Override
@@ -139,7 +141,7 @@ public abstract class AViewableParentFlagsXY extends AViewable {
             }
             flags |= UV.cMend;
         }
-        parent.mend();
+        parent.get().mend();
     }
 
     @Override
@@ -153,12 +155,12 @@ public abstract class AViewableParentFlagsXY extends AViewable {
         if (r == null) {
             return false;
         }
-        return parent.isVisible(r.x + (int) x, r.y + (int) y, r.w, r.h);
+        return parent.get().isVisible(r.x + (int) x, r.y + (int) y, r.w, r.h);
     }
 
     @Override
     public boolean isVisible() {
-        return parent.isVisible((int) x, (int) y, (int) getW(), (int) getH());
+        return parent.get().isVisible((int) x, (int) y, (int) getW(), (int) getH());
     }
 
     /**
@@ -268,12 +270,12 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public void setLocation(float _x, float _y) {
-        if (x != _x || y != _y) {
-            parent.repair();
-        }
         synchronized (this) {
             x = _x;
             y = _y;
+        }
+        if (x != _x || y != _y) {
+            parent.get().repair();
         }
     }
 
@@ -289,9 +291,9 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public void promoteEvent(IEvent _task) {
-        IView _parent = parent;
-        if (_parent != null) {
-            _parent.promoteEvent(_task);
+        IView got = parent.get();
+        if (got != null) {
+            got.promoteEvent(_task);
         }
     }
 }

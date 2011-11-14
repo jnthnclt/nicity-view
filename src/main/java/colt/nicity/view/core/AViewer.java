@@ -133,7 +133,7 @@ public abstract class AViewer extends AViewWHBorder {
 
     // Layout
     @Override
-    synchronized public void layoutInterior(IView _parent, Flex _flex) {
+    public void layoutInterior(IView _parent, Flex _flex) {
         WH_F size = new WH_F(0, 0);
         placer.placeInside(_parent, size, _flex);
         float sw = size.getW();

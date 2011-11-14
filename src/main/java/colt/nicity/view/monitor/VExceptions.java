@@ -37,7 +37,7 @@ public class VExceptions extends AItem {
 
     private static VExceptions cExceptions;
 
-    private static synchronized VExceptions e() {
+    private static VExceptions e() {
         if (cExceptions == null) {
             cExceptions = new VExceptions();
         }

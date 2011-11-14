@@ -19,7 +19,6 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.awt.NullPeerView;
 import colt.nicity.view.awt.PFrame;
 import colt.nicity.view.awt.PeerViewBorder;
@@ -46,7 +45,6 @@ import colt.nicity.view.interfaces.IPlacer;
 import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IView;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -139,16 +137,17 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         openWindows.add(this);
         display = new ADisplay(this) {
 
+            @Override
             public ICanvas display(long _who, float _w, float _h) {
                 if (peer == null) {
                     return null;
                 }
-                Graphics g = peer.ensureSize((int) _w, (int) _h);
+                ICanvas g = peer.ensureSize(_who, (int) _w, (int) _h);
                 if (g == null) {
                     return null;
                 }
 
-                return new GlueAWTGraphicsToCanvas(_who, g);
+                return g;
             }
 
             @Override
@@ -306,6 +305,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     }
 
     // IRootView
+    @Override
     public IPeerView getPeerView() {
         return getPeer();
     }
@@ -336,6 +336,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     /**
      *
      */
+    @Override
     public void iconify() {
         getPeer().iconify();
     }
@@ -350,10 +351,12 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     /**
      *
      */
+    @Override
     public void maximize() {
         getPeer().maximize();
     }
 
+    @Override
     public void toFront() {
         getPeer().toFront();
     }
@@ -373,11 +376,13 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         return peer == NullPeerView.cNull;
     }
 
+    @Override
     public boolean isValid() {
         return !requestedDispose;
     }
     private boolean requestedDispose = false;
 
+    @Override
     public void dispose() {
         openWindows.remove(this);
         ADisplay _display = display;
@@ -407,6 +412,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         if (openWindowCount == 0) {
             if (onLastWindowClosed != null) {
                 new Thread() {
+
                     @Override
                     public void run() {
                         onLastWindowClosed.callback(null);
@@ -436,7 +442,8 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
      */
     public static CSet popups = new CSet();
 
-    public void processEvent(IOut _,PrimativeEvent event) {
+    @Override
+    public void processEvent(IOut _, PrimativeEvent event) {
         if (popups.getCount() > 0) {// hacky
             if (event.family == ADK.cComponent) {
                 if (event.id == ADK.cFocusGained) {
@@ -459,7 +466,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
             }
         }
         if (input != null) {
-            input.handleEvent(_,event);
+            input.handleEvent(_, event);
         }
     }
 
@@ -478,6 +485,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     }
 
     // This is intentionally not synchronized
+    @Override
     public void addToRepaint(IView _view) {
         ADisplay _display = display;
         if (_display != null) {
@@ -544,6 +552,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     }
 
     // DropTargetListener
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
         if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
             dtde.rejectDrag();
@@ -551,6 +560,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         }
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
         if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
             dtde.rejectDrag();
@@ -567,14 +577,17 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         }
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
         //System.out.println("dropActionChanged"+dtde);
     }
 
+    @Override
     public void dragExit(DropTargetEvent dte) {
         //System.out.println("dragExit"+dte);
     }
 
+    @Override
     public void drop(DropTargetDropEvent dtde) {
         if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
             dtde.dropComplete(false);
@@ -629,26 +642,31 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         getPeer().setTitle(_title);
     }
 
+    @Override
     public IView getFocusedView(long _who) {
         return input.getFocusedView(_who);
     }
 
+    @Override
     public void setFocusedView(long _who, IView view) {
         if (input != null) {
             input.setFocusedView(_who, view);
         }
     }
 
+    @Override
     public IView getHardFocusedView(long _who) {
         return input.getHardFocusedView(_who);
     }
 
+    @Override
     public void setHardFocusedView(long _who, IView view) {
         if (input != null) {
             input.setHardFocusedView(_who, view);
         }
     }
 
+    @Override
     public void setMouseWheelFocus(long _who, IView _mouseWheelFocus) {
         if (input != null) {
             input.setMouseWheelFocus(_who, _mouseWheelFocus);

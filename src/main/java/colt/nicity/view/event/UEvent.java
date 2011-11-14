@@ -57,7 +57,7 @@ public class UEvent {
      * @param task
      * @return
      */
-    final public static Object processEvent(Object instance, IEvent task) {
+    public static Object processEvent(Object instance, IEvent task) {
 
         if (!(task instanceof AViewEvent)) {
             return null;

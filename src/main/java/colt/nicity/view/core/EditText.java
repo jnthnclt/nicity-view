@@ -40,6 +40,7 @@ import colt.nicity.core.lang.UArray;
 import colt.nicity.core.lang.UString;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
@@ -48,19 +49,13 @@ import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Administrator
  */
-public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
+public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents {
 
     // Convienient overloadable methods
     /**
@@ -333,11 +328,6 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
         return h + font.getSize() + border.getH();
     }
 
-    // ClipboardOwner
-    public void lostOwnership(Clipboard clipboard, Transferable contents) {
-        //System.out.println("lostOwnership "+clipboard+" "+contents);
-    }
-
     // IKeyEvents
     public void keyPressed(KeyPressed e) {
         int code = e.getKeyCode();
@@ -352,10 +342,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 case KeyEvent.VK_X: {
                     if (selectionStart != null && selectionEnd != null) {
                         String cut = selectionStart.selected(text, selectionEnd);
-                        Toolkit tk = Toolkit.getDefaultToolkit();
-                        Clipboard cb = tk.getSystemClipboard();
-                        cb.setContents(new StringSelection(cut), this);
-
+                        VS.setClipboard(cut);
                         setText(selectionStart.remove(text, selectionEnd));
                         caret = selectionStart;
                         selectionStart = null;
@@ -368,19 +355,14 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 case KeyEvent.VK_C: {
                     if (selectionStart != null && selectionEnd != null) {
                         String copy = selectionStart.selected(text, selectionEnd);
-                        Toolkit tk = Toolkit.getDefaultToolkit();
-                        Clipboard cb = tk.getSystemClipboard();
-                        cb.setContents(new StringSelection(copy), this);
+                        VS.setClipboard(copy);
                     }
                     break;
                 }
                 case KeyEvent.VK_V: {
-                    Toolkit tk = Toolkit.getDefaultToolkit();
-                    Clipboard cb = tk.getSystemClipboard();
-                    Transferable t = cb.getContents(this);
                     String paste = "";
                     try {
-                        paste = (String) t.getTransferData(DataFlavor.stringFlavor);
+                        paste = VS.getClipboardIfString(this);
                         appendText(UString.toStringArray(paste, "\n"));
                         update();
                         stringChanged(text);
@@ -527,7 +509,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
         update();
     }
 
-    synchronized private void orderStartEnd(RowColum end) {
+    private void orderStartEnd(RowColum end) {
         if (selectionBegin == null) {
             selectionBegin = end;
             return;

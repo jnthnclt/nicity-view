@@ -27,6 +27,14 @@ import colt.nicity.view.core.AColor;
 import colt.nicity.view.image.IImage;
 import colt.nicity.view.interfaces.ICanvas;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +54,10 @@ public class VS {
     // File
     // Sound
     // Color
+
+    public static Font systemColor(String _name, int _style, int _size) {
+        return new Font(_name, _style, _size);
+    }
 
     /**
      *
@@ -211,5 +223,31 @@ public class VS {
             System.out.println("toDisk error " + x);
             return false;
         }
+    }
+
+    public static void setClipboard(String value) {
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Clipboard cb = tk.getSystemClipboard();
+        cb.setContents(new StringSelection(value), new ClipboardOwner() {
+
+            @Override
+            public void lostOwnership(Clipboard clipboard, Transferable contents) {
+            }
+        });
+    }
+
+    public static String getClipboardIfString(Object requestor) {
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Clipboard cb = tk.getSystemClipboard();
+        Transferable t = cb.getContents(requestor);
+        try {
+            return (String) t.getTransferData(DataFlavor.stringFlavor);
+        } catch (UnsupportedFlavorException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
     }
 }

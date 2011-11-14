@@ -115,12 +115,12 @@ public class Placer extends APlacer implements IPlacer {
     }
 
     @Override
-    public void placeInside(IView _parent, WH_F _size, Flex _flex) {//synchronized
+    public void placeInside(IView _parent, WH_F _size, Flex _flex) {
         UPlacer.placeInside(viewable.getView(), place, _parent, _size, _flex);
     }
 
     @Override
-    public void placeInside(IView _parent, IView _anchor, WH_F _size, Flex _flex) {//synchronized
+    public void placeInside(IView _parent, IView _anchor, WH_F _size, Flex _flex) {
         IView v = viewable.getView();
         if (v == _anchor) {
             return;//??

@@ -94,7 +94,7 @@ public class AFrame extends AWindow {
                 ((Component) _peer).setDropTarget(dropTarget);
                 ((Component) _peer).setEnabled(true);
 
-                _peer.show();
+                _peer.setVisible(true);
                 peerBorder = new PeerViewBorder(_peer);
                 return _peer;
             } else {

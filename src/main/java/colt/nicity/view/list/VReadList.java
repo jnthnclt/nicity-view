@@ -243,13 +243,14 @@ public class VReadList extends AVList implements IVList {
      * @param _parent
      * @param _flex
      */
+    @Override
     public void layoutInterior(IView _parent, Flex _flex) {
         // this allows a newline object to know when layout is called
         // since it is expected that getItems() list should not contain any nulls.
         newLine.equals(null);
 
-        IView currentParent = parent;
-        parent = NullView.cNull;
+        IView currentParent = parent.get();;
+        parent.set(NullView.cNull);
 
         IVItem[] items = getItems();
 
@@ -304,7 +305,7 @@ public class VReadList extends AVList implements IVList {
             }
         }
 
-        parent = currentParent;
+        parent.set(currentParent);
         w = (size.getW()) + getBorder().getW();
         h = (size.getH()) + getBorder().getH();
     }

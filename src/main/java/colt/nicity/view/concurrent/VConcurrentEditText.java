@@ -617,7 +617,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
         update();
     }
 
-    synchronized private void orderStartEnd(RowColum end) {
+    private void orderStartEnd(RowColum end) {
         RowColum sb = caret(end.who, selectionBegin);
         if (sb == null) {
             sb = end;

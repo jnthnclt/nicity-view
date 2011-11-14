@@ -191,10 +191,8 @@ abstract public class AListController extends ASetObject implements IListControl
         if (list == null) {
             return;
         }
-        synchronized (this) {
-            list.layoutInterior();
-            list.paint();
-        }
+        list.layoutInterior();
+        list.paint();
     }
 
     /**
@@ -206,10 +204,8 @@ abstract public class AListController extends ASetObject implements IListControl
         if (list == null) {
             return;
         }
-        synchronized (this) {
-            list.layoutInterior();
-            list.paint();
-        }
+        list.layoutInterior();
+        list.paint();
     }
 
     /**

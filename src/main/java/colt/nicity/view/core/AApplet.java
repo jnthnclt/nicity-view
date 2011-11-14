@@ -42,6 +42,7 @@ public class AApplet extends AWindow {
         init();
     }
 
+    @Override
     public IPeerView getPeerView() {
         return peer;
     }
@@ -58,6 +59,7 @@ public class AApplet extends AWindow {
      *
      * @return
      */
+    @Override
     public IPeerView getPeer() {
         if (peer == null) {
             throw new RuntimeException();
@@ -65,6 +67,7 @@ public class AApplet extends AWindow {
         return peer;
     }
 
+    @Override
     public void setBorder(IBorder border) {
     }
 }

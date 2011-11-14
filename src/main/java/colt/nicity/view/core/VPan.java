@@ -163,7 +163,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     }
 
     @Override
-    public synchronized IView spans(int spanMasks) {
+    public IView spans(int spanMasks) {
         return this;
     }
 
@@ -177,7 +177,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @param _autoCenter
      */
-    synchronized public final void setAutoCenter(boolean _autoCenter) {
+    public final void setAutoCenter(boolean _autoCenter) {
         autoCenterX = _autoCenter;
         autoCenterY = _autoCenter;
     }
@@ -187,7 +187,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _autoCenterX
      * @param _autoCenterY
      */
-    synchronized public final void setAutoCenter(boolean _autoCenterX, boolean _autoCenterY) {
+    public final void setAutoCenter(boolean _autoCenterX, boolean _autoCenterY) {
         autoCenterX = _autoCenterX;
         autoCenterY = _autoCenterY;
     }
@@ -197,7 +197,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _w
      * @param _h
      */
-    synchronized public void setSizeBeforeScroll(int _w, int _h) {
+    public void setSizeBeforeScroll(int _w, int _h) {
         maxWBeforePan = _w;
         maxHBeforePan = _h;
     }
@@ -207,7 +207,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _w
      * @param _h
      */
-    synchronized public void fixedSize(int _w, int _h) {
+    public void fixedSize(int _w, int _h) {
         fixedW = _w;
         fixedH = _h;
         if (fixedW != -1) {
@@ -367,7 +367,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I incUp() {
+    public XYWH_I incUp() {
         XYWH_I p = panX();
         return new XYWH_I(p.x, p.y, p.w, p.h / 2);
     }
@@ -376,7 +376,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I incDown() {
+    public XYWH_I incDown() {
         XYWH_I p = panX();
         return new XYWH_I(p.x, p.y + (p.h / 2), p.w, p.h / 2);
     }
@@ -385,7 +385,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I incRight() {
+    public XYWH_I incRight() {
         XYWH_I p = panY();
         return new XYWH_I(p.x + (p.w / 2), p.y, p.w / 2, p.h);
     }
@@ -394,7 +394,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I incLeft() {
+    public XYWH_I incLeft() {
         XYWH_I p = panY();
         return new XYWH_I(p.x, p.y, p.w / 2, p.h);
     }
@@ -403,7 +403,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I resizeY() {
+    public XYWH_I resizeY() {
         return new XYWH_I((int) (getW() - resize), 0, resize, getH());
     }
 
@@ -411,7 +411,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I resizeX() {
+    public XYWH_I resizeX() {
         return new XYWH_I(0, (int) (getH() - resize), getW(), resize);
     }
 
@@ -419,7 +419,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I panX() {
+    public XYWH_I panX() {
         int r = resize;
         if (alignY < 0) {
             r = 0;
@@ -440,7 +440,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public XYWH_I panY() {
+    public XYWH_I panY() {
         int r = resize;
         if (alignX < 0) {
             r = 0;
@@ -459,37 +459,38 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
 
     @Override
     public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
+        IView _parent = parent.get();
         if (maxWBeforePan > -1 && maxWBeforePan > view.getW()) {
             //alignX = -1;
             w = view.getW();
-            parent.layoutInterior();
-            parent.repair();
-            parent.flush();
+            _parent.layoutInterior();
+            _parent.repair();
+            _parent.flush();
         } else if (maxWBeforePan > -1 && alignX < 0) {
             w = maxWBeforePan;
             alignX = 0;
-            parent.layoutInterior();
-            parent.repair();
-            parent.flush();
+            _parent.layoutInterior();
+            _parent.repair();
+            _parent.flush();
         }
         if (maxHBeforePan > -1 && maxHBeforePan > view.getH()) {
             //alignY = -1;
             h = view.getH();
-            parent.layoutInterior();
-            parent.repair();
-            parent.flush();
+            _parent.layoutInterior();
+            _parent.repair();
+            _parent.flush();
         } else if (maxHBeforePan > -1 && alignY < 0) {
             h = maxHBeforePan;
             alignY = 0;
-            parent.layoutInterior();
-            parent.repair();
-            parent.flush();
+            _parent.layoutInterior();
+            _parent.repair();
+            _parent.flush();
         }
         super.paintBackground(_g, _x, _y, _w, _h);
     }
 
     @Override
-    synchronized public IView disbatchEvent(IView parent, AViewEvent event) {
+    public IView disbatchEvent(IView parent, AViewEvent event) {
         if (isPanEvent(event) || scrollingX || scrollingY || resizingX || resizingY) {
             return this;
         }
@@ -577,7 +578,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
 
     // IMouseWheelEvents
     @Override
-    synchronized public void mouseWheel(MouseWheel _e) {
+    public void mouseWheel(MouseWheel _e) {
         int rotation = _e.getWheelRotation();
         if (_e.isShiftDown()) {
             if (rotation < 0) {
@@ -605,108 +606,40 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     /**
      *
      */
-    synchronized protected void incUpScroll() {
+    protected void incUpScroll() {
         float p = getAlignY() - (((float) getH() / 3) / ((float) getContent().getH()));
         setPositionY(UFloat.checkFloat(p, 0.0f));
-        new Thread() {
-
-            @Override
-            public void run() {
-                while (mouseIsDown && !drug) {
-                    try {
-                        Thread.sleep(600);
-                        if (!mouseIsDown) {
-                            break;
-                        }
-                    } catch (InterruptedException ex) {
-                    }
-                    float p = getAlignY() - (((float) getH() / 3) / ((float) getContent().getH()));
-                    setPositionY(UFloat.checkFloat(p, 0.0f));
-                }
-            }
-        }.start();
     }
 
     /**
      *
      */
-    synchronized protected void incDownScroll() {
+    protected void incDownScroll() {
         float p = getAlignY() + (((float) getH() / 3) / ((float) getContent().getH()));
         setPositionY(UFloat.checkFloat(p, 1.0f));
-        new Thread() {
-
-            @Override
-            public void run() {
-                while (mouseIsDown && !drug) {
-                    try {
-                        Thread.sleep(600);
-                        if (!mouseIsDown) {
-                            break;
-                        }
-                    } catch (InterruptedException ex) {
-                    }
-                    float p = getAlignY() + (((float) getH() / 3) / ((float) getContent().getH()));
-                    setPositionY(UFloat.checkFloat(p, 1.0f));
-                }
-            }
-        }.start();
     }
 
     /**
      *
      */
-    synchronized protected void incLeftScroll() {
+    protected void incLeftScroll() {
         float p = getAlignX() - (((float) getW() / 3) / ((float) getContent().getW()));
         setPositionX(UFloat.checkFloat(p, 0.0f));
-        new Thread() {
-
-            @Override
-            public void run() {
-                while (mouseIsDown && !drug) {
-                    try {
-                        Thread.sleep(600);
-                        if (!mouseIsDown) {
-                            break;
-                        }
-                    } catch (InterruptedException ex) {
-                    }
-                    float p = getAlignX() - (((float) getW() / 3) / ((float) getContent().getW()));
-                    setPositionX(UFloat.checkFloat(p, 0.0f));
-                }
-            }
-        }.start();
     }
 
     /**
      *
      */
-    synchronized protected void incRightScroll() {
+    protected void incRightScroll() {
         float p = getAlignX() + (((float) getW() / 3) / ((float) getContent().getW()));
         setPositionX(UFloat.checkFloat(p, 1.0f));
-        new Thread() {
-
-            @Override
-            public void run() {
-                while (mouseIsDown && !drug) {
-                    try {
-                        Thread.sleep(600);
-                        if (!mouseIsDown) {
-                            break;
-                        }
-                    } catch (InterruptedException ex) {
-                    }
-                    float p = getAlignX() + (((float) getW() / 3) / ((float) getContent().getW()));
-                    setPositionX(UFloat.checkFloat(p, 1.0f));
-                }
-            }
-        }.start();
     }
 
     /**
      *
      * @param _position
      */
-    synchronized public void setPositionX(float _position) {
+    public void setPositionX(float _position) {
         if (_position < 0.0f) {
             _position = 0.0f;
         }
@@ -721,7 +654,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @param _position
      */
-    synchronized public void setPositionY(float _position) {
+    public void setPositionY(float _position) {
         if (_position < 0.0f) {
             _position = 0.0f;
         }
@@ -736,7 +669,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public float getPositionX() {
+    public float getPositionX() {
         return getAlignX();
     }
 
@@ -744,7 +677,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      *
      * @return
      */
-    synchronized public float getPositionY() {
+    public float getPositionY() {
         return getAlignY();
     }
 
@@ -760,13 +693,13 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     // IMouseEvents
 
     @Override
-    synchronized public void mouseEntered(MouseEntered _e) {
+    public void mouseEntered(MouseEntered _e) {
         DragAndDrop.cDefault.mouseEntered(_e);
         mouseIsDown = false;
     }
 
     @Override
-    synchronized public void mouseExited(MouseExited _e) {
+    public void mouseExited(MouseExited _e) {
         DragAndDrop.cDefault.mouseExited(_e);
         mouseIsDown = false;
     }
@@ -776,7 +709,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _p
      * @param _panXY
      */
-    synchronized public void setModePoint(XY_I _p, boolean _panXY) {
+    public void setModePoint(XY_I _p, boolean _panXY) {
 
         if (_panXY) {
             scrollingX = true;
@@ -818,7 +751,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     float mpyp = 0f;
 
     @Override
-    synchronized public void mousePressed(MousePressed _e) {
+    public void mousePressed(MousePressed _e) {
         if (_e.getClickCount() > 0) {
             DragAndDrop.cDefault.mousePressed(_e);
         }
@@ -829,7 +762,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     }
 
     @Override
-    synchronized public void mouseReleased(MouseReleased _e) {
+    public void mouseReleased(MouseReleased _e) {
         setModePoint(_e.getPoint(), isPanEvent(_e));
         if (incDown().contains(_e.getPoint())) {
             incDownScroll();
@@ -864,7 +797,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
      * @param _p
      * @param _pan
      */
-    synchronized public void setPaintingScrollBars(XY_I _p, boolean _pan) {
+    public void setPaintingScrollBars(XY_I _p, boolean _pan) {
         if (mouseIsDown) {
             return;
         }
@@ -907,7 +840,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     XY_I lmp = null;
 
     @Override
-    synchronized public void mouseMoved(MouseMoved _e) {
+    public void mouseMoved(MouseMoved _e) {
         if (mouseIsDown) {
             return;
         }
@@ -930,7 +863,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     boolean drug = false;
 
     @Override
-    synchronized  public void mouseDragged(MouseDragged _e) {
+    public void mouseDragged(MouseDragged _e) {
         DragAndDrop.cDefault.mouseDragged(_e);
         if (!operable) {
             return;
@@ -945,8 +878,8 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
                 h = mpwh.h + _e.getSumDeltaY();
             }
             layoutInterior();
-            parent.layoutInterior();
-            parent.paint();
+            getParentView().layoutInterior();
+            getParentView().paint();
         }
         if (scrollingY) {
             float s = getH() - resize;
@@ -972,7 +905,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
 
     // IDrop
     @Override
-    synchronized public IDropMode accepts(Object value, AInputEvent _e) {
+    public IDropMode accepts(Object value, AInputEvent _e) {
         if (dropCallback == null) {
             return null;
         }
@@ -980,7 +913,7 @@ public class VPan extends VClip implements IDrop, IMouseWheelEvents, IMouseEvent
     }
 
     @Override
-    synchronized public void dropParcel(final Object value, final IDropMode mode) {
+    public void dropParcel(final Object value, final IDropMode mode) {
         if (droppedCallback == null) {
             return;
         }

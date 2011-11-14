@@ -125,7 +125,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
             float _h = hDependant.getY();
             if (ch != _h) {
                 h = _h;
-                parent.layoutInterior();
+                getParentView().layoutInterior();
             }
             return _h;
         } else {
@@ -140,7 +140,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
             float _w = wDependant.getX();
             if (cw != _w) {
                 w = _w;
-                parent.layoutInterior();
+                getParentView().layoutInterior();
             }
             return _w;
         } else {
@@ -318,7 +318,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
             return false;
         }
 
-        return parent.isVisible(r.x + (int) b.x, r.y + (int) b.y, r.w, r.h);
+        return getParentView().isVisible(r.x + (int) b.x, r.y + (int) b.y, r.w, r.h);
     }
 
     /**

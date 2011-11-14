@@ -19,10 +19,14 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.core.collection.CArray;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IView;
+import java.util.LinkedList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -87,19 +91,23 @@ abstract public class ADisplay {
     /**
      *
      */
-    protected volatile CArray toRepaint = new CArray();
-    final private Object painterLock = new Object();
-    private Painter painter;
-    private IView displaying;
+    private final Painter painter;
+    private final ExecutorService painterThread;
+    private final BlockingQueue<IView> blockingQueue;
+    private final IView displaying;
     private boolean antialias = true;
     private boolean isAutoFocusable = true;
 
     /**
      *
-     * @param _displaying
+     * @param view
      */
-    public ADisplay(IView _displaying) {
-        displaying = _displaying;
+    public ADisplay(IView view) {
+        displaying = view;
+        blockingQueue = new LinkedBlockingQueue<IView>();
+        painter = new Painter();
+        painterThread = Executors.newSingleThreadExecutor();
+        painterThread.submit(painter);
     }
 
     /**
@@ -163,85 +171,56 @@ abstract public class ADisplay {
      * @param _view
      */
     public void addToRepaint(IView _view) {
-        synchronized (painterLock) {
-            if (painter == null) {
-                painter = new Painter();
-            }
-        }
-        toRepaint.insertLast(_view);
+        blockingQueue.add(_view);
     }
 
     /**
      *
      */
     public void repaint() {
-        if (painter == null) {
-            return;
-        }
-        if (toRepaint.getCount() == 0) {
-            return;
-        }
-        synchronized (painterLock) {
-            painterLock.notifyAll();
-        }
+        addToRepaint(displaying);
     }
-
+    
+    
     /**
      *
      */
     public void dispose() {
-        if (painter != null) {
-            painter.stop = true;
-        }
-        synchronized (painterLock) {
-            painterLock.notifyAll();
-        }
+        painter.stop = true;
+        blockingQueue.clear();
     }
 
-    class Painter extends Thread {
+    class Painter implements Runnable {
 
         boolean stop = false;
 
-        Painter() {
-            start();
-        }
-
+        @Override
         public void run() {
             while (!stop) {
-                if (toRepaint.getCount() == 0) {
-                    synchronized (painterLock) {
-                        try {
-                            painterLock.wait();
-                        } catch (Exception x) {
-                        }
-                    }
-                } else {
-                    Object[] repaint = toRepaint.removeAll();
-                    //Ensures mend paths are enables
-                    for (int i = 0; i < repaint.length; i++) {
-                        IView repair = (IView) repaint[i];
-                        if (repair == null) {
-                            continue;
-                        }
-                        repair.enableFlag(UV.cRepair);
-                        repair.mend();
-                    }
+                LinkedList<IView> list = new LinkedList<IView>();
+                blockingQueue.drainTo(list);
+                if (list.isEmpty()) continue;
+                for (IView l:list) {
+                    if (l.hasFlag(UV.cMend)) continue;//??
+                    l.enableFlag(UV.cRepair);
+                    l.mend();
+                }
 
-                    try {
-                        float w = displaying.getW();
-                        float h = displaying.getH();
-                        ICanvas g = display(0, w, h);//who
-                        if (g != null) {
-                            XYWH_I _region = new XYWH_I(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
-                            Layer layer = new Layer(null, 0f, 0f, 0f, 0f, w, h);
-                            displaying.paint(displaying, g, layer, UV.cMend, _region);
-                            paintWhos(g);
-                            displayable(g, _region);
-                        }
-
-                    } catch (Exception x) {
-                        x.printStackTrace();
+                try {
+                    float w = displaying.getW();
+                    float h = displaying.getH();
+                    ICanvas g = display(0, w, h);//who
+                    if (g == null) {
+                        continue;
                     }
+                    XYWH_I region = new XYWH_I(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+                    Layer layer = new Layer(null, 0f, 0f, 0f, 0f, w, h);
+                    displaying.paint(displaying, g, layer, UV.cMend, region);
+                    paintWhos(g);
+                    displayable(g, region);
+
+                } catch (Exception x) {
+                    x.printStackTrace();
                 }
             }
         }

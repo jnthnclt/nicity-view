@@ -126,6 +126,7 @@ public class Viewer extends AViewer {
 
     @Override
     public void layoutExterior(WH_F _size, Flex _flex) {
-        placers.placeInside(parent, this, _size, _flex);
+        IView _parent = parent.get();
+        placers.placeInside(_parent, this, _size, _flex);
     }
 }

@@ -137,10 +137,11 @@ public class VLoose extends AVList implements IVList, IMouseEvents, IMouseMotion
      * @param _parent
      * @param _flex
      */
+    @Override
     public void layoutInterior(IView _parent, Flex _flex) {
 
-        IView currentParent = parent;
-        parent = NullView.cNull;
+        IView currentParent = parent.get();
+        parent.set(NullView.cNull);
 
         IVItem[] items = getItems();
 
@@ -162,7 +163,7 @@ public class VLoose extends AVList implements IVList, IMouseEvents, IMouseMotion
             }
         }
 
-        parent = currentParent;
+        parent.set(currentParent);
         if (fixedW == -1) {
             w = (size.getW()) + getBorder().getW();
         } else {

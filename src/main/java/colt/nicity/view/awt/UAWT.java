@@ -307,10 +307,10 @@ public class UAWT {
      */
     static public Image ensureBuffer(Image _old, int _w, int _h) {
         if (_w == 0 || _h == 0) {
+            Image newBuffer = newBuffer(1, 1);
             if (_old != null) {
                 _old.flush();
             }
-            Image newBuffer = newBuffer(1, 1);
             return newBuffer;
         }
         if (_old == null) {

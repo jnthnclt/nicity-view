@@ -23,7 +23,6 @@ import colt.nicity.core.memory.struct.TRLB_I;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
-import java.awt.Graphics;
 
 /**
  *
@@ -175,7 +174,7 @@ public interface IPeerView {
      * @param _h
      * @return
      */
-    public Graphics ensureSize(int _w, int _h);
+    public ICanvas ensureSize(long _who,int _w, int _h);
 
     /**
      *

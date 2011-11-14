@@ -26,9 +26,13 @@ import colt.nicity.view.list.VList;
 import colt.nicity.view.list.UListController;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.CSet;
+import colt.nicity.core.lang.UFile;
+import colt.nicity.core.lang.UText;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.core.time.UTime;
 import colt.nicity.core.value.IValue;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.core.EditText;
 import colt.nicity.view.core.Place;
 import colt.nicity.view.core.Placer;
 import colt.nicity.view.core.RigidBox;
@@ -38,43 +42,48 @@ import colt.nicity.view.core.VButton;
 import colt.nicity.view.core.VChain;
 import colt.nicity.view.core.VFixed;
 import colt.nicity.view.core.VFrame;
+import colt.nicity.view.core.VPaintable;
 import colt.nicity.view.core.VPan;
 import colt.nicity.view.core.VString;
 import colt.nicity.view.core.VTrapFlex;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.ViewString;
 import colt.nicity.view.core.Viewer;
+import colt.nicity.view.image.ViewImage;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.ISizeable;
 import colt.nicity.view.interfaces.ISupportSizeDependecy;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.rpp.IRPPViewable;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
  * @author Administrator
  */
 public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDependecy, IRPPViewable {
-    
+
     public static IView viewable(String[] args) {
         VFiles files = new VFiles();
         files.init(false, true, 600, 600);
         return files;
     }
-    
+
     /**
      *
      * @param _args
      */
     public static void main(String[] _args) {
-        
+
         UV.exitFrame(viewable(_args), "File Browser");
     }
     /**
      *
      */
-    public static CSet fsRootSet = new CSet();
+    final private static ExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
+    final public static CSet fsRootSet = new CSet();
     private static File[] fsRoots;
     private VButton cancel;
     private VButton refresh;
@@ -175,13 +184,13 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
     public void toFront(Object _title) {
         UV.frame(this, _title);
     }
-    
+
     /**
      *
      * @param _title
      */
-    public void popup(IView ref,Object _title) {
-        UV.popup(ref, UV.cCC, new VFrame(this, _title,true,false), false, false);
+    public void popup(IView ref, Object _title) {
+        UV.popup(ref, UV.cCC, new VFrame(this, _title, true, false), false, false);
     }
 
     /**
@@ -199,6 +208,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      *
      * @return
      */
+    @Override
     public Object getValue() {
         return value.getValue();
     }
@@ -207,6 +217,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      *
      * @param _value
      */
+    @Override
     public void setValue(Object _value) {
         File file = null;
         if (_value instanceof File) {
@@ -232,60 +243,85 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      * @param _who
      * @param _file
      */
-    public void setPOV(long _who, File _file) {
-        if (_file == null) {
-            return;
-        }
-        if (!_file.isDirectory()) {
-            return;
-        }
+    public void setPOV(final long _who, final File _file) {
+        final VFiles _this = this;
+        
+        EXECUTOR_SERVICE.execute(new Runnable() {
 
-        pov = _file;
-        if (flcontroller != null) {
-            flcontroller.setFilter("");
-        }
-        if (pan != null) {
-            pan.setPositionY(0);
-            pan.setPositionY(0);
-        }
+            @Override
+            public void run() {
+                if (_file == null) {
+                    return;
+                }
+                
+                VChain c = new VChain(UV.cSWNW);
+                c.add(new VString("Executable:"+_file.canExecute()));
+                c.add(new VString("Readable:"+_file.canRead()));
+                c.add(new VString("Writable:"+_file.canWrite()));
+                c.add(new VString("Modified:"+UTime.basicTime(_file.lastModified())));
+                c.add(new VString("Size:"+_file.length()));
+                
+                String ext = UFile.getExtension(_file.getName());
+                if (ext.equalsIgnoreCase("xml") || ext.equalsIgnoreCase("txt")) {
+                    c.add(new EditText(UText.loadTextFile(_file)));
+                }
+                if (ext.equalsIgnoreCase("png") || ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("gif")) {
+                    c.add(new VPaintable(new ViewImage(_file).getThumbnail(0.25f)));
+                }
+                preview.setView(c);
+                
+                if (!_file.isDirectory()) {
+                    return;
+                }
 
-        path.removeAll();
-        for (File _path = _file; _path != null; _path = _path.getParentFile()) {
-            if (!_path.isDirectory()) {
-                continue;
-            }
-            path.insertLast(new VFile(this, _path));
-            if (fsRootSet.get(_path) != null) {
-                break;
-            }
-        }
+                pov = _file;
+                if (flcontroller != null) {
+                    flcontroller.setFilter("");
+                }
+                if (pan != null) {
+                    pan.setPositionY(0);
+                    pan.setPositionY(0);
+                }
 
-        CArray fileItems = new CArray(VFile.class);
-        if (_file.isDirectory()) {
-            File[] _files = _file.listFiles();
-            String[] names = new String[_files.length];
-            for (int i = 0; i < _files.length; i++) {
-                names[i] = _files[i].getName();
-                if (showFiles) {
-                    fileItems.insertLast(new VFile(this, _files[i]));
-                } else {
-                    if (_files[i].isFile()) {
+                path.removeAll();
+                for (File _path = _file; _path != null; _path = _path.getParentFile()) {
+                    if (!_path.isDirectory()) {
                         continue;
                     }
-                    fileItems.insertLast(new VFile(this, _files[i]));
+                    path.insertLast(new VFile(_this, _path));
+                    if (fsRootSet.get(_path) != null) {
+                        break;
+                    }
+                }
+
+                CArray fileItems = new CArray(VFile.class);
+                if (_file.isDirectory()) {
+                    File[] _files = _file.listFiles();
+                    String[] names = new String[_files.length];
+                    for (int i = 0; i < _files.length; i++) {
+                        names[i] = _files[i].getName();
+                        if (showFiles) {
+                            fileItems.insertLast(new VFile(_this, _files[i]));
+                        } else {
+                            if (_files[i].isFile()) {
+                                continue;
+                            }
+                            fileItems.insertLast(new VFile(_this, _files[i]));
+                        }
+                    }
+                    files.replaceAll(fileItems.getAll());
+                } else {
+                    files.replaceAll(new VFile[]{new VFile(_this, _file)});
+                }
+
+                paint();
+
+                VFile fileItem = (VFile) files.getAt(0);
+                if (fileItem != null) {
+                    fileItem.grabFocus(0);// !! propagate who
                 }
             }
-            files.replaceAll(fileItems.getAll());
-        } else {
-            files.replaceAll(new VFile[]{new VFile(this, _file)});
-        }
-
-        paint();
-
-        VFile fileItem = (VFile) files.getAt(0);
-        if (fileItem != null) {
-            fileItem.grabFocus(0);// !! propagate who
-        }
+        });
     }
 
     /**
@@ -305,6 +341,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
     public void setValue(IValue _value, Object _key) {
         value = _value;
     }
+    VPan preview;
     VPan pan;
     ListController flcontroller;
 
@@ -349,6 +386,8 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
         lookin.add(UV.zone("Path", new VPan(pathList, 160, _h)), UV.cFIG);
         pan = new VPan(filesList, _w, _h);
         lookin.add(UV.zone("Files", pan), UV.cFIG);
+        preview = new VPan(new RigidBox(1,1),-1,_h); 
+        lookin.add(UV.zone("Preview", preview), UV.cFIG);
 
         VTrapFlex trapLookin = new VTrapFlex(lookin);
 
@@ -410,7 +449,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
         }
         };
         VEditValue gotoFile = new VEditValue(vgoto, true, (int) _w);
-
+        
         chain.add(UV.zone("Go to..", gotoFile), UV.cFII);
          */
 
@@ -440,6 +479,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      *
      * @param _d
      */
+    @Override
     public void setWDependency(XY_I _d) {
     }
 
@@ -447,6 +487,7 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      *
      * @param _d
      */
+    @Override
     public void setHDependency(XY_I _d) {
     }
 }

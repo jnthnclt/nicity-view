@@ -244,7 +244,7 @@ public class VMenu extends AItem implements IKeyEvents {
         }
         item(_item);
         layoutInterior();
-        parent.layoutInterior();
+        parent.get().layoutInterior();
         flush();
         if (popup != null) {
             popup.hidePopup();

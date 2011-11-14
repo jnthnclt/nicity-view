@@ -198,14 +198,16 @@ public class ListController extends AListController implements IListController, 
      *
      * @return
      */
-    synchronized public IVItem[] getItems() {
-
-        if (items == null) {
-            rawItems = rawItems(NullOut.cNull, backcall);
+    @Override
+    public IVItem[] getItems() {
+        IVItem[] _items = items;
+        if (_items == null) {
+            IVItem[] _rawItems = rawItems(NullOut.cNull, backcall);
+            rawItems = _rawItems;
             releaseItems();
-            items = filterItems(NullOut.cNull, rawItems);
+            _items = items = filterItems(NullOut.cNull, _rawItems);
         }
-        if ((items == null || items.length == 0) && !(filter.toString().equals(""))) {
+        if ((_items == null || _items.length == 0) && !(filter.toString().equals(""))) {
             Viewer titleViewer = new Viewer(new ViewString(" filter= "));
             titleViewer.setBorder(new SolidBorder(ViewColor.cThemeAccent));
 
@@ -220,21 +222,23 @@ public class ListController extends AListController implements IListController, 
             item.layoutInterior();
             return new IVItem[]{item};
         }
-        return items;
+        return _items;
     }
 
     /**
      *
      * @return
      */
-    synchronized public int getCount() {
-        return (items == null) ? 0 : items.length;
+    public int getCount() {
+         IVItem[] _items = items;
+        return (_items == null) ? 0 : _items.length;
     }
 
     /**
      *
      * @return
      */
+    @Override
     public IVItem getSelectedItem() {
         return selectedItem;
     }
@@ -243,13 +247,15 @@ public class ListController extends AListController implements IListController, 
      *
      * @return
      */
-    synchronized public IVItem[] getSelectedItems() {
-        if (items == null) {
+    @Override
+    public IVItem[] getSelectedItems() {
+         IVItem[] _items = items;
+        if (_items == null) {
             return new IVItem[0];
         }
         CArray selectedItems = new CArray(IVItem.class);
-        for (int i = 0; i < items.length; i++) {
-            IVItem item = items[i];
+        for (int i = 0; i < _items.length; i++) {
+            IVItem item = _items[i];
             if (item != null && item.isSelected()) {
                 selectedItems.insertLast(item);
             }
@@ -260,13 +266,15 @@ public class ListController extends AListController implements IListController, 
     /**
      *
      */
-    synchronized public void selectAllItems() {
-        if (items == null) {
+    @Override
+    public void selectAllItems() {
+         IVItem[] _items = items;
+        if (_items == null) {
             return;
         }
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] != null) {
-                items[i].selectBorder();
+        for (int i = 0; i < _items.length; i++) {
+            if (_items[i] != null) {
+                _items[i].selectBorder();
             }
         }
         if (observeSelectionChanges.isBeingObserved()) {
@@ -278,13 +286,15 @@ public class ListController extends AListController implements IListController, 
      *
      * @return
      */
+    @Override
     public boolean hasMultiSelect() {
-        if (items == null) {
+         IVItem[] _items = items;
+        if (_items == null) {
             return false;
         }
         int selectedCount = 0;
-        for (int i = 0; i < items.length; i++) {
-            IVItem item = items[i];
+        for (int i = 0; i < _items.length; i++) {
+            IVItem item = _items[i];
             if (item != null && item.isSelected()) {
                 selectedCount++;
                 if (selectedCount > 1) {
@@ -298,13 +308,15 @@ public class ListController extends AListController implements IListController, 
     /**
      *
      */
-    synchronized public void deselectAllItems() {
-        if (items == null) {
+    @Override
+    public void deselectAllItems() {
+         IVItem[] _items = items;
+        if (_items == null) {
             return;
         }
         selectedItem = null;
-        for (int i = 0; i < items.length; i++) {
-            IVItem item = items[i];
+        for (int i = 0; i < _items.length; i++) {
+            IVItem item = _items[i];
             if (item != null) {
                 item.deselectBorder();
             }
@@ -319,16 +331,18 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemToSelect
      */
-    synchronized public void selectOneItem(IVItem _itemToSelect) {
+    @Override
+    public void selectOneItem(IVItem _itemToSelect) {
         if (_itemToSelect == null) {
             return;
         }
         deselectAllItems();
-        if (selectedItem != null) {
-            selectedItem.deselectBorder();
+        IVItem _selectedItem = selectedItem;
+        if (_selectedItem != null) {
+            _selectedItem.deselectBorder();
         }
         selectedItem = _itemToSelect;
-        selectedItem.selectBorder();
+        _itemToSelect.selectBorder();
         if (observeSelectionChanges.isBeingObserved()) {
             observeSelectionChanges.change(this);
         }
@@ -338,12 +352,13 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemToSelect
      */
-    synchronized public void selectItem(IVItem _itemToSelect) {
+    @Override
+    public void selectItem(IVItem _itemToSelect) {
         if (_itemToSelect == null) {
             return;
         }
         selectedItem = _itemToSelect;
-        selectedItem.selectBorder();
+        _itemToSelect.selectBorder();
         if (observeSelectionChanges.isBeingObserved()) {
             observeSelectionChanges.change(this);
         }
@@ -353,7 +368,8 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemToDeselect
      */
-    synchronized public void deselectItem(IVItem _itemToDeselect) {
+    @Override
+    public void deselectItem(IVItem _itemToDeselect) {
         if (_itemToDeselect == null) {
             return;
         }
@@ -367,7 +383,8 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemToToggle
      */
-    synchronized public void toggleItem(IVItem _itemToToggle) {
+    @Override
+    public void toggleItem(IVItem _itemToToggle) {
         if (_itemToToggle == null) {
             return;
         }
@@ -384,37 +401,40 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _toItem
      */
-    synchronized public void selectFromSelectedItemTo(IVItem _toItem) {
-        if (selectedItem == null) {
+    @Override
+    public void selectFromSelectedItemTo(IVItem _toItem) {
+        IVItem _selectedItem = selectedItem;
+        if (_selectedItem == null) {
             selectOneItem(_toItem);
             return;
         }
-        if (_toItem == null || items == null || selectedItem == null) {
+        IVItem[] _items = items;
+        if (_toItem == null || _items == null || _selectedItem == null) {
             return;
         }
-        if (selectedItem == _toItem) {
+        if (_selectedItem == _toItem) {
             return;
         }
         int i = 0;
-        for (; i < items.length; i++) {
-            if (items[i] == _toItem || items[i] == selectedItem) {
+        for (; i < _items.length; i++) {
+            if (_items[i] == _toItem || _items[i] == _selectedItem) {
                 break;
             }
         }
 
-        if (i < items.length) {
-            items[i].selectBorder();
+        if (i < _items.length) {
+            _items[i].selectBorder();
 
         }
-        for (i++; i < items.length; i++) {
-            if (items[i] == _toItem || items[i] == selectedItem) {
+        for (i++; i < _items.length; i++) {
+            if (_items[i] == _toItem || _items[i] == _selectedItem) {
                 break;
             }
-            items[i].selectBorder();
+            _items[i].selectBorder();
         }
 
-        if (i < items.length) {
-            items[i].selectBorder();
+        if (i < _items.length) {
+            _items[i].selectBorder();
 
         }
         selectedItem = _toItem; //
@@ -427,26 +447,29 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _toItem
      */
-    synchronized public void deselectFromSelectedItemTo(IVItem _toItem) {
-        if (_toItem == null || items == null) {
+    @Override
+    public void deselectFromSelectedItemTo(IVItem _toItem) {
+        IVItem[] _items = items;
+        if (_toItem == null || _items == null) {
             return;
         }
+        IVItem _selectedItem = selectedItem;
         int i = 0;
-        for (; i < items.length; i++) {
-            if (items[i] == _toItem || items[i] == selectedItem) {
+        for (; i < _items.length; i++) {
+            if (_items[i] == _toItem || _items[i] == _selectedItem) {
                 break;
             }
         }
 
-        if (i < items.length) {
-            items[i].deselectBorder();
+        if (i < _items.length) {
+            _items[i].deselectBorder();
 
         }
-        for (i++; i < items.length; i++) {
-            if (items[i] == _toItem || items[i] == selectedItem) {
+        for (i++; i < _items.length; i++) {
+            if (_items[i] == _toItem || _items[i] == selectedItem) {
                 break;
             }
-            items[i].deselectBorder();
+            _items[i].deselectBorder();
         }
         if (observeSelectionChanges.isBeingObserved()) {
             observeSelectionChanges.change(this);
@@ -457,6 +480,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemsToSelect
      */
+    @Override
     public void selectItems(IVItem[] _itemsToSelect) {
         if (_itemsToSelect == null) {
             return;
@@ -476,6 +500,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemsToDeselect
      */
+    @Override
     public void deselectItems(IVItem[] _itemsToDeselect) {
         if (_itemsToDeselect == null) {
             return;
@@ -495,6 +520,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param _itemsToToggle
      */
+    @Override
     public void toggleItems(IVItem[] _itemsToToggle) {
         if (_itemsToToggle == null) {
             return;
@@ -515,10 +541,11 @@ public class ListController extends AListController implements IListController, 
     }
 
     private void releaseItems() {
-        if (items != null) {
-            for (int i = 0; i < items.length; i++) {
-                if (items[i] instanceof IView) {
-                    ((IView) items[i]).setParentView(null);
+        IVItem[] _items = items;
+        if (_items != null) {
+            for (int i = 0; i < _items.length; i++) {
+                if (_items[i] instanceof IView) {
+                    ((IView) _items[i]).setParentView(null);
                 }
             }
         }
@@ -530,7 +557,7 @@ public class ListController extends AListController implements IListController, 
      * @param _backcall
      */
     @Override
-    synchronized public void setBackcall(IBackcall _backcall) {
+    public void setBackcall(IBackcall _backcall) {
         releaseItems();
         super.setBackcall(_backcall);
     }
@@ -540,13 +567,14 @@ public class ListController extends AListController implements IListController, 
      * @param _
      */
     @Override
-    synchronized public void listModified(IOut _) {
+    public void listModified(IOut _) {
         if (_ == null) {
             _ = NullOut.cNull;
         }
         releaseItems();
-        rawItems = rawItems(_, backcall);
-        items = filterItems(_, rawItems);
+        IVItem[] _rawItems = rawItems(_, backcall);
+        rawItems = _rawItems;
+        items = filterItems(_, _rawItems);
         super.listModified(_);
     }
 
@@ -555,14 +583,16 @@ public class ListController extends AListController implements IListController, 
      * @param _
      */
     @Override
-    synchronized public void filterModified(IOut _) {
-        if (rawItems != null) {
+    public void filterModified(IOut _) {
+        IVItem[] _rawItems  = rawItems;
+        if (_rawItems != null) {
             releaseItems();
-            items = filterItems(_, rawItems);
+            items = filterItems(_, _rawItems);
         }
         super.filterModified(_);
-        if (items != null && items.length > 0) {
-            items[0].grabFocus(0);//!!who needs to be propagated
+        IVItem[] _items  = items;
+        if (_items != null && _items.length > 0) {
+            _items[0].grabFocus(0);//!!who needs to be propagated
         }
         super.listModified(_);
     }
@@ -577,6 +607,7 @@ public class ListController extends AListController implements IListController, 
         final CArray array = new CArray(IVItem.class);
         ICallback callback = new ICallback() {
 
+            @Override
             public Object callback(Object _value) {
                 IVItem vi = vItem(_value);
                 if (vi != null) {
@@ -716,6 +747,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param e
      */
+    @Override
     public void keyTyped(KeyTyped e) {
     }
 
@@ -723,6 +755,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param e
      */
+    @Override
     public void keyReleased(KeyReleased e) {
     }
 
@@ -730,6 +763,7 @@ public class ListController extends AListController implements IListController, 
      *
      * @param e
      */
+    @Override
     public void keyPressed(KeyPressed e) {
         if (e.isControlDown()) {
             int code = e.getKeyCode();

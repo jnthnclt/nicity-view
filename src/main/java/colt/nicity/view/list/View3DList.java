@@ -180,6 +180,7 @@ public class View3DList extends AVList implements IVList {
      * @param _parent
      * @param _flex
      */
+    @Override
     public void layoutInterior(IView _parent, Flex _flex) {
 
         IVItem[] items = getItems();
@@ -201,7 +202,7 @@ public class View3DList extends AVList implements IVList {
 
         //UXYZ.sort(items);
 
-        int len = (items == null) ? 0 : items.length;
+        int len = items.length;
         for (int i = 0; i < len; i++) {
             IView view = items[i];
             if (view == null) {
@@ -260,7 +261,7 @@ public class View3DList extends AVList implements IVList {
             }
             return super.disbatchEvent(_parent, event);
         } else {
-            return parent;
+            return parent.get();
         }
     }
 

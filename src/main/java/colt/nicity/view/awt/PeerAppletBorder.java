@@ -19,13 +19,12 @@
  */
 package colt.nicity.view.awt;
 
+import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.IActiveBorder;
 import colt.nicity.view.interfaces.IActiveSelectedBorder;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.ISelectedBorder;
-import java.awt.Color;
-import java.awt.Graphics;
 
 /**
  *
@@ -52,7 +51,7 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      * @param w
      * @param h
      */
-    public void paintBorder(Graphics g, int w, int h) {
+    public void paintBorder(ICanvas g, int w, int h) {
     }
 
     /**
@@ -61,10 +60,10 @@ public class PeerAppletBorder implements IActiveSelectedBorder, ISelectedBorder,
      * @param w
      * @param h
      */
-    public void paintBackground(Graphics g, int w, int h) {
+    public void paintBackground(ICanvas g, int w, int h) {
 
-        g.setColor(Color.white);
-        g.fillRect(0, 0, w, h);
+        g.setColor(AColor.white);
+        g.rect(true, 0, 0, w, h);
 
     }
 

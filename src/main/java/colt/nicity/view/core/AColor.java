@@ -26,7 +26,6 @@ import colt.nicity.core.lang.UFloat;
 import colt.nicity.core.lang.UInteger;
 import colt.nicity.core.lang.URandom;
 import colt.nicity.core.memory.SoftIndex;
-import java.awt.Color;
 
 /**
  *
@@ -186,24 +185,24 @@ public class AColor extends ASetObject {
      *
      * @return
      */
-    static public final AColor randomNamed() {
+    public static AColor randomNamed() {
         return AColor.colors[URandom.rand(AColor.colors.length)];
     }
     // fast static color utilities
-    final static double[] rs = new double[]{1, 0, 1};
-    final static double[] gs = new double[]{0.5, 1, 0.5, 0, 0.5};
-    final static double[] bs = new double[]{0, 1, 0};
-    static int[] v255 = null;
+    final static double[] RS = new double[]{1, 0, 1};
+    final static double[] GS = new double[]{0.5, 1, 0.5, 0, 0.5};
+    final static double[] BS = new double[]{0, 1, 0};
+    static int[] VLUT_255 = null;
 
     static {
-        v255 = new int[360];
+        VLUT_255 = new int[360];
         for (int i = 0; i < 180; i++) {
             double v = i;
             v /= 180.0;
             v *= 255;
             v += .5;
-            v255[i] = (int) v;
-            v255[359 - i] = (int) v;
+            VLUT_255[i] = (int) v;
+            VLUT_255[359 - i] = (int) v;
         }
     }
 
@@ -212,17 +211,17 @@ public class AColor extends ASetObject {
      * @param _degree
      * @return
      */
-    public final static int intForDegree(int _degree) { // faster than using hue from HSB model
+    public static int intForDegree(int _degree) { // faster than using hue from HSB model
         int i;
         int a = 255;
         i = (_degree + 180) % 360;
-        int r = v255[i];
+        int r = VLUT_255[i];
         i = (_degree + 90) % 360;
-        int g = v255[i];
+        int g = VLUT_255[i];
         i = (_degree + 0) % 360;
-        int b = v255[i];
+        int b = VLUT_255[i];
 
-        return ((a << 24) | (r << 16) | (g << 8) | (b << 0));
+        return ((a << 24) | (r << 16) | (g << 8) | (b));
     }
 
     /**
@@ -230,7 +229,7 @@ public class AColor extends ASetObject {
      * @param _degree
      * @return
      */
-    public final static int intForDegree2(int _degree) { // faster than using hue from HSB model
+    public static int intForDegree2(int _degree) { // faster than using hue from HSB model
         if (_degree < 0) {
             _degree *= -1;
         }
@@ -238,11 +237,11 @@ public class AColor extends ASetObject {
         d /= 360;
 
         int a = 255;
-        int r = (int) (UDouble.linearInterpolation(rs, d) * 255);
-        int g = (int) (UDouble.linearInterpolation(gs, d) * 255);
-        int b = (int) (UDouble.linearInterpolation(bs, d) * 255);
+        int r = (int) (UDouble.linearInterpolation(RS, d) * 255);
+        int g = (int) (UDouble.linearInterpolation(GS, d) * 255);
+        int b = (int) (UDouble.linearInterpolation(BS, d) * 255);
 
-        return ((a << 24) | (r << 16) | (g << 8) | (b << 0));
+        return ((a << 24) | (r << 16) | (g << 8) | (b));
     }
 
     /**
@@ -250,7 +249,7 @@ public class AColor extends ASetObject {
      * @param _radians
      * @return
      */
-    public final static int intForRadians(double _radians) { // faster than using hue from HSB model
+    public static int intForRadians(double _radians) { // faster than using hue from HSB model
         if (_radians < 0) {
             _radians *= -1;
         }
@@ -258,11 +257,11 @@ public class AColor extends ASetObject {
         d /= (Math.PI * 2);
 
         int a = 255;
-        int r = (int) (UDouble.linearInterpolation(rs, d) * 255);
-        int g = (int) (UDouble.linearInterpolation(gs, d) * 255);
-        int b = (int) (UDouble.linearInterpolation(bs, d) * 255);
+        int r = (int) (UDouble.linearInterpolation(RS, d) * 255);
+        int g = (int) (UDouble.linearInterpolation(GS, d) * 255);
+        int b = (int) (UDouble.linearInterpolation(BS, d) * 255);
 
-        return ((a << 24) | (r << 16) | (g << 8) | (b << 0));
+        return ((a << 24) | (r << 16) | (g << 8) | (b));
     }
 
     /**
@@ -270,10 +269,10 @@ public class AColor extends ASetObject {
      * @param _c
      * @return
      */
-    public final static double radiansForInt(int _c) { // faster than using hue from HSB model
+    public static double radiansForInt(int _c) { // faster than using hue from HSB model
         double r = (double) ((_c >> 16) & 0xFF);
         double g = (double) ((_c >> 8) & 0xFF);
-        double b = (double) ((_c >> 0) & 0xFF);
+        double b = (double) ((_c) & 0xFF);
         if (g > 127) {
             return (b / 255d) * Math.PI;
         } else {
@@ -286,9 +285,9 @@ public class AColor extends ASetObject {
      * @param _c
      * @return
      */
-    public final static int degreeForInt(int _c) { // faster than using hue from HSB model
+    public static int degreeForInt(int _c) { // faster than using hue from HSB model
         double g = (double) ((_c >> 8) & 0xFF);
-        double b = (double) ((_c >> 0) & 0xFF);
+        double b = (double) ((_c) & 0xFF);
         if (g > 127) {
             return (int) ((b * 180d) / 255d);
         } else {
@@ -304,15 +303,15 @@ public class AColor extends ASetObject {
      * @param _p
      * @return
      */
-    public final static int linearInterpolation(int _c1, int _c2, double _p) { // 0=>lowest; 1=>highest (identical)
+    public static int linearInterpolation(int _c1, int _c2, double _p) { // 0=>lowest; 1=>highest (identical)
         int a1 = (_c1 >> 24) & 0xFF;
         int r1 = (_c1 >> 16) & 0xFF;
         int g1 = (_c1 >> 8) & 0xFF;
-        int b1 = (_c1 >> 0) & 0xFF;
+        int b1 = (_c1) & 0xFF;
         int a2 = (_c2 >> 24) & 0xFF;
         int r2 = (_c2 >> 16) & 0xFF;
         int g2 = (_c2 >> 8) & 0xFF;
-        int b2 = (_c2 >> 0) & 0xFF;
+        int b2 = (_c2) & 0xFF;
 
         return rgbaToInt(
                 (int) UDouble.linearInterpolation(r1, r2, _p),
@@ -327,14 +326,14 @@ public class AColor extends ASetObject {
      * @param _c2
      * @return
      */
-    public final static double correlateRGB(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
+    public static double correlateRGB(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
         int r1 = (_c1 >> 16) & 0xFF;
         int g1 = (_c1 >> 8) & 0xFF;
-        int b1 = (_c1 >> 0) & 0xFF;
+        int b1 = (_c1) & 0xFF;
 
         int r2 = (_c2 >> 16) & 0xFF;
         int g2 = (_c2 >> 8) & 0xFF;
-        int b2 = (_c2 >> 0) & 0xFF;
+        int b2 = (_c2) & 0xFF;
 
         double dr = r1 - r2;
         if (dr < 0) {
@@ -357,7 +356,7 @@ public class AColor extends ASetObject {
      * @param _c2
      * @return
      */
-    public final static double correlateHSB(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
+    public static double correlateHSB(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
         return correlateHSB(_c1, _c2, new float[3], new float[3]);
     }//dgG
 
@@ -367,10 +366,10 @@ public class AColor extends ASetObject {
      * @param _hsb1
      * @return
      */
-    public final static float[] hsb(int _c1, float[] _hsb1) {
+    public static float[] hsb(int _c1, float[] _hsb1) {
         int r1 = (_c1 >> 16) & 0xFF;
         int g1 = (_c1 >> 8) & 0xFF;
-        int b1 = (_c1 >> 0) & 0xFF;
+        int b1 = (_c1) & 0xFF;
         return RGBtoHSB(r1, g1, b1, _hsb1);
     }
 
@@ -382,7 +381,7 @@ public class AColor extends ASetObject {
      * @param _hsb2
      * @return
      */
-    public final static double correlateHSB(int _c1, int _c2, float[] _hsb1, float[] _hsb2) { // 0=>lowest; 1=>highest (identical)
+    public static double correlateHSB(int _c1, int _c2, float[] _hsb1, float[] _hsb2) { // 0=>lowest; 1=>highest (identical)
         return correlateHSB(hsb(_c1, _hsb1), hsb(_c2, _hsb2));
     }//dg
 
@@ -393,7 +392,7 @@ public class AColor extends ASetObject {
      * @param _hsb2
      * @return
      */
-    public final static double correlateHSB(float[] _hsb1, float[] _hsb2) { // 0=>lowest; 1=>highest (identical)
+    public static double correlateHSB(float[] _hsb1, float[] _hsb2) { // 0=>lowest; 1=>highest (identical)
         double ave = 0;
         ave += Math.abs((_hsb1[0] * _hsb1[1]) - (_hsb2[0] * _hsb2[1]));
         ave += Math.abs((_hsb1[1] * _hsb1[2]) - (_hsb2[1] * _hsb2[2]));
@@ -411,7 +410,7 @@ public class AColor extends ASetObject {
      * @param _weightTotal
      * @return
      */
-    public final static double correlateHSB(
+    public static double correlateHSB(
             float[] _hsb1, float[] _hsb2,
             int _weightH, int _weightS, int _weightB, int _weightTotal) { // 0=>lowest; 1=>highest (identical)
         double ave = 0;
@@ -422,7 +421,7 @@ public class AColor extends ASetObject {
         return 1d - (ave / _weightTotal);
     }
     /*
-
+    
     We use the colour space (r,g,L) where L=R+G+B, r=R/L, and g=G/L. We divide the
     space into discrete bins. The resolution of the discretization of the three components do not need to
     be equal. There is no reason to make the first two different from each other, but, as discussed
@@ -442,10 +441,10 @@ public class AColor extends ASetObject {
      * @param _c2
      * @return
      */
-    public final static double correlateRGL(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
+    public static double correlateRGL(int _c1, int _c2) { // 0=>lowest; 1=>highest (identical)
         int r1 = (_c1 >> 16) & 0xFF;
         int g1 = (_c1 >> 8) & 0xFF;
-        int b1 = (_c1 >> 0) & 0xFF;
+        int b1 = (_c1) & 0xFF;
 
         double l1 = r1 + g1 + b1;
         double rp1 = (double) r1 / l1;
@@ -454,7 +453,7 @@ public class AColor extends ASetObject {
 
         int r2 = (_c2 >> 16) & 0xFF;
         int g2 = (_c2 >> 8) & 0xFF;
-        int b2 = (_c2 >> 0) & 0xFF;
+        int b2 = (_c2) & 0xFF;
 
         double l2 = r2 + g2 + b2;
         double rp2 = (double) r2 / l2;
@@ -474,10 +473,10 @@ public class AColor extends ASetObject {
      * @param _c
      * @return
      */
-    public final static int grayForInt(int _c) { // faster than using hue from HSB model
+    public static int grayForInt(int _c) { // faster than using hue from HSB model
         int r = (_c >> 16) & 0xFF;
         int g = (_c >> 8) & 0xFF;
-        int b = (_c >> 0) & 0xFF;
+        int b = (_c) & 0xFF;
         int gray = r;
         if (g > gray) {
             gray = g;
@@ -502,7 +501,7 @@ public class AColor extends ASetObject {
      * @param d
      * @return
      */
-    public final static float colorSrcOver(float sa, float da, float s, float d, float alpha) {
+    public static float colorSrcOver(float sa, float da, float s, float d, float alpha) {
         float v = (s * sa * alpha) + (d);
         if (v > 1) {
             v = 1;
@@ -517,7 +516,7 @@ public class AColor extends ASetObject {
      * @param alpha
      * @return
      */
-    public final static float alphaSrcOver(float sa, float da, float alpha) {
+    public static float alphaSrcOver(float sa, float da, float alpha) {
         float v = (sa * alpha) + (da);
         if (v > 1) {
             v = 1;
@@ -530,9 +529,9 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    public final static double average(int _color) {
+    public static double average(int _color) {
         double result =
-                (double) (((_color >> 16) & 0xFF) + ((_color >> 8) & 0xFF) + ((_color >> 0) & 0xFF)) / 3d;
+                (double) (((_color >> 16) & 0xFF) + ((_color >> 8) & 0xFF) + ((_color) & 0xFF)) / 3d;
         return result;
     }
 
@@ -542,7 +541,7 @@ public class AColor extends ASetObject {
      * @param _channel
      * @return
      */
-    public final static int intForChannel(int _color, int _channel) { // extract int 0-255
+    public static int intForChannel(int _color, int _channel) { // extract int 0-255
         int result = 0;
         if (_channel == 0) {
             result = (_color >> 24) & 0xFF;
@@ -554,7 +553,7 @@ public class AColor extends ASetObject {
             result = (_color >> 8) & 0xFF;
         }
         if (_channel == 3) {
-            result = (_color >> 0) & 0xFF;
+            result = (_color) & 0xFF;
         }
         return result;
     }
@@ -564,7 +563,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    public final static int[] channelsForInt(int _color) {
+    public static int[] channelsForInt(int _color) {
         return channelsForInt(_color, null);
     }
 
@@ -574,14 +573,14 @@ public class AColor extends ASetObject {
      * @param _channels
      * @return
      */
-    public final static int[] channelsForInt(int _color, int[] _channels) {
+    public static int[] channelsForInt(int _color, int[] _channels) {
         if (_channels == null || _channels.length < 4) {
             _channels = new int[4];
         }
         _channels[0] = (_color >> 24) & 0xFF;
         _channels[1] = (_color >> 16) & 0xFF;
         _channels[2] = (_color >> 8) & 0xFF;
-        _channels[3] = (_color >> 0) & 0xFF;
+        _channels[3] = (_color) & 0xFF;
         return _channels;
     }
 
@@ -598,7 +597,7 @@ public class AColor extends ASetObject {
         float[] hsb = new float[3];
         int[] c = new int[4];
         AColor.channelsForInt(_rgba, c);
-        Color.RGBtoHSB(c[1], c[2], c[3], hsb);
+        RGBtoHSB(c[1], c[2], c[3], hsb);
 
         if (_h != 0) {
             hsb[0] = (float) (hsb[0] + _h);
@@ -635,14 +634,14 @@ public class AColor extends ASetObject {
             c[0] = UInteger.range(c[0] + (int) (_a * 255), 0, 255);
         }
 
-        int color = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        int color = HSBtoRGB(hsb[0], hsb[1], hsb[2]);
         color |= ((c[0] & 0xFF) << 24); // restore with a modified alpha
         return color;
     }
     /**
      *
      */
-    protected int color = 0; //
+    protected int color = 0;
     /**
      *
      */
@@ -718,8 +717,9 @@ public class AColor extends ASetObject {
      *
      * @return
      */
+    @Override
     public Object hashObject() {
-        return new Integer(color);
+        return Integer.valueOf(color);
     }
     private static SoftIndex colorIndex = new SoftIndex();
 
@@ -729,7 +729,7 @@ public class AColor extends ASetObject {
      * @return
      */
     public static AColor color(int _rgba) {
-        AColor color = (AColor) colorIndex.get(new Integer(_rgba));
+        AColor color = (AColor) colorIndex.get(Integer.valueOf(_rgba));
         if (color != null) {
             return color;
         }
@@ -782,7 +782,7 @@ public class AColor extends ASetObject {
      * @return
      */
     final public int getB() {
-        return (color >> 0) & 0xFF;
+        return (color) & 0xFF;
     }
 
     /**
@@ -798,7 +798,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public int getR(int _color) {
+    public static int getR(int _color) {
         return (_color >> 16) & 0xFF;
     }
 
@@ -807,7 +807,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public int getG(int _color) {
+    public static int getG(int _color) {
         return (_color >> 8) & 0xFF;
     }
 
@@ -816,8 +816,8 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public int getB(int _color) {
-        return (_color >> 0) & 0xFF;
+    public static int getB(int _color) {
+        return (_color) & 0xFF;
     }
 
     /**
@@ -825,7 +825,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public int getA(int _color) {
+    public static int getA(int _color) {
         return (_color >> 24) & 0xFF;
     }
 
@@ -834,7 +834,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public float getHue(int _color) {
+    public static float getHue(int _color) {
         return RGBtoHSB(getR(_color), getG(_color), getB(_color), null)[0];
     }
 
@@ -843,7 +843,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public float getSaturation(int _color) {
+    public static float getSaturation(int _color) {
         return RGBtoHSB(getR(_color), getG(_color), getB(_color), null)[1];
     }
 
@@ -852,7 +852,7 @@ public class AColor extends ASetObject {
      * @param _color
      * @return
      */
-    static final public float getBrightness(int _color) {
+    public static float getBrightness(int _color) {
         return RGBtoHSB(getR(_color), getG(_color), getB(_color), null)[2];
     }
 
@@ -1044,7 +1044,7 @@ public class AColor extends ASetObject {
         color = rgba(_r, _g, _b, getA());
     }
 
-    private final int rgba(int _r, int _g, int _b, int _a) {
+    private int rgba(int _r, int _g, int _b, int _a) {
         _r = UInteger.range(_r, 0, 255);
         _g = UInteger.range(_g, 0, 255);
         _b = UInteger.range(_b, 0, 255);
@@ -1055,7 +1055,7 @@ public class AColor extends ASetObject {
         return ((_a & 0xFF) << 24)
                 | ((_r & 0xFF) << 16)
                 | ((_g & 0xFF) << 8)
-                | ((_b & 0xFF) << 0);
+                | ((_b & 0xFF));
     }
 
     /**
@@ -1066,12 +1066,12 @@ public class AColor extends ASetObject {
      * @param _a
      * @return
      */
-    public static final int rgbaToInt(int _r, int _g, int _b, int _a) {
+    public static int rgbaToInt(int _r, int _g, int _b, int _a) {
 
         return ((_a & 0xFF) << 24)
                 | ((_r & 0xFF) << 16)
                 | ((_g & 0xFF) << 8)
-                | ((_b & 0xFF) << 0);
+                | ((_b & 0xFF));
     }
 
     /**
@@ -1079,7 +1079,7 @@ public class AColor extends ASetObject {
      * @param _gray
      * @return
      */
-    public static final int grayToInt(float _gray) {
+    public static int grayToInt(float _gray) {
         int v = (int) (_gray * 255);
         return rgbaToInt(v, v, v, 255);
     }
@@ -1091,7 +1091,7 @@ public class AColor extends ASetObject {
      * @param _b
      * @return
      */
-    public static final int hsbToInt(float _h, float _s, float _b) {
+    public static int hsbToInt(float _h, float _s, float _b) {
         return HSBtoRGB(_h, _s, _b);
     }
     private static final float cFactor = 0.7f;
@@ -1340,10 +1340,9 @@ public class AColor extends ASetObject {
      * @return
      */
     static public double[] rgbDoubles(int _color) {
-        int a = (_color >> 24) & 0xFF;
         int r = (_color >> 16) & 0xFF;
         int g = (_color >> 8) & 0xFF;
-        int b = (_color >> 0) & 0xFF;
+        int b = (_color) & 0xFF;
         return new double[]{(double) r / 255d, (double) g / 255d, (double) b / 255d};
     }
 
@@ -1356,7 +1355,7 @@ public class AColor extends ASetObject {
         int a = (_color >> 24) & 0xFF;
         int r = (_color >> 16) & 0xFF;
         int g = (_color >> 8) & 0xFF;
-        int b = (_color >> 0) & 0xFF;
+        int b = (_color) & 0xFF;
         return new double[]{(double) r / 255d, (double) g / 255d, (double) b / 255d, (double) a / 255d};
     }
 
@@ -1388,7 +1387,7 @@ public class AColor extends ASetObject {
         int a = (int) (255 * _hsba[3]);
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
+        int b = (color) & 0xFF;
         return rgbaToInt(r, g, b, a);
     }
 
@@ -1485,35 +1484,6 @@ public class AColor extends ASetObject {
         h >>= 4;
         int r = (h % 96) + 128;
         h >>= 8;
-
-        AColor color = null;
-        int _12 = (h % 2) + 1;
-        if (_12 == 1) {
-            int _123 = (h % 3) + 1;
-            switch (_123) {
-                case 1:
-                    color = new AColor(r, 64, 64);
-                    break;
-                case 2:
-                    color = new AColor(64, g, 64);
-                    break;
-                default:
-                    color = new AColor(64, 64, b);
-            }
-
-        } else {
-            int _123 = (h % 3) + 1;
-            switch (_123) {
-                case 1:
-                    color = new AColor(r, g, 64);
-                    break;
-                case 2:
-                    color = new AColor(r, 64, b);
-                    break;
-                default:
-                    color = new AColor(64, g, b);
-            }
-        }
         return new AColor(r, g, b);
     }
 
@@ -1645,7 +1615,7 @@ public class AColor extends ASetObject {
         int a = (color >> 24) & 0xFF;
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
+        int b = (color) & 0xFF;
         int v = r;
         if (g > v) {
             v = g;
@@ -1664,7 +1634,7 @@ public class AColor extends ASetObject {
         int a = (color >> 24) & 0xFF;
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
+        int b = (color) & 0xFF;
         int v = r;
         if (g > v) {
             v = g;
@@ -1680,11 +1650,11 @@ public class AColor extends ASetObject {
      * @param _c
      * @return
      */
-    public static final int intToGrayInt(int _c) {
+    public static int intToGrayInt(int _c) {
         int a = (_c >> 24) & 0xFF;
         int r = (_c >> 16) & 0xFF;
         int g = (_c >> 8) & 0xFF;
-        int b = (_c >> 0) & 0xFF;
+        int b = (_c) & 0xFF;
         int v = r;
         if (g > v) {
             v = g;
@@ -1704,7 +1674,7 @@ public class AColor extends ASetObject {
         int a = (_int >> 24) & 0xFF;
         int r = (_int >> 16) & 0xFF;
         int g = (_int >> 8) & 0xFF;
-        int b = (_int >> 0) & 0xFF;
+        int b = (_int) & 0xFF;
         return "ARGB[" + a + "," + r + "," + g + "," + b + "]";
     }
 
@@ -1713,10 +1683,9 @@ public class AColor extends ASetObject {
      * @return
      */
     public int sum() {
-        int a = (color >> 24) & 0xFF;
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
+        int b = (color) & 0xFF;
         return r + g + b;
     }
 
@@ -1765,12 +1734,12 @@ public class AColor extends ASetObject {
         float as = ((_s >> 24) & 0xFF) / 255f;
         float rs = ((_s >> 16) & 0xFF) / 255f;
         float gs = ((_s >> 8) & 0xFF) / 255f;
-        float bs = ((_s >> 0) & 0xFF) / 255f;
+        float bs = ((_s) & 0xFF) / 255f;
 
         float ad = ((_d >> 24) & 0xFF) / 255f;
         float rd = ((_d >> 16) & 0xFF) / 255f;
         float gd = ((_d >> 8) & 0xFF) / 255f;
-        float bd = ((_d >> 0) & 0xFF) / 255f;
+        float bd = ((_d) & 0xFF) / 255f;
 
         float delta = Math.max(Math.max(Math.max(Math.abs(as - ad), Math.abs(rs - rd)), Math.abs(gs - gd)), Math.abs(bs - bd));
         float blend = (float) delta;
@@ -1806,7 +1775,7 @@ public class AColor extends ASetObject {
         return ((a & 0xFF) << 24)
                 | ((r & 0xFF) << 16)
                 | ((g & 0xFF) << 8)
-                | ((b & 0xFF) << 0);
+                | ((b & 0xFF));
     }
     // source over rules
     // fs = 1
@@ -1826,12 +1795,12 @@ public class AColor extends ASetObject {
         float as = ((_s >> 24) & 0xFF) / 255f;
         float rs = ((_s >> 16) & 0xFF) / 255f;
         float gs = ((_s >> 8) & 0xFF) / 255f;
-        float bs = ((_s >> 0) & 0xFF) / 255f;
+        float bs = ((_s) & 0xFF) / 255f;
 
         float ad = ((_d >> 24) & 0xFF) / 255f;
         float rd = ((_d >> 16) & 0xFF) / 255f;
         float gd = ((_d >> 8) & 0xFF) / 255f;
-        float bd = ((_d >> 0) & 0xFF) / 255f;
+        float bd = ((_d) & 0xFF) / 255f;
 
 
         as *= _alpha;
@@ -1863,7 +1832,7 @@ public class AColor extends ASetObject {
         return ((a & 0xFF) << 24)
                 | ((r & 0xFF) << 16)
                 | ((g & 0xFF) << 8)
-                | ((b & 0xFF) << 0);
+                | ((b & 0xFF));
 
     }
 
@@ -2043,9 +2012,8 @@ public class AColor extends ASetObject {
                     break;
             }
         }
-        return 0xff000000 | (r << 16) | (g << 8) | (b << 0);
+        return 0xff000000 | (r << 16) | (g << 8) | (b);
     }
-
 
     /**
      *

@@ -59,7 +59,9 @@ public abstract class AView extends AViewableParentFlagsXY {
                 flags |= UV.cFocus;
             }
         }
-        root.setFocusedView(_who, this);
+        else {
+            root.setFocusedView(_who, this);
+        }
     }
 
     @Override
@@ -105,9 +107,11 @@ public abstract class AView extends AViewableParentFlagsXY {
 
     @Override
     public void layoutInterior(Flex _flex) {
+        IView _parent = parent.get();
+        boolean parentHasAllInterior = _parent.hasFlag(UV.cAllInterior);
         synchronized (this) {
             if (_flex.interior && (flags & UV.cInterior) == UV.cInterior) {
-                if (parent.hasFlag(UV.cAllInterior)) {
+                if (parentHasAllInterior) {
                     flags |= UV.cAllInterior;
                 } else if ((flags & UV.cAllInterior) != UV.cAllInterior) {
                     return;
@@ -129,8 +133,8 @@ public abstract class AView extends AViewableParentFlagsXY {
         float w = getW();
         float h = getH();
 
-        if (parent != NullView.cNull
-                && !parent.hasFlag(UV.cActive)
+        if (_parent != NullView.cNull
+                && !_parent.hasFlag(UV.cActive)
                 && ((w != _w || h != _h) || hasFlag(UV.cAllInterior))) {
             if (_flex != null) {
                 _flex.x = -(_w - w);

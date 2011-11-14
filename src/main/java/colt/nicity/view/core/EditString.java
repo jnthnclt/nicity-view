@@ -40,6 +40,7 @@ import colt.nicity.core.lang.UFloat;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.IValue;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
@@ -48,19 +49,13 @@ import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Administrator
  */
-public class EditString extends AViewableWH implements IValue, IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
+public class EditString extends AViewableWH implements IValue, IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents {
 
     // Convienient overloadable methods
     /**
@@ -530,15 +525,12 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         return h + border.getH();
     }
 
-    // ClipboardOwner
-    public void lostOwnership(Clipboard clipboard, Transferable contents) {
-    }
-
     // IValue
     /**
      *
      * @return
      */
+    @Override
     public Object getValue() {
         return text;
     }
@@ -547,11 +539,13 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
      *
      * @param _value
      */
+    @Override
     public void setValue(Object _value) {
         setText((_value == null) ? "" : _value.toString());
     }
 
     // IKeyEvents
+    @Override
     public void keyPressed(KeyPressed e) {
         int code = e.getKeyCode();
         if (e.isControlDown()) {
@@ -579,9 +573,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                     }
                     parent.layoutInterior();
                     update();
-                    Toolkit tk = Toolkit.getDefaultToolkit();
-                    Clipboard cb = tk.getSystemClipboard();
-                    cb.setContents(new StringSelection(cut), this);
+                    VS.setClipboard(cut);
                     break;
                 }
                 case KeyEvent.VK_C: {
@@ -589,17 +581,12 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                     if (start != -1 && end != -1) {
                         copy = text.toString().substring(start, end);
                     }
-                    Toolkit tk = Toolkit.getDefaultToolkit();
-                    Clipboard cb = tk.getSystemClipboard();
-                    cb.setContents(new StringSelection(copy), this);
+                    VS.setClipboard(copy);
                     break;
                 }
                 case KeyEvent.VK_V: {
-                    Toolkit tk = Toolkit.getDefaultToolkit();
-                    Clipboard cb = tk.getSystemClipboard();
-                    Transferable t = cb.getContents(this);
                     try {
-                        String paste = (String) t.getTransferData(DataFlavor.stringFlavor);
+                        String paste = VS.getClipboardIfString(this);
                         if (start != -1 && end != -1) {
                             setText(new String(UArray.add(text.toString().toCharArray(), start, paste.toCharArray(), end)));
                             at = start;
@@ -755,16 +742,20 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         }
     }
 
+    @Override
     public void keyReleased(KeyReleased _e) {
     }
 
+    @Override
     public void keyTyped(KeyTyped _e) {
     }
 
     // IMouseMotionEvents
+    @Override
     public void mouseMoved(MouseMoved _e) {
     }
 
+    @Override
     public void mouseDragged(MouseDragged _e) {
         XY_I p = _e.getPoint();
         if (p.x < 0 || p.y < 0 || p.x > w || p.y > h) {
@@ -788,6 +779,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
     }
 
     // IMouseEvents
+    @Override
     public void mouseEntered(MouseEntered _e) {
         if (at == -2) {
             return;
@@ -798,12 +790,14 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         update();
     }
 
+    @Override
     public void mouseExited(MouseExited _e) {
         //if (at == -2) return;
         //at = -1;
         update();
     }
 
+    @Override
     public void mousePressed(MousePressed _e) {
         grabHardFocus(_e.who());
         if (at == -2) {
@@ -813,6 +807,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         update();
     }
 
+    @Override
     public void mouseReleased(MouseReleased _e) {
         if (at == -2) {
             return;
@@ -854,7 +849,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         update();
     }
 
-    private static final boolean seperator(char c) {
+    private static boolean seperator(char c) {
         switch (Character.getType(c)) {
             case Character.UNASSIGNED:
                 break;
@@ -916,11 +911,10 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         return false;
     }
 
-    private final int at(String _text, AFont _font, AMouseEvent _e, float _w) {
-        int at = 0;
+    private int at(String _text, AFont _font, AMouseEvent _e, float _w) {
         int tl = _text.length();
         if (tl == 0) {
-            return at;
+            return 0;
         }
 
         XY_I ep = _e.getPoint();
@@ -977,10 +971,12 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
     }
 
     // IFocusEvents
+    @Override
     public void focusGained(FocusGained e) {
         super.promoteEvent(e);
     }
 
+    @Override
     public void focusLost(FocusLost e) {
         super.promoteEvent(e);
     }

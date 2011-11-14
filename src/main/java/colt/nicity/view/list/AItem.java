@@ -211,6 +211,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @return
      */
+    @Override
     public Object getParcel() {
         return getValue();
     }
@@ -222,6 +223,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      * @param _e
      * @return
      */
+    @Override
     public IDropMode accepts(Object object, AInputEvent _e) {
         return null;
     }
@@ -231,6 +233,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      * @param object
      * @param mode
      */
+    @Override
     public void dropParcel(Object object, IDropMode mode) {
     }
 
@@ -238,6 +241,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @return
      */
+    @Override
     public Object getValue() {
         return this;
     }
@@ -247,6 +251,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void keyPressed(KeyPressed e) {
         UKey.arrowKeys(e, this);
         int code = e.getKeyCode();
@@ -281,6 +286,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void keyReleased(KeyReleased e) {
         promoteEvent(e);
     }
@@ -289,6 +295,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void keyTyped(KeyTyped e) {
         promoteEvent(e);
     }
@@ -298,6 +305,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void mouseEntered(MouseEntered e) {
         DragAndDrop.cDefault.mouseEntered(e);
         grabFocus(e.who());
@@ -307,6 +315,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void mouseExited(MouseExited e) {
         DragAndDrop.cDefault.mouseExited(e);
     }
@@ -315,6 +324,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void mousePressed(MousePressed e) {
         DragAndDrop.cDefault.mousePressed(e);
         IListController controller = getListController();
@@ -333,6 +343,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param e
      */
+    @Override
     public void mouseReleased(MouseReleased e) {
         DragAndDrop.cDefault.mouseReleased(e);
         if (PickupAndDrop.cDefault.event(e)) {
@@ -384,6 +395,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param _e
      */
+    @Override
     public void mouseMoved(MouseMoved _e) {
     }
 
@@ -391,6 +403,7 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
      *
      * @param _e
      */
+    @Override
     public void mouseDragged(MouseDragged _e) {
         DragAndDrop.cDefault.mouseDragged(_e);
     }
@@ -415,11 +428,11 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
     }
 
     private IListController getListController() {
-        IView parent = UV.findParent(this, AVList.class);//??
-        if (!(parent instanceof AVList)) {
+        IView foundParent = UV.findParent(this, AVList.class);//??
+        if (!(foundParent instanceof AVList)) {
             return NullListController.cNull;
         }
-        AVList list = (AVList) parent;
+        AVList list = (AVList) foundParent;
         IListController lc = list.getListController();
         return lc;
     }

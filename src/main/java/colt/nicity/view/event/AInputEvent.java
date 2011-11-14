@@ -127,6 +127,7 @@ abstract public class AInputEvent extends AViewEvent {
         return ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK);
     }
 
+    @Override
     public String toString() {
         return "mod = " + modifiers;
     }
