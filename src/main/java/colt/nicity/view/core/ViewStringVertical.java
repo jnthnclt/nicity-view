@@ -71,7 +71,7 @@ public class ViewStringVertical extends ViewString implements IOrientable {
         setText(text);
         setColor(fontColor);
         font = getFont();
-        w = UVA.fontHeight(font);
+        w = font.getH(text.toString());
         h = font.getSize() * (text.toString().length());
     }
 
@@ -85,7 +85,7 @@ public class ViewStringVertical extends ViewString implements IOrientable {
         int yStep = font.getSize();
         int y = yStep;
         for (int i = 0; i < chars.length; i++) {
-            float charW = UVA.fontCharWidth(font, chars[i]);
+            float charW = font.getCharW(chars[i]);
             float x = (w / 2) - (charW / 2);
             g.drawString("" + chars[i], (int) x, y);
             y += yStep;

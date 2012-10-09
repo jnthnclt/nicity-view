@@ -19,10 +19,9 @@
  */
 package colt.nicity.view.event;
 
+import colt.nicity.view.adaptor.IEventConstants;
 import colt.nicity.view.core.PrimativeEvent;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Event;
-import java.awt.event.InputEvent;
 
 /**
  *
@@ -70,7 +69,7 @@ public class EKey {
      * @return
      */
     public boolean isShiftDown() {
-        return (e.modifiers & Event.SHIFT_MASK) != 0;
+        return (e.modifiers & IEventConstants.cShiftMask) != 0;
     }
 
     /**
@@ -78,7 +77,7 @@ public class EKey {
      * @return
      */
     public boolean isControlDown() {
-        return (e.modifiers & Event.CTRL_MASK) != 0;
+        return (e.modifiers & IEventConstants.cCrtlMask) != 0;
     }
 
     /**
@@ -86,7 +85,7 @@ public class EKey {
      * @return
      */
     public boolean isMetaDown() {
-        return (e.modifiers & Event.META_MASK) != 0;
+        return (e.modifiers & IEventConstants.cMetaMask) != 0;
     }
 
     /**
@@ -94,7 +93,7 @@ public class EKey {
      * @return
      */
     public boolean isAltDown() {
-        return (e.modifiers & Event.ALT_MASK) != 0;
+        return (e.modifiers & IEventConstants.cAltMask) != 0;
     }
 
     /**
@@ -102,7 +101,7 @@ public class EKey {
      * @return
      */
     public boolean isLeftMouseDown() {
-        return ((e.modifiers & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK);
+        return ((e.modifiers & IEventConstants.cButton1DownMask) == IEventConstants.cButton1DownMask);
     }
 
     /**
@@ -110,7 +109,7 @@ public class EKey {
      * @return
      */
     public boolean isLeftClick() {
-        return ((e.modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK);
+        return ((e.modifiers & IEventConstants.cButton1Mask) == IEventConstants.cButton1Mask);
     }
 
     /**
@@ -118,7 +117,7 @@ public class EKey {
      * @return
      */
     public boolean isMiddleClick() {
-        return ((e.modifiers & InputEvent.BUTTON2_MASK) == InputEvent.BUTTON2_MASK);
+        return ((e.modifiers & IEventConstants.cButton2Mask) == IEventConstants.cButton2Mask);
     }
 
     /**
@@ -126,6 +125,6 @@ public class EKey {
      * @return
      */
     public boolean isRightClick() {
-        return ((e.modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK);
+        return ((e.modifiers & IEventConstants.cButton3Mask) == IEventConstants.cButton3Mask);
     }
 }

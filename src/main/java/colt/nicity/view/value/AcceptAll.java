@@ -130,8 +130,7 @@ public class AcceptAll extends Viewer implements IWindowEvents {
         chain.add(viewer);
         setPlacer(new Placer(chain));
         setBorder(new ButtonBorder());
-        layoutInterior();
-        flush();
+        paint();
     }
     private boolean choosed = false;
 

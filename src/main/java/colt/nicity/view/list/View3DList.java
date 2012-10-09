@@ -36,7 +36,6 @@ import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IVList;
 import colt.nicity.view.interfaces.IView;
 
-
 /**
  *
  * @author Administrator
@@ -132,8 +131,7 @@ public class View3DList extends AVList implements IVList {
             _controller = NullListController.cNull;
         }
         controller = _controller;
-        layoutInterior();//??
-        flush();//??
+        paint();
     }
 
     /**
@@ -188,11 +186,11 @@ public class View3DList extends AVList implements IVList {
             return;
         }
         /*
-        if (center.getCount() != items.length) {
-        XYZ[] xyz = new XYZ[items.length];
-        for(int i=0;i<xyz.length;i++) xyz[i] = new XYZ(0,0,0);
-        U3D.sphere(center,xyz,300);
-        }*/
+         * if (center.getCount() != items.length) { XYZ[] xyz = new
+         * XYZ[items.length]; for(int i=0;i<xyz.length;i++) xyz[i] = new
+         * XYZ(0,0,0); U3D.sphere(center,xyz,300);
+        }
+         */
         center.mapPoints(items);
         XYZ_D centerEye = eye.getCenter();
         XYZ_D centerObj = center.getCenter();
@@ -212,16 +210,15 @@ public class View3DList extends AVList implements IVList {
             IXYZ xyz = (IXYZ) items[i];
             //if (xyz.z() <= 0) continue;
 
-            synchronized (view) {
-                view.setParentView(this);//??
-                view.layoutInterior(_flex);
-                float _x = (float) xyz.x();
-                float _y = (float) xyz.y();
+            view.setParentView(this);//??
+            view.layoutInterior(_flex);
+            float _x = (float) xyz.x();
+            float _y = (float) xyz.y();
 
-                _x += (view.getW() / 2) + (getW() / 2);
-                _y += (view.getH() / 2) + (getH() / 2);
-                view.setLocation(_x, _y);
-            }
+            _x += (view.getW() / 2) + (getW() / 2);
+            _y += (view.getH() / 2) + (getH() / 2);
+            view.setLocation(_x, _y);
+
         }
 
     }
@@ -336,4 +333,3 @@ public class View3DList extends AVList implements IVList {
         super.paintBody(g, _layer, _mode, _painted);
     }
 }
-

@@ -26,6 +26,7 @@ import colt.nicity.view.list.event.ItemPicked;
 import colt.nicity.view.list.event.ItemSelected;
 import colt.nicity.core.collection.IBackcall;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.core.Placer;
 import colt.nicity.view.core.UPopup;
 import colt.nicity.view.core.VIcon;
@@ -39,7 +40,6 @@ import colt.nicity.view.interfaces.IListController;
 import colt.nicity.view.interfaces.IToolTip;
 import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -327,7 +327,7 @@ public class VMenu extends AItem implements IKeyEvents {
      */
     public void keyPressed(KeyPressed e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_ENTER) {
+        if (code == IKeyEventConstants.cEnter) {
             showPopup(e.who());
         }
         super.keyPressed(e);

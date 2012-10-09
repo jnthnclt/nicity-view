@@ -19,7 +19,15 @@
  */
 package colt.nicity.view.list;
 
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.border.ItemBorder;
+import colt.nicity.view.core.AColor;
+import colt.nicity.view.core.DragAndDrop;
+import colt.nicity.view.core.NullPopup;
+import colt.nicity.view.core.PickupAndDrop;
+import colt.nicity.view.core.ULAF;
+import colt.nicity.view.core.UV;
+import colt.nicity.view.core.Viewer;
 import colt.nicity.view.event.AInputEvent;
 import colt.nicity.view.event.FocusGained;
 import colt.nicity.view.event.FocusLost;
@@ -33,13 +41,6 @@ import colt.nicity.view.event.MouseMoved;
 import colt.nicity.view.event.MousePressed;
 import colt.nicity.view.event.MouseReleased;
 import colt.nicity.view.event.UKey;
-import colt.nicity.view.core.AColor;
-import colt.nicity.view.core.DragAndDrop;
-import colt.nicity.view.core.NullPopup;
-import colt.nicity.view.core.PickupAndDrop;
-import colt.nicity.view.core.ULAF;
-import colt.nicity.view.core.UV;
-import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IDrag;
 import colt.nicity.view.interfaces.IDrop;
@@ -57,7 +58,6 @@ import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.list.event.ItemPicked;
 import colt.nicity.view.list.event.ItemSelected;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -256,18 +256,18 @@ public abstract class AItem extends Viewer implements IVItem, IKeyEvents, IMouse
         UKey.arrowKeys(e, this);
         int code = e.getKeyCode();
         if (e.isControlDown()) {
-            if (code == KeyEvent.VK_A) {
+            if (code == IKeyEventConstants.cA) {
                 IListController controller = getListController();
                 controller.selectAllItems();
-            } else if (code == KeyEvent.VK_D) {
+            } else if (code == IKeyEventConstants.cD) {
                 IListController controller = getListController();
                 controller.deselectAllItems();
             }
-        } else if (code == KeyEvent.VK_DELETE) {
+        } else if (code == IKeyEventConstants.cDelete) {
             if (isSelected()) {
                 removed(e);
             }
-        } else if (code == KeyEvent.VK_ENTER) {
+        } else if (code == IKeyEventConstants.cEnter) {
             if (e.isShiftDown()) {
                 selected(e);
                 promoteEvent(ItemSelected.newInstance(this, e));

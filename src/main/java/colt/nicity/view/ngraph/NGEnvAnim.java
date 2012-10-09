@@ -43,6 +43,7 @@ import colt.nicity.core.lang.URandom;
 import colt.nicity.core.memory.struct.IXYZ;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.UV;
@@ -243,7 +244,7 @@ public class NGEnvAnim extends Viewer implements IRPPViewable {
      */
     public void setSize(int _w, int _h) {
         panGraph.setSize(_w, _h);
-        panGraph.layoutInterior();
+        panGraph.paint();
     }
     private boolean editable = true;
 
@@ -458,7 +459,7 @@ public class NGEnvAnim extends Viewer implements IRPPViewable {
                 c.add(((IEnteredOrExited) key.value()).exitedView());
             }
             else {
-                VString s = new VString(key, new AFont(AFont.cPlain, 14), ViewColor.cVisualizeThemeFont);
+                VString s = new VString(key, new AFont(IFontConstants.cPlain, 14), ViewColor.cVisualizeThemeFont);
                 c.add(s);
             }
             setContent(c);

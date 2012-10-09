@@ -83,7 +83,6 @@ public abstract class AViewer extends AViewWHBorder {
     @Override
     public void setView(IView _view) {
         setPlacer(new Placer(_view));
-        layoutInterior();
         paint();
     }
 

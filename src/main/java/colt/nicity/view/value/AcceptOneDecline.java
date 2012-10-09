@@ -127,8 +127,7 @@ public class AcceptOneDecline extends Viewer implements IWindowEvents {
         viewer.spans(UV.cXEW);
         chain.add(viewer);
         setPlacer(new Placer(chain));
-        layoutInterior();
-        flush();
+        paint();
     }
     private boolean choosed = false;
 

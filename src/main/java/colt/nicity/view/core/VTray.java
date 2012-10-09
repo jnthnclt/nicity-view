@@ -93,7 +93,6 @@ public class VTray extends VButton {
             placer = new Placer(closed);
             deselectBorder();
         }
-        layoutInterior();
         paint();
     }
 

@@ -19,9 +19,10 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.event.AViewEvent;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
+import colt.nicity.view.adaptor.IViewEventConstants;
+import colt.nicity.view.event.AViewEvent;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPlacer;
 import colt.nicity.view.interfaces.IView;
@@ -158,7 +159,7 @@ public class Placer extends APlacer implements IPlacer {
     @Override
     public IView transferFocusToChild(long _who) {
         IView child = viewable.getView();
-        if (child.isEventEnabled(AViewEvent.cKeyEvent)) {
+        if (child.isEventEnabled(IViewEventConstants.cKeyEvent)) {
             child.grabFocus(_who);
             return child;
         } else {

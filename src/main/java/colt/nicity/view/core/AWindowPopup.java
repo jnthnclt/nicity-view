@@ -58,7 +58,7 @@ public class AWindowPopup extends AWindow implements IPopup, IRootView, IView {
     public AWindowPopup(IView _reference, IView _view) {
         reference = _reference;
         setContent(_view);
-        layoutInterior();
+        paint();
     }
 
     /**

@@ -244,20 +244,17 @@ public class VGrid extends VList implements IMouseMotionEvents {
             } else {
                 sphere.change(0, 0, 0, 0, Math.toRadians(-_e.getDeltaX()), 0);
             }
-            layoutInterior();
-            flush();
+            paint();
         } else {
             super.mouseDragged(_e);
         }
     }
     /*
-    
-    public void picked(IEvent _e) {
-    if (!spherical) spherical = true;
-    else spherical = false;
-    layoutInterior();
-    flush();
-    }*/
+     *
+     * public void picked(IEvent _e) { if (!spherical) spherical = true; else
+     * spherical = false; layoutInterior(); flush();
+    }
+     */
     /**
      *
      */
@@ -421,34 +418,33 @@ public class VGrid extends VList implements IMouseMotionEvents {
                 }
                 IXYZ xyz = (IXYZ) items[i];
 
-                synchronized (view) {
-                    view.setParentView(this);//??
-                    view.layoutInterior(_flex);
-                    float _x = (float) xyz.x();
-                    float _y = (float) xyz.y();
-                    float _z = (float) xyz.z();
+                view.setParentView(this);//??
+                view.layoutInterior(_flex);
+                float _x = (float) xyz.x();
+                float _y = (float) xyz.y();
+                float _z = (float) xyz.z();
 
-                    double tx = _x, ty = _y;
-                    if (perspective) {
-                        tx = tunnel.getX(((_x + 1d) / 2d), ((_z + 1d) / 2d));
-                        ty = tunnel.getY(((_y + 1d) / 2d), ((_z + 1d) / 2d));
-                    } else {
-                        tx = tunnel.getX(((_x + 1d) / 2d), -1);
-                        ty = tunnel.getY(((_y + 1d) / 2d), -1);
-                    }
-
-                    _x = (float) tx;
-                    _y = (float) ty;
-
-
-                    float vx = view.getX();
-                    float vy = view.getY();
-                    float vw = view.getW();
-                    float vh = view.getH();
-
-                    view.setLocation(_x, _y);
-                    size.max(vx + vw, +vy + vh);
+                double tx = _x, ty = _y;
+                if (perspective) {
+                    tx = tunnel.getX(((_x + 1d) / 2d), ((_z + 1d) / 2d));
+                    ty = tunnel.getY(((_y + 1d) / 2d), ((_z + 1d) / 2d));
+                } else {
+                    tx = tunnel.getX(((_x + 1d) / 2d), -1);
+                    ty = tunnel.getY(((_y + 1d) / 2d), -1);
                 }
+
+                _x = (float) tx;
+                _y = (float) ty;
+
+
+                float vx = view.getX();
+                float vy = view.getY();
+                float vw = view.getW();
+                float vh = view.getH();
+
+                view.setLocation(_x, _y);
+                size.max(vx + vw, +vy + vh);
+
             }
 
             w = size.getW() - getBorder().getX();//!!??
@@ -743,6 +739,9 @@ public class VGrid extends VList implements IMouseMotionEvents {
     @Override
     public void paintBackground(ICanvas g, int _x, int _y, int _w, int _h) {
 
+        _x += getBorder().getX();
+        _y += getBorder().getY();
+
         if (midLineColor != null) {
 
             if (radial) {
@@ -785,4 +784,3 @@ public class VGrid extends VList implements IMouseMotionEvents {
         }
     }
 }
-

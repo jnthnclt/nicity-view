@@ -164,7 +164,7 @@ public class ViewTextBox extends AViewableWH {
         fontColor = _fontColor;
     }
     @Override
-    synchronized public void paintBody(ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
+    public void paintBody(ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
         super.paintBody(g, _layer, mode, _painted);
         g.setColor(fontColor);
         g.setFont(font);

@@ -30,9 +30,15 @@ import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.core.PrimativeEvent;
 import colt.nicity.view.core.ViewColor;
+import colt.nicity.view.event.AMouseEvent;
+import colt.nicity.view.event.MouseMoved;
 import colt.nicity.view.interfaces.ICanvas;
+import colt.nicity.view.interfaces.IDrop;
+import colt.nicity.view.interfaces.IDropMode;
+import colt.nicity.view.interfaces.IDropView;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
+import colt.nicity.view.interfaces.IView;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -40,8 +46,16 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.io.File;
+import java.util.List;
 
 /**
  *
@@ -88,11 +102,99 @@ public class PFrame extends Frame implements IPeerView {
 
 
         try {
-            setDropTarget(new DropTarget(this, (DropTargetListener) client));
+            if (client instanceof DropTargetListener) {
+                setDropTarget(new DropTarget(this, (DropTargetListener) client));
+            }
         } catch (Exception x) {
             new VException(x, "Error Attaching DagNDrop").toFront(null);
         }
 
+    }
+
+    public void enableDND(final IDropView dropView) {
+
+        DropTargetListener dropTargetListener = new DropTargetListener() {
+
+            // DropTargetListener
+            @Override
+            public void dragEnter(DropTargetDragEvent dtde) {
+                if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    dtde.rejectDrag();
+                    return;
+                }
+            }
+
+            @Override
+            public void dragOver(DropTargetDragEvent dtde) {
+                if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    dtde.rejectDrag();
+                    return;
+                }
+
+                Point p = dtde.getLocation();
+                AMouseEvent ame = MouseMoved.newInstance(0, dropView, p.x, p.y, 0, 0, 0, 0, 0, 0f, 0f, getW(), getH());
+                IView view = ame.disbatchEvent(dropView, dropView);
+                if (view instanceof IDrop) {
+                    //System.out.println(view);
+                } else {
+                    //dtde.rejectDrag();
+                }
+            }
+
+            @Override
+            public void dropActionChanged(DropTargetDragEvent dtde) {
+                //System.out.println("dropActionChanged"+dtde);
+            }
+
+            @Override
+            public void dragExit(DropTargetEvent dte) {
+                //System.out.println("dragExit"+dte);
+            }
+
+            @Override
+            public void drop(DropTargetDropEvent dtde) {
+                if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    dtde.dropComplete(false);
+                    return;
+                }
+
+                Point p = dtde.getLocation();
+                AMouseEvent ame = MouseMoved.newInstance(0, dropView, p.x, p.y, 0, 0, 0, 0, 0, 0f, 0f, getW(), getH());
+                IView view = ame.disbatchEvent(dropView, dropView);
+                dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                //System.out.println("Drop:"+view);
+                if (view instanceof IDrop) {
+                    try {
+                        Transferable t = dtde.getTransferable();
+                        List list = (List) t.getTransferData(DataFlavor.javaFileListFlavor);
+                        Object[] files = list.toArray();
+                        File[] _files = new File[files.length];
+                        for (int i = 0; i < files.length; i++) {
+                            File f = (File) files[i];
+                            System.out.println("Drop:" + f);
+                            _files[i] = f;
+                        }
+                        IDropMode dropMode = ((IDrop) view).accepts(_files, null);
+
+                        if (dropMode != null) {
+                            dropMode.drop((IDrop) view, _files, ame);
+                            //((IDrop)view).dropParcel(_files,dropMode);
+                        }
+                        dtde.dropComplete(true);
+                    } catch (Exception ex) {
+                        //new ViewException("Drop Error",x);
+                        dtde.dropComplete(false);
+                    }
+                } else {
+                    //dtde.dropComplete(false);
+                }
+            }
+        };
+
+        DropTarget dropTarget = new DropTarget(this, dropTargetListener);
+        dropTarget.setActive(true);
+        this.setDropTarget(dropTarget);
+        this.setEnabled(true);
     }
 
     /**

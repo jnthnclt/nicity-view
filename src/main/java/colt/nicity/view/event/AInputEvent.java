@@ -19,8 +19,7 @@
  */
 package colt.nicity.view.event;
 
-import java.awt.Event;
-import java.awt.event.InputEvent;
+import colt.nicity.view.adaptor.IEventConstants;
 
 /**
  *
@@ -68,7 +67,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isShiftDown() {
-        return (modifiers & Event.SHIFT_MASK) != 0;
+        return (modifiers & IEventConstants.cShiftMask) != 0;
     }
 
     /**
@@ -76,7 +75,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isControlDown() {
-        return (modifiers & Event.CTRL_MASK) != 0;
+        return (modifiers & IEventConstants.cCrtlMask) != 0;
     }
 
     /**
@@ -84,7 +83,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isMetaDown() {
-        return (modifiers & Event.META_MASK) != 0;
+        return (modifiers & IEventConstants.cMetaMask) != 0;
     }
 
     /**
@@ -92,7 +91,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isAltDown() {
-        return (modifiers & Event.ALT_MASK) != 0;
+        return (modifiers & IEventConstants.cAltMask) != 0;
     }
 
     /**
@@ -100,7 +99,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isLeftMouseDown() {
-        return ((modifiers & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK);
+        return ((modifiers & IEventConstants.cButton1DownMask) == IEventConstants.cButton1DownMask);
     }
 
     /**
@@ -108,7 +107,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isLeftClick() {
-        return ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK);
+        return ((modifiers & IEventConstants.cButton1Mask) == IEventConstants.cButton1Mask);
     }
 
     /**
@@ -116,7 +115,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isMiddleClick() {
-        return ((modifiers & InputEvent.BUTTON2_MASK) == InputEvent.BUTTON2_MASK);
+        return ((modifiers & IEventConstants.cButton2Mask) == IEventConstants.cButton2Mask);
     }
 
     /**
@@ -124,7 +123,7 @@ abstract public class AInputEvent extends AViewEvent {
      * @return
      */
     public boolean isRightClick() {
-        return ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK);
+        return ((modifiers & IEventConstants.cButton3Mask) == IEventConstants.cButton3Mask);
     }
 
     @Override

@@ -22,7 +22,6 @@ package colt.nicity.view.core;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPaintable;
-import java.awt.Image;
 
 /**
  *
@@ -38,21 +37,17 @@ public class NullPaintable implements IPaintable {
     private NullPaintable() {
     }
 
-    /**
-     *
-     * @return
-     */
-    public Image getImage() {
-        return null;
-    }
-
+    
+    @Override
     public void paint(ICanvas g, XYWH_I xywh) {
     }
 
+    @Override
     public float getW(IPaintable _under, IPaintable _over) {
         return 0;
     }
 
+    @Override
     public float getH(IPaintable _under, IPaintable _over) {
         return 0;
     }

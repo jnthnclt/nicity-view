@@ -45,6 +45,7 @@ import colt.nicity.core.memory.struct.IXYZ;
 import colt.nicity.core.memory.struct.XYZ_D;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.PaintCompression;
@@ -312,7 +313,7 @@ public class NGEnv extends AItem implements IRPPViewable {
         threeD = false;
         grid.set3D(true);
         grid.setPerspective(0.9d);
-        grid.layoutInterior();
+        grid.paint();
         refresher.signal();
     }
 
@@ -326,7 +327,7 @@ public class NGEnv extends AItem implements IRPPViewable {
         threeD = true;
         grid.setPerspective(true);
         grid.set3D(true);
-        grid.layoutInterior();
+        grid.paint();
         refresher.signal();
     }
 
@@ -340,7 +341,7 @@ public class NGEnv extends AItem implements IRPPViewable {
         threeD = false;
         grid.setPerspective(true);
         grid.set3D(true);
-        grid.layoutInterior();
+        grid.paint();
         refresher.signal();
     }
 
@@ -354,7 +355,7 @@ public class NGEnv extends AItem implements IRPPViewable {
         verticalProcess = false;
         grid.setRadial(false);
         grid.set3D(true);
-        grid.layoutInterior();
+        grid.paint();
         refresher.signal();
     }
 
@@ -368,7 +369,7 @@ public class NGEnv extends AItem implements IRPPViewable {
         verticalProcess = true;
         grid.setRadial(false);
         grid.set3D(true);
-        grid.layoutInterior();
+        grid.paint();
         refresher.signal();
     }
     boolean threeD = true;
@@ -441,7 +442,7 @@ public class NGEnv extends AItem implements IRPPViewable {
                 grid.setRadial(false);
                 grid.set3D(false);
                 grid.setRowsColums(-1);
-                grid.layoutInterior();
+                grid.paint();
                 paint();
                 getRootView().dispose();
 
@@ -456,7 +457,7 @@ public class NGEnv extends AItem implements IRPPViewable {
                 grid.set3D(false);
                 grid.setRadial(true);
                 grid.setRowsColums(1);
-                grid.layoutInterior();
+                grid.paint();
                 paint();
                 getRootView().dispose();
 
@@ -471,7 +472,7 @@ public class NGEnv extends AItem implements IRPPViewable {
                 grid.setRadial(false);
                 grid.set3D(false);
                 grid.setRowsColums((int) Math.sqrt(hashNodes.getCount()));
-                grid.layoutInterior();
+                grid.paint();
                 paint();
                 getRootView().dispose();
 
@@ -486,7 +487,7 @@ public class NGEnv extends AItem implements IRPPViewable {
                 grid.setRadial(true);
                 grid.set3D(false);
                 grid.setRowsColums((int) Math.sqrt(hashNodes.getCount()));
-                grid.layoutInterior();
+                grid.paint();
                 paint();
                 getRootView().dispose();
             }
@@ -703,7 +704,7 @@ public class NGEnv extends AItem implements IRPPViewable {
             } else if (key.value() instanceof IEnteredOrExited) {
                 c.add(((IEnteredOrExited) key.value()).exitedView());
             } else {
-                VString s = new VString(key, new AFont(AFont.cPlain, _fontSize), ViewColor.cVisualizeThemeFont);
+                VString s = new VString(key, new AFont(IFontConstants.cPlain, _fontSize), ViewColor.cVisualizeThemeFont);
                 c.add(s);
             }
             setContent(c);

@@ -19,21 +19,21 @@
  */
 package colt.nicity.view.list;
 
+import colt.nicity.core.lang.BitMasks;
+import colt.nicity.core.lang.LongBits;
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.border.ButtonBorder;
+import colt.nicity.view.core.Placer;
 import colt.nicity.view.event.AInputEvent;
 import colt.nicity.view.event.KeyPressed;
 import colt.nicity.view.event.KeyReleased;
 import colt.nicity.view.event.KeyTyped;
 import colt.nicity.view.event.MouseDragged;
 import colt.nicity.view.event.MouseMoved;
-import colt.nicity.view.threeD.IObject3D;
-import colt.nicity.core.lang.BitMasks;
-import colt.nicity.core.lang.LongBits;
-import colt.nicity.view.core.Placer;
 import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.event.KeyEvent;
+import colt.nicity.view.threeD.IObject3D;
 
 
 /**
@@ -102,8 +102,7 @@ public class Input3D extends AItem implements IMouseMotionEvents, IKeyEvents {
         if (LongBits.hasBit(_mode, cWalk)) {
             it.change(0, 0, _y, 0, Math.toRadians(_x), 0);
         }
-        repair.layoutInterior();
-        repair.flush();
+        repair.paint();
     }
     
     private static long mode(AInputEvent _e) {
@@ -122,12 +121,14 @@ public class Input3D extends AItem implements IMouseMotionEvents, IKeyEvents {
      *
      * @param _e
      */
+    @Override
     public void mouseMoved(MouseMoved _e) {
     }
     /**
      *
      * @param _e
      */
+    @Override
     public void mouseDragged(MouseDragged _e) {
         double deltaX = _e.getDeltaX();
         double deltaY = _e.getDeltaY();
@@ -144,18 +145,19 @@ public class Input3D extends AItem implements IMouseMotionEvents, IKeyEvents {
      *
      * @param _e
      */
+    @Override
     public void keyPressed(KeyPressed _e) {
         int code = _e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) {
+        if (code == IKeyEventConstants.cRight) {
             change(step, 0, mode(_e));
         }
-        if (code == KeyEvent.VK_LEFT) {
+        if (code == IKeyEventConstants.cLeft) {
             change(-step, 0, mode(_e));
         }
-        if (code == KeyEvent.VK_UP) {
+        if (code == IKeyEventConstants.cUp) {
             change(0, step, mode(_e));
         }
-        if (code == KeyEvent.VK_DOWN) {
+        if (code == IKeyEventConstants.cDown) {
             change(0, -step, mode(_e));
         }
     }
@@ -163,12 +165,14 @@ public class Input3D extends AItem implements IMouseMotionEvents, IKeyEvents {
      *
      * @param e
      */
+    @Override
     public void keyReleased(KeyReleased e) {
     }
     /**
      *
      * @param e
      */
+    @Override
     public void keyTyped(KeyTyped e) {
     }
     

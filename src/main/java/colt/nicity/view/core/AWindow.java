@@ -19,49 +19,34 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.awt.NullPeerView;
-import colt.nicity.view.awt.PFrame;
-import colt.nicity.view.awt.PeerViewBorder;
-import colt.nicity.view.border.NullBorder;
-import colt.nicity.view.event.ADK;
-import colt.nicity.view.event.AMouseEvent;
-import colt.nicity.view.event.AViewEvent;
-import colt.nicity.view.event.MouseMoved;
-import colt.nicity.view.event.WindowClosed;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.ICallback;
 import colt.nicity.core.lang.IOut;
 import colt.nicity.core.memory.struct.UXYWH_I;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.awt.NullPeerView;
+import colt.nicity.view.awt.PFrame;
+import colt.nicity.view.awt.PeerViewBorder;
+import colt.nicity.view.border.NullBorder;
+import colt.nicity.view.event.ADK;
+import colt.nicity.view.event.AViewEvent;
+import colt.nicity.view.event.WindowClosed;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
-import colt.nicity.view.interfaces.IDrop;
-import colt.nicity.view.interfaces.IDropMode;
+import colt.nicity.view.interfaces.IDropView;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IEventClient;
 import colt.nicity.view.interfaces.IPeerView;
 import colt.nicity.view.interfaces.IPlacer;
 import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
-import java.io.File;
-import java.util.List;
 
 /**
  *
  * @author Administrator
  */
-public class AWindow extends AViewer implements IEventClient, IRootView, DropTargetListener {
+public class AWindow extends AViewer implements IEventClient, IRootView, IDropView {
 
     /**
      *
@@ -79,10 +64,6 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
      *
      */
     public ICallback windowClosedCallback;
-    /**
-     *
-     */
-    protected DropTarget dropTarget;
     /**
      *
      */
@@ -248,10 +229,7 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
         _peer.setUndecorated(true);
         setBorder(null);
 
-        dropTarget = new DropTarget((Component) peer, this);
-        dropTarget.setActive(true);
-        ((Component) _peer).setDropTarget(dropTarget);
-        ((Component) _peer).setEnabled(true);
+        _peer.enableDND(this);
         peerBorder = new PeerViewBorder(_peer);
         return peer;
     }
@@ -315,7 +293,6 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
      */
     public void show() {
         super.setParentView(NullRootView.cNull);
-        layoutInterior();
         synchronized (getPeerLock) {
             if (requestedDispose) {
                 return;
@@ -329,7 +306,6 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
 
     @Override
     public void layoutInterior() {
-        super.layoutInterior();
         flush();
     }
 
@@ -478,7 +454,6 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
             v.processEvent(awe);
             dispose();
             input.setHardFocusedView(0, NullView.cNull);
-            return;
         } else {
             super.promoteEvent(_task);
         }
@@ -549,81 +524,6 @@ public class AWindow extends AViewer implements IEventClient, IRootView, DropTar
     @Override
     public XY_I getLocationInWindow() {
         return new XY_I(0, 0);
-    }
-
-    // DropTargetListener
-    @Override
-    public void dragEnter(DropTargetDragEvent dtde) {
-        if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-            dtde.rejectDrag();
-            return;
-        }
-    }
-
-    @Override
-    public void dragOver(DropTargetDragEvent dtde) {
-        if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-            dtde.rejectDrag();
-            return;
-        }
-
-        Point p = dtde.getLocation();
-        AMouseEvent ame = MouseMoved.newInstance(0, this, p.x, p.y, 0, 0, 0, 0, 0, 0f, 0f, getW(), getH());
-        IView view = ame.disbatchEvent(this, this);
-        if (view instanceof IDrop) {
-            //System.out.println(view);
-        } else {
-            //dtde.rejectDrag();
-        }
-    }
-
-    @Override
-    public void dropActionChanged(DropTargetDragEvent dtde) {
-        //System.out.println("dropActionChanged"+dtde);
-    }
-
-    @Override
-    public void dragExit(DropTargetEvent dte) {
-        //System.out.println("dragExit"+dte);
-    }
-
-    @Override
-    public void drop(DropTargetDropEvent dtde) {
-        if (!dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-            dtde.dropComplete(false);
-            return;
-        }
-
-        Point p = dtde.getLocation();
-        AMouseEvent ame = MouseMoved.newInstance(0, this, p.x, p.y, 0, 0, 0, 0, 0, 0f, 0f, getW(), getH());
-        IView view = ame.disbatchEvent(this, this);
-        dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-        //System.out.println("Drop:"+view);
-        if (view instanceof IDrop) {
-            try {
-                Transferable t = dtde.getTransferable();
-                List list = (List) t.getTransferData(DataFlavor.javaFileListFlavor);
-                Object[] files = list.toArray();
-                File[] _files = new File[files.length];
-                for (int i = 0; i < files.length; i++) {
-                    File f = (File) files[i];
-                    System.out.println("Drop:" + f);
-                    _files[i] = f;
-                }
-                IDropMode dropMode = ((IDrop) view).accepts(_files, null);
-
-                if (dropMode != null) {
-                    dropMode.drop((IDrop) view, _files, ame);
-                    //((IDrop)view).dropParcel(_files,dropMode);
-                }
-                dtde.dropComplete(true);
-            } catch (Exception ex) {
-                //new ViewException("Drop Error",x);
-                dtde.dropComplete(false);
-            }
-        } else {
-            //dtde.dropComplete(false);
-        }
     }
 
     /**

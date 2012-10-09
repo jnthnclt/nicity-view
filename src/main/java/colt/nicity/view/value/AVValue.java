@@ -70,8 +70,6 @@ abstract public class AVValue<V> extends Viewer {
      */
     public void refresh() {
         placer = new Placer(viewValue(value.getValue()));
-        layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 }

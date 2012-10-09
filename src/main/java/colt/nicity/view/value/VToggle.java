@@ -177,9 +177,7 @@ public class VToggle extends VButton {
             placer = new Placer(falseView);
             deselectBorder();
         }
-        layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 
     /**

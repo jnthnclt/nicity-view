@@ -19,11 +19,11 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.border.NullBorder;
-import colt.nicity.view.event.AViewEvent;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.border.NullBorder;
+import colt.nicity.view.event.AViewEvent;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
@@ -33,7 +33,6 @@ import colt.nicity.view.interfaces.IPopup;
 import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IToolTip;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Cursor;
 
 /**
  *
@@ -46,162 +45,170 @@ public class NullView implements IView {
      */
     public static final NullView cNull = new NullView();
 
+    @Override
     public IRootView getRootView() {
         return NullRootView.cNull;
-    }//??
+    }
 
     public IView getParentView() {
         return NullView.cNull;
     }
 
+    @Override
     public void setParentView(IView parent) {
     }
 
+    @Override
     public IView getView() {
         return NullView.cNull;
     }
 
+    @Override
     public void setView(IView view) {
     }
 
+    @Override
     public IPlacer getPlacer() {
         return NullPlacer.cNull;
     }
 
+    @Override
     public void setPlacer(IPlacer placer) {
     }
 
+    @Override
     public IView getContent() {
         return NullView.cNull;
     }
 
+    @Override
     public void setContent(IView view) {
     }
 
+    @Override
     public IPlacers getPlacers() {
         return NullPlacers.cNull;
     }
 
+    @Override
     public void setPlacers(IPlacers placers) {
     }
 
-    // public void place(IView _child);
+    @Override
     public IView place(IView _child, Place _place) {
         return NullView.cNull;
     }
 
+    @Override
     public IView place(IView _child, Place _place, Flex _flex) {
         return NullView.cNull;
     }
 
+    @Override
     public IView place(IView _child, Place _place, Flex _interior, Flex _exterior) {
         return NullView.cNull;
     }
 
+    @Override
     public void add(IPlacer placer) {
     }
 
+    @Override
     public IPlacer find(IView view) {
         return NullPlacer.cNull;
     }
 
+    @Override
     public IPlacer remove(IPlacer placer) {
         return NullPlacer.cNull;
     }
 
+    @Override
     public void grabFocus(long _who) {
     }
 
+    @Override
     public void grabHardFocus(long _who) {
     }
 
+    @Override
     public void releaseHardFocus(long _who) {
     }
 
+    @Override
     public IView transferFocusToParent(long _who) {
         return NullView.cNull;
     }
 
+    @Override
     public IView transferFocusToChild(long _who) {
         return NullView.cNull;
     }
 
+    @Override
     public IView transferFocusToNearestNeighbor(long _who, int direction) {
         return NullView.cNull;
     }
 
+    @Override
     public IView spans(int spanMasks) {
         return NullView.cNull;
     }
 
+    @Override
     public void unspans(int spanMasks) {
     }
 
+    @Override
     public void disableFlag(int flagMask) {
     }
 
+    @Override
     public void enableFlag(int flagsToEnable) {
     }
 
+    @Override
     public boolean hasFlag(int flag) {
         return false;
     }
 
+    @Override
     public void layoutInterior() {
     }
 
+    @Override
     public void layoutAllInterior() {
     }
 
+    @Override
     public void layoutInterior(Flex _flex) {
     }
 
+    @Override
     public void layoutInterior(IView parent, Flex _flex) {
     }
 
+    @Override
     public void layoutExterior(WH_F size, Flex _flex) {
     }
 
+    @Override
     public void paint(IView _parent, ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
     }
 
+    @Override
     public void paintBackground(ICanvas g, int _x, int _y, int _w, int _h) {
     }
 
+    @Override
     public void paintBody(ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
     }
 
+    @Override
     public void paintBorder(ICanvas g, int _x, int _y, int _w, int _h) {
     }
 
-    /**
-     *
-     * @return
-     */
-    public Cursor getCursor() {
-        return null;
-    }
-
-    /**
-     *
-     * @param _cursor
-     */
-    public void setRestoreCursor(Cursor _cursor) {
-    }
-
-    /**
-     *
-     * @param _cursor
-     */
-    public void setCursor(Cursor _cursor) {
-    }
-
-    /**
-     *
-     */
-    public void restoreCursor() {
-    }
-
+    @Override
     public void mend() {
     }
 

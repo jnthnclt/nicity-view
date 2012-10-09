@@ -93,7 +93,7 @@ public class DragAndDrop {
      *
      * @param e
      */
-    synchronized public void mousePressed(MousePressed e) {
+    public void mousePressed(MousePressed e) {
         Object source = e.getSource();
         if (!(source instanceof IDrag)) {
             return;
@@ -108,7 +108,7 @@ public class DragAndDrop {
      *
      * @param e
      */
-    synchronized public void mouseReleased(MouseReleased e) {
+    public void mouseReleased(MouseReleased e) {
         if (e.getClickCount() == 1) {
             IDropMode mode = canDeliver(e, dropOn);
             if (mode != null) {
@@ -135,7 +135,7 @@ public class DragAndDrop {
      *
      * @param e
      */
-    synchronized public void mouseEntered(MouseEntered e) {
+    public void mouseEntered(MouseEntered e) {
         Object source = e.getSource();
         if (dragFrom != null && source instanceof IDrop && source != dragFrom && canDeliver(e, source) != null) {
             dropOn = (IDrop) source;
@@ -149,7 +149,7 @@ public class DragAndDrop {
      *
      * @param e
      */
-    synchronized public void mouseExited(MouseExited e) {
+    public void mouseExited(MouseExited e) {
         Object _dropOn = dropOn;
         dropOn = null;
         if (_dropOn instanceof IView) {
@@ -161,7 +161,7 @@ public class DragAndDrop {
      *
      * @param e
      */
-    synchronized public void mouseDragged(MouseDragged e) {
+    public void mouseDragged(MouseDragged e) {
         if (scrollView != NullView.cNull && scrollView instanceof IMouseMotionEvents) {
             ((IMouseMotionEvents) scrollView).mouseDragged(e);
         }

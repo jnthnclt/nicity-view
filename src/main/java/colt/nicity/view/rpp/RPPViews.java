@@ -38,7 +38,7 @@ public class RPPViews {
         
         RPPWindow view = KeyedValue.get(views,_key);
         if (view == null) {
-            register(new RPPHome(""),_key);
+            register(new RPPHome("/home/jonathan/Dropbox/Code/nicity-goal/target/nicity-goal-1.0-SNAPSHOT.jar"),_key);
             view =  KeyedValue.get(views,_key);
         }
         return view;

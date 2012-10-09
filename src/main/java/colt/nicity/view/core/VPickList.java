@@ -113,6 +113,6 @@ public class VPickList extends Viewer {
             c.add(pick);
         }
         setContent(c);
-        layoutInterior();
+        paint();
     }
 }

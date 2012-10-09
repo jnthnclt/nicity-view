@@ -19,8 +19,8 @@
  */
 package colt.nicity.view.event;
 
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.interfaces.IView;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -36,23 +36,23 @@ public class UKey {
     public static void arrowKeys(AKeyEvent e, IView view) {
 
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) {
-            autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_RIGHT));
+        if (code == IKeyEventConstants.cRight) {
+            autoScroll(view.transferFocusToNearestNeighbor(e.who(), IKeyEventConstants.cRight));
             if (e.isShiftDown()) {
                 view.selectBorder();
             }
-        } else if (code == KeyEvent.VK_LEFT) {
-            autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_LEFT));
+        } else if (code == IKeyEventConstants.cLeft) {
+            autoScroll(view.transferFocusToNearestNeighbor(e.who(), IKeyEventConstants.cLeft));
             if (e.isShiftDown()) {
                 view.selectBorder();
             }
-        } else if (code == KeyEvent.VK_UP) {
-            autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_UP));
+        } else if (code == IKeyEventConstants.cUp) {
+            autoScroll(view.transferFocusToNearestNeighbor(e.who(), IKeyEventConstants.cUp));
             if (e.isShiftDown()) {
                 view.selectBorder();
             }
-        } else if (code == KeyEvent.VK_DOWN) {
-            autoScroll(view.transferFocusToNearestNeighbor(e.who(), KeyEvent.VK_DOWN));
+        } else if (code == IKeyEventConstants.cDown) {
+            autoScroll(view.transferFocusToNearestNeighbor(e.who(), IKeyEventConstants.cDown));
             if (e.isShiftDown()) {
                 view.selectBorder();
             }

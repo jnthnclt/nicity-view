@@ -141,8 +141,7 @@ public class VButton extends AItem {
     public void setView(String _iconName, String _name, Place _place) {
         VChain c = new VChain(_place, VIcon.icon(_iconName, 16), new ViewString(_name, ViewColor.cButtonFont));
         setPlacer(new Placer(c, UV.cOrigin));
-        layoutInterior();
-        flush();
+        paint();
     }
 
     /**

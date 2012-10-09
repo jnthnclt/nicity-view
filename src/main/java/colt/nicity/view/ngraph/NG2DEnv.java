@@ -37,12 +37,14 @@ import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.IOut;
 import colt.nicity.core.lang.MinMaxDouble;
 import colt.nicity.core.lang.MinMaxLong;
+import colt.nicity.core.lang.NullOut;
 import colt.nicity.core.lang.UDouble;
 import colt.nicity.core.lang.UFloat;
 import colt.nicity.core.memory.struct.IXYZ;
 import colt.nicity.core.memory.struct.XYZ_D;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.UV;
@@ -120,7 +122,6 @@ public class NG2DEnv extends Viewer {
         ch = _h;
 
         loose = new VLoose(new ListController(nodes)) {
-
             public void mend() {
                 enableFlag(UV.cRepair);//??
                 super.mend();
@@ -175,7 +176,6 @@ public class NG2DEnv extends Viewer {
         loose.setBorder(new SolidBorder(ViewColor.cVisualizeTheme));
 
         VPan pan = new VPan(loose, _w, _h) {
-
             public void paintBackground(ICanvas _g, int _x, int _y, int _w, int _h) {
                 super.paintBackground(_g, _x, _y, _w, _h);
                 if (cw != _w || ch != _h) {
@@ -188,8 +188,7 @@ public class NG2DEnv extends Viewer {
         setContent(pan);
         setBorder(new SolidBorder(ViewColor.cVisualizeTheme));
 
-        refresher = new ElapseCall(null, 500, new ICall() {
-
+        refresher = new ElapseCall(NullOut.cNull, 500, new ICall() {
             public void invoke(IOut _) {
                 _refresh(_);
             }
@@ -287,7 +286,6 @@ public class NG2DEnv extends Viewer {
         c.add(new VEditValue("Repulsion:", repulsion, "", false));
         c.add(new VEditValue("Iterations:", iterations, "", false));
         VItem b = new VItem("Refresh") {
-
             @Override
             public void picked(IEvent _e) {
                 getRootView().dispose();
@@ -331,7 +329,6 @@ public class NG2DEnv extends Viewer {
         Map<Object, float[]> nodePosition = new HashMap<Object, float[]>();
         Map<Object, Float> nodeDiameter = new HashMap<Object, Float>();
         LinLogProgress llp = new LinLogProgress() {
-
             public void out(double _count, double _outof) {
                 _.out(_count, _outof);
             }
@@ -419,7 +416,7 @@ public class NG2DEnv extends Viewer {
             } else if (key.value() instanceof IEnteredOrExited) {
                 c.add(((IEnteredOrExited) key.value()).exitedView());
             } else {
-                VString s = new VString(key, new AFont(AFont.cPlain, _fontSize), ViewColor.cVisualizeThemeFont);
+                VString s = new VString(key, new AFont(IFontConstants.cPlain, _fontSize), ViewColor.cVisualizeThemeFont);
                 c.add(s);
             }
             setContent(c);
@@ -483,7 +480,7 @@ public class NG2DEnv extends Viewer {
             if (_e.isRightClick() && _e.isSingleClick()) {
                 UV.popup(this, _e, NG2DEnv.this.popupView(), true, true);
             }
-            loose.layoutInterior();
+            loose.paint();
         }
         // IXYZ
 

@@ -120,8 +120,7 @@ public class LinkViewer extends Viewer implements IMouseEvents {
             new VException(x, this.getClass() + " exception ").toFront(null);
 
         }
-        layoutInterior();
-        flush();
         deselectBorder();
+        paint();
     }
 }

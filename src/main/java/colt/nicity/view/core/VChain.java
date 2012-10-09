@@ -134,4 +134,9 @@ public class VChain extends Viewer implements IVItem {
             last = _view;
         }
     }
+    
+    public void clear() {
+        last = null;
+        setPlacer(NullPlacer.cNull);
+    }
 }

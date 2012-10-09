@@ -1,9 +1,10 @@
 package colt.nicity.view.rpp;
 
-import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.NullOut;
 import colt.nicity.core.lang.UString;
 import colt.nicity.core.lang.UText;
+import colt.nicity.view.adaptor.IFont;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.border.LineBorder;
 import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.concurrent.VConcurrentEditText;
@@ -19,7 +20,6 @@ import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.ngraph.NG;
 import colt.nicity.view.ngraph.NGEnvAnim;
 import colt.nicity.view.value.VFiles;
-import java.awt.Font;
 import java.io.File;
 
 public class VTextEditor extends Viewer implements IRPPViewable {
@@ -44,7 +44,7 @@ public class VTextEditor extends Viewer implements IRPPViewable {
             "and our Posterity, do ordain and establish this Constitution for the United States",
             "of America."
         };
-        final VConcurrentEditText text = new VConcurrentEditText(t, new AFont(Font.MONOSPACED, Font.PLAIN, 14));
+        final VConcurrentEditText text = new VConcurrentEditText(t, new AFont(IFontConstants.cMonospaced, IFontConstants.cPlain, 14));
         final VPan pan = new VPan(text, 600, 800);
         pan.setBorder(new LineBorder());
 

@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.list;
 
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.border.NullBorder;
 import colt.nicity.view.event.AKeyEvent;
 import colt.nicity.view.event.KeyPressed;
@@ -27,7 +28,6 @@ import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.EditString;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.interfaces.IBorder;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -103,9 +103,10 @@ public class FilterString extends EditString {
      *
      * @param e
      */
+    @Override
     public void keyPressed(KeyPressed e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_ESCAPE) {
+        if (code == IKeyEventConstants.cEscape) {
             at = 0;
             start = 0;
             end = 0;
@@ -124,28 +125,28 @@ public class FilterString extends EditString {
         String f = toString();
         int code = e.getKeyCode();
         switch (code) {
-            case (KeyEvent.VK_ALT):
-            case (KeyEvent.VK_CONTROL):
-            case (KeyEvent.VK_DELETE):
-            case (KeyEvent.VK_UP):
-            case (KeyEvent.VK_DOWN):
-            case (KeyEvent.VK_RIGHT):
-            case (KeyEvent.VK_LEFT):
-            case (KeyEvent.VK_SHIFT):
+            case (IKeyEventConstants.cAlt):
+            case (IKeyEventConstants.cCtrl):
+            case (IKeyEventConstants.cDelete):
+            case (IKeyEventConstants.cUp):
+            case (IKeyEventConstants.cDown):
+            case (IKeyEventConstants.cRight):
+            case (IKeyEventConstants.cLeft):
+            case (IKeyEventConstants.cShift):
             case (0x9d):// mac apple
                 return false;
-            case (KeyEvent.VK_BACK_SPACE):
+            case (IKeyEventConstants.cBackspace):
                 if (f.length() > 0) {
                     setText(f.substring(0, f.length() - 1));
                     return true;
                 }
                 return false;
-            case (KeyEvent.VK_ESCAPE):
+            case (IKeyEventConstants.cEscape):
                 setText("");
                 return true;
-            case (KeyEvent.VK_EXCLAMATION_MARK):
-            case (KeyEvent.VK_BACK_SLASH):// java dosen't provide '|' so we are using '\' to mean '|'
-            //case (KeyEvent.VK_SPACE):
+            case (IKeyEventConstants.cExclamationMark):
+            case (IKeyEventConstants.cBackSlash):// java dosen't provide '|' so we are using '\' to mean '|'
+            //case (IKeyEventConstants.cSpace):
             //	filter.setText(f+OR);
             //delayedModify=true; // wait until next char after "or"
             //return;

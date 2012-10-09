@@ -167,10 +167,9 @@ public class VString extends Viewer {
         if (_w != width || _h != height) {
             width = _w;
             height = _h;
-            layoutInterior();
             IView _parent = parent.get();
-            _parent.layoutInterior();
-            flush();
+            _parent.paint();
+            paint();
         }
     }
 }

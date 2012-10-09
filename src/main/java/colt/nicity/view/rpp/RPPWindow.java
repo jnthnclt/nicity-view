@@ -17,7 +17,6 @@ import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPeerView;
 import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IView;
-import java.awt.image.BufferedImage;
 
 /**
  * 
@@ -113,9 +112,8 @@ public class RPPWindow extends AViewer implements IRootView {
      */
     public void show() {
         super.setParentView(NullRootView.cNull);
-        layoutInterior();
         paintable = true;
-        flush();
+        paint();
     }
 
     @Override
@@ -317,15 +315,6 @@ public class RPPWindow extends AViewer implements IRootView {
         if (_input != null) {
             _input.setMouseWheelFocus(_who, _mouseWheelFocus);
         }
-    }
-
-    /**
-     * 
-     * @param _buffer
-     * @param _bufferRegion
-     * @param _screenRegion
-     */
-    public void directPaint(BufferedImage _buffer, XYWH_I _bufferRegion, XYWH_I _screenRegion) {
     }
 
     @Override

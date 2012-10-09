@@ -19,6 +19,7 @@ import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.list.VItem;
 import colt.nicity.view.list.VList;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
@@ -31,8 +32,9 @@ import java.util.logging.Logger;
 public class RPPHome extends Viewer {
 
     public static void main(String[] args) {
+        System.out.println(new File("./").getAbsolutePath());
         ViewColor.onGray();
-        UV.exitFrame(new RPPHome("target/nicity-view-1.0-SNAPSHOT.jar"), "");
+        UV.exitFrame(new RPPHome("/home/jonathan/Dropbox/Code/nicity-goal/target/nicity-goal-1.0-SNAPSHOT.jar"), "");
     }
     String[] jars;
     Viewer menu = new Viewer();

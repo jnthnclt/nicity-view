@@ -172,8 +172,7 @@ public class VElapse extends AItem implements IWindowEvents {
 
         setPlacer(new Placer(elapse));
         setBorder(new ViewBorder());
-        layoutInterior();
-        flush();
+        paint();
     }
 
     /**

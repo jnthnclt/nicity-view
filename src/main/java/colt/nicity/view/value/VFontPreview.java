@@ -28,6 +28,7 @@ import colt.nicity.view.event.MouseMoved;
 import colt.nicity.view.event.MousePressed;
 import colt.nicity.view.event.MouseReleased;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.DragAndDrop;
 import colt.nicity.view.core.PickupAndDrop;
@@ -62,14 +63,14 @@ public class VFontPreview extends Viewer implements IDrag, IDrop, IMouseEvents, 
     public VFontPreview(AFont _font, String _title) {
         super();
         if (_font == null) {
-            _font = new AFont(AFont.cPlain, 12);
+            _font = new AFont(IFontConstants.cPlain, 12);
         }
         if (_title == null) {
             _title = "null";
         }
 
         fontString = new ViewString(_title, _font);
-        ViewString fontName = new ViewString(_font.getFont().getName());
+        ViewString fontName = new ViewString(_font.getFontName());
         VChain preview = new VChain(UV.cEW, fontName, fontString);
         preview.spans(UV.cXE);
 

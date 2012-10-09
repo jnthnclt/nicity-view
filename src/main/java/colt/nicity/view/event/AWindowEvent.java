@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.event;
 
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.core.NullView;
 import colt.nicity.view.interfaces.IView;
 
@@ -34,6 +35,7 @@ abstract public class AWindowEvent extends AViewEvent {
      * @param view
      * @return
      */
+    @Override
     public IView disbatchEvent(IView parent, IView view) {
         if (parent != NullView.cNull && parent != view) {
             view.setParentView(parent);
@@ -46,6 +48,6 @@ abstract public class AWindowEvent extends AViewEvent {
      * @return
      */
     public long getMask() {
-        return AViewEvent.cWindowEvent;
+        return IViewEventConstants.cWindowEvent;
     }
 }

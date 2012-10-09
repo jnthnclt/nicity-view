@@ -127,8 +127,7 @@ public class VLoose extends AVList implements IVList, IMouseEvents, IMouseMotion
             _controller = NullListController.cNull;
         }
         controller = _controller;
-        layoutInterior();//??
-        flush();//??
+        paint();
     }
 
     // Layout

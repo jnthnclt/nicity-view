@@ -20,10 +20,10 @@
 package colt.nicity.view.awt;
 
 import colt.nicity.core.memory.struct.TRLB_I;
-import colt.nicity.view.adaptor.VS;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.canvas.GlueAWTGraphicsToCanvas;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEventClient;
@@ -450,5 +450,9 @@ public class FilePeerView implements IPeerView {
     @Override
     public WH_F getWH() {
         return new WH_F(getW(), getH());
+    }
+
+    @Override
+    public void setUndecorated(boolean undecorated) {
     }
 }

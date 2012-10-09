@@ -170,8 +170,7 @@ public class AcceptRejectDecline extends Viewer implements IWindowEvents {
         chain.add(viewer);
         setPlacer(new Placer(chain));
         setBorder(new ViewBorder());
-        layoutInterior();
-        flush();
+        paint();
     }
     private boolean choosed = false;
 

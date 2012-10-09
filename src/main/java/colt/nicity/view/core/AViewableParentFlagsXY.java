@@ -19,10 +19,10 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.event.AViewEvent;
 import colt.nicity.core.memory.struct.UXYWH_I;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
 import java.util.concurrent.atomic.AtomicReference;
@@ -79,7 +79,7 @@ public abstract class AViewableParentFlagsXY extends AViewable {
         if (got == NullView.cNull) {
             return NullView.cNull;
         }
-        if (got.isEventEnabled(AViewEvent.cKeyEvent)) {
+        if (got.isEventEnabled(IViewEventConstants.cKeyEvent)) {
             got.grabFocus(_who);
             return got;
         } else {
@@ -89,38 +89,28 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public IView spans(int spanMasks) {
-        synchronized (this) {
-            flags |= spanMasks;
-        }
+        flags |= spanMasks;
         return this;
     }
 
     @Override
     public void unspans(int spanMasks) {
-        synchronized (this) {
-            flags &= ~spanMasks;
-        }
+        flags &= ~spanMasks;
     }
 
     @Override
     public void enableFlag(int flagsToEnable) {
-        synchronized (this) {
-            flags |= flagsToEnable;
-        }
+        flags |= flagsToEnable;
     }
 
     @Override
     public void disableFlag(int flagsToDisable) {
-        synchronized (this) {
-            flags &= ~flagsToDisable;
-        }
+        flags &= ~flagsToDisable;
     }
 
     @Override
     public boolean hasFlag(int flag) {
-        synchronized (this) {
-            return (flags & flag) == flag;
-        }
+        return (flags & flag) == flag;
     }
 
     /**
@@ -135,12 +125,10 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public void mend() {
-        synchronized (this) {
-            if ((flags & UV.cMend) == UV.cMend) {
-                return;
-            }
-            flags |= UV.cMend;
+        if ((flags & UV.cMend) == UV.cMend) {
+            return;
         }
+        flags |= UV.cMend;
         parent.get().mend();
     }
 
@@ -270,10 +258,8 @@ public abstract class AViewableParentFlagsXY extends AViewable {
 
     @Override
     public void setLocation(float _x, float _y) {
-        synchronized (this) {
-            x = _x;
-            y = _y;
-        }
+        x = _x;
+        y = _y;
         if (x != _x || y != _y) {
             parent.get().repair();
         }

@@ -105,7 +105,7 @@ public class Eye {
      * @param _y
      * @param _z
      */
-    synchronized public void move(double _x, double _y, double _z) {
+    public void move(double _x, double _y, double _z) {
         if (eyeCentric) {
             x += _x;
             y += _y;
@@ -121,7 +121,7 @@ public class Eye {
      * @param _ry
      * @param _rz
      */
-    synchronized public void look(double _rx, double _ry, double _rz) {
+    public void look(double _rx, double _ry, double _rz) {
         if (eyeCentric) {
             rx += _rx;
             ry += _ry;
@@ -135,7 +135,7 @@ public class Eye {
      *
      * @param _eyeCentric
      */
-    synchronized public void setEyeCentric(boolean _eyeCentric) {
+    public void setEyeCentric(boolean _eyeCentric) {
         eyeCentric = _eyeCentric;
     }
 

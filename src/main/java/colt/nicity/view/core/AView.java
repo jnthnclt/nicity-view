@@ -19,8 +19,8 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.event.AViewEvent;
 import colt.nicity.core.memory.struct.XYWH_I;
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IRootView;
 import colt.nicity.view.interfaces.IView;
@@ -41,7 +41,6 @@ public abstract class AView extends AViewableParentFlagsXY {
     @Override
     public IRootView getRootView() {
         IView i = this;
-        //?? maybe NullView should implement IRootView
         while (i != NullView.cNull && !(i instanceof IRootView)) {
             i = i.getParentView();
         }
@@ -55,11 +54,8 @@ public abstract class AView extends AViewableParentFlagsXY {
     public void grabFocus(long _who) {
         IRootView root = getRootView();
         if (root == null || root == NullRootView.cNull) {
-            synchronized (this) {
-                flags |= UV.cFocus;
-            }
-        }
-        else {
+            flags |= UV.cFocus;
+        } else {
             root.setFocusedView(_who, this);
         }
     }
@@ -76,7 +72,7 @@ public abstract class AView extends AViewableParentFlagsXY {
 
     @Override
     public IView transferFocusToChild(long _who) {
-        if (isEventEnabled(AViewEvent.cKeyEvent)) {
+        if (isEventEnabled(IViewEventConstants.cKeyEvent)) {
             grabFocus(_who);
             return this;
         }
@@ -90,18 +86,14 @@ public abstract class AView extends AViewableParentFlagsXY {
 
     @Override
     public void layoutInterior() {
-        synchronized (this) {
-            flags &= ~UV.cInterior;
-        }
+        flags &= ~UV.cInterior;
         layoutInterior(new Flex(this, 0, 0));
     }
 
     @Override
     public void layoutAllInterior() {
-        synchronized (this) {
-            flags &= ~UV.cInterior;
-            flags |= UV.cAllInterior;
-        }
+        flags &= ~UV.cInterior;
+        flags |= UV.cAllInterior;
         layoutInterior(new Flex(this, 0, 0));
     }
 
@@ -109,22 +101,20 @@ public abstract class AView extends AViewableParentFlagsXY {
     public void layoutInterior(Flex _flex) {
         IView _parent = parent.get();
         boolean parentHasAllInterior = _parent.hasFlag(UV.cAllInterior);
-        synchronized (this) {
-            if (_flex.interior && (flags & UV.cInterior) == UV.cInterior) {
-                if (parentHasAllInterior) {
-                    flags |= UV.cAllInterior;
-                } else if ((flags & UV.cAllInterior) != UV.cAllInterior) {
-                    return;
-                }
-            }
-            flags |= UV.cInterior;
-            if ((flags & UV.cActive) == UV.cActive) {
+        if (_flex.interior && (flags & UV.cInterior) == UV.cInterior) {
+            if (parentHasAllInterior) {
+                flags |= UV.cAllInterior;
+            } else if ((flags & UV.cAllInterior) != UV.cAllInterior) {
                 return;
             }
-            flags |= UV.cActive;
-            flags |= UV.cFlexing;
         }
-
+        flags |= UV.cInterior;
+        if ((flags & UV.cActive) == UV.cActive) {
+            return;
+        }
+        flags |= UV.cActive;
+        flags |= UV.cFlexing;
+        
         float _w = getW();
         float _h = getH();
 
@@ -143,11 +133,9 @@ public abstract class AView extends AViewableParentFlagsXY {
             layoutParent(_flex);
         }
 
-        synchronized (this) {/////flags &= ~cInterior;//??
-            flags &= ~UV.cAllInterior;
-            flags &= ~UV.cActive;
-            flags &= ~UV.cFlexing;
-        }
+        flags &= ~UV.cAllInterior;
+        flags &= ~UV.cActive;
+        flags &= ~UV.cFlexing;
         repair();
     }
 
@@ -169,10 +157,8 @@ public abstract class AView extends AViewableParentFlagsXY {
 
     @Override
     public void paint(IView _parent, ICanvas g, Layer _layer, int mode, XYWH_I _painted) {
-        synchronized (this) {
-            if (mode == UV.cMend && (flags & UV.cMend) != UV.cMend) {
-                return;
-            }
+        if (mode == UV.cMend && (flags & UV.cMend) != UV.cMend) {
+            return;
         }
         Layer l = (Layer) _layer.clone();
         float w = getW();
@@ -184,9 +170,7 @@ public abstract class AView extends AViewableParentFlagsXY {
         float tx = l.tx + x;
         float ty = l.ty + y;
         if (!l.intersection(tx - ew, ty - en, ew + w + ee, en + h + es)) {// area out of view so why paint
-            synchronized (this) {
-                flags &= ~UV.cMend;// remove mend
-            }
+            flags &= ~UV.cMend;// remove mend
             return;
         }
         int px = (int) (tx - ew);
@@ -195,10 +179,7 @@ public abstract class AView extends AViewableParentFlagsXY {
         int ph = (int) (en + h + es);
         l.clobber(tx + ox(), ty + oy(), pw, ph);
 
-        boolean dorepair = false;
-        synchronized (this) {
-            dorepair = (mode == UV.cRepair || (flags & UV.cRepair) == UV.cRepair);
-        }
+        boolean dorepair = (mode == UV.cRepair || (flags & UV.cRepair) == UV.cRepair);
         if (dorepair) {
             mode = UV.cRepair;
             g.setClip((int) l.x, (int) l.y, (int) l.w, (int) l.h);
@@ -217,11 +198,8 @@ public abstract class AView extends AViewableParentFlagsXY {
             paintBody(g, l, mode, _painted);//??
         }
 
-        synchronized (this) {
-            flags &= ~UV.cRepair;// remove repair flag
-            flags &= ~UV.cMend;// remove mend flag
-        }
-        return;
+        flags &= ~UV.cRepair;// remove repair flag
+        flags &= ~UV.cMend;// remove mend flag
     }
 
     // Place

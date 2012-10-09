@@ -189,8 +189,10 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
      *
      * @param _title
      */
+    VFrame frame;
     public void popup(IView ref, Object _title) {
-        UV.popup(ref, UV.cCC, new VFrame(this, _title, true, false), false, false);
+        frame = new VFrame(this, _title, true, false);
+        UV.popup(ref, UV.cCC, frame, false, false);
     }
 
     /**
@@ -201,6 +203,10 @@ public class VFiles extends Viewer implements IValue, ISizeable, ISupportSizeDep
         UModal wait = new UModal(value);
         value = wait;
         Object got = wait.getModalValue();
+        if (frame != null) {
+            frame.close();
+            frame = null;
+        }
         return (File) got;
     }
 

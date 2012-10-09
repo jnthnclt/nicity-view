@@ -19,11 +19,12 @@
  */
 package colt.nicity.view.value;
 
-import colt.nicity.view.border.ViewBorder;
-import colt.nicity.view.list.VItem;
-import colt.nicity.view.list.VList;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFont;
+import colt.nicity.view.adaptor.IFontConstants;
+import colt.nicity.view.adaptor.VS;
+import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.EditString;
 import colt.nicity.view.core.MaintainViewer;
@@ -36,8 +37,9 @@ import colt.nicity.view.core.ViewString;
 import colt.nicity.view.core.Viewer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IVItem;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
+import colt.nicity.view.list.VItem;
+import colt.nicity.view.list.VList;
+import java.util.List;
 
 /**
  *
@@ -56,7 +58,7 @@ public class VFontBrowser extends Viewer {
     /**
      *
      */
-    protected static Font[] allFonts = null;
+    protected static List<IFont> allFonts = null;
     /**
      *
      */
@@ -91,12 +93,11 @@ public class VFontBrowser extends Viewer {
             return viewAllFonts;
         }
         if (allFonts == null) {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            allFonts = ge.getAllFonts();
+            allFonts = VS.allFonts();
         }
         viewAllFonts = new CArray(ViewString.class);
-        for (int i = 0; i < allFonts.length; i++) {
-            viewAllFonts.insertLast(new ViewString(allFonts[i].getName()));
+        for (int i = 0; i < allFonts.size(); i++) {
+            viewAllFonts.insertLast(new ViewString(allFonts.get(i).getFontName()));
         }
         return viewAllFonts;
     }
@@ -127,11 +128,11 @@ public class VFontBrowser extends Viewer {
         vfont = _vfont;
         text = _text;
         AFont f = vfont.getValue();
-        font = new ViewString(f.getFont().getName());
+        font = new ViewString(f.getName());
         style = new ViewString("" + f.getFont().getStyle());
         size = new EditString("" + f.getFont().getSize());
 
-        fonts = new VList(allFonts(AFont.cPlain, 16), 1) {
+        fonts = new VList(allFonts(IFontConstants.cPlain, 16), 1) {
 
             @Override
             public IVItem vItem(Object _value) {
@@ -218,16 +219,16 @@ public class VFontBrowser extends Viewer {
             int size = Integer.parseInt(_size);
             int style = 0;
             if (_style.equals("Plain") || _style.equals("0")) {
-                style |= AFont.cPlain;
+                style |= IFontConstants.cPlain;
             }
             if (_style.equals("Bold") || _style.equals("1")) {
-                style |= Font.BOLD;
+                style |= IFontConstants.cBold;
             }
             if (_style.equals("Italic") || _style.equals("2")) {
-                style |= Font.ITALIC;
+                style |= IFontConstants.cItalic;
             }
             if (_style.equals("Bold Italic") || _style.equals("3")) {
-                style |= (Font.BOLD | Font.ITALIC);
+                style |= (IFontConstants.cBold | IFontConstants.cItalic);
             }
 
             AFont font = new AFont(_name, style, size);

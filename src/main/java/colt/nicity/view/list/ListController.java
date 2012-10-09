@@ -19,11 +19,6 @@
  */
 package colt.nicity.view.list;
 
-import colt.nicity.view.border.SolidBorder;
-import colt.nicity.view.border.ViewBorder;
-import colt.nicity.view.event.KeyPressed;
-import colt.nicity.view.event.KeyReleased;
-import colt.nicity.view.event.KeyTyped;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.IBackcall;
 import colt.nicity.core.collection.NullBackcall;
@@ -35,12 +30,17 @@ import colt.nicity.core.lang.NullOut;
 import colt.nicity.core.lang.UArray;
 import colt.nicity.core.observer.AObserver;
 import colt.nicity.core.observer.Observable;
-import colt.nicity.view.core.AColor;
+import colt.nicity.view.adaptor.IKeyEventConstants;
+import colt.nicity.view.border.SolidBorder;
+import colt.nicity.view.border.ViewBorder;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VString;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.ViewString;
 import colt.nicity.view.core.Viewer;
+import colt.nicity.view.event.KeyPressed;
+import colt.nicity.view.event.KeyReleased;
+import colt.nicity.view.event.KeyTyped;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IListController;
@@ -48,7 +48,6 @@ import colt.nicity.view.interfaces.IObservableSelectionChanges;
 import colt.nicity.view.interfaces.IVItem;
 import colt.nicity.view.interfaces.IView;
 import colt.nicity.view.interfaces.IViewable;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.regex.Pattern;
@@ -219,7 +218,7 @@ public class ListController extends AListController implements IListController, 
             Viewer v = new Viewer(titleViewer);
             VItem item = new VItem(v);
             item.setBorder(new ViewBorder());
-            item.layoutInterior();
+            item.paint();
             return new IVItem[]{item};
         }
         return _items;
@@ -768,11 +767,7 @@ public class ListController extends AListController implements IListController, 
         if (e.isControlDown()) {
             int code = e.getKeyCode();
             switch (code) {
-                //case KeyEvent.VK_X: cut
-                //case KeyEvent.VK_C: copy
-                //case KeyEvent.VK_V: paste
-
-                case KeyEvent.VK_A:
+                case IKeyEventConstants.cA:
                     selectAllItems();
                     break;
             }

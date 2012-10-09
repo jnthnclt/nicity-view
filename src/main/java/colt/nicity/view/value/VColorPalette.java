@@ -402,7 +402,6 @@ public class VColorPalette extends AItem {
             IView vColor = new VChain(UV.cCC, new VString(this), new RigidBox((int) (400 * (popularity())), 20));
             vColor.setBorder(new ItemBorder(color));
             setContent(vColor);
-            layoutInterior();
             paint();
 
         }

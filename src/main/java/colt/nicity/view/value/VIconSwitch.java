@@ -140,8 +140,7 @@ public class VIconSwitch extends AItem implements IMouseMotionEvents {
         start = (int) _e.getPoint().y;
         locked = false;
         ;
-        layoutInterior();
-        flush();
+        paint();
     }
 
     /**
@@ -151,8 +150,7 @@ public class VIconSwitch extends AItem implements IMouseMotionEvents {
     public void mouseReleased(MouseReleased _e) {
         locked = true;
         setCase(dynamic);
-        layoutInterior();
-        flush();
+        paint();
     }
 
     // IMouseMotionEvents
@@ -170,7 +168,6 @@ public class VIconSwitch extends AItem implements IMouseMotionEvents {
     public void mouseDragged(MouseDragged _e) {
         int delta = start - _e.getPoint().y;
         dynamic = (Math.abs(index + icons.length + delta / hysteresis)) % icons.length;
-        layoutInterior();
-        flush();
+        paint();
     }
 }

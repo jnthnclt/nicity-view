@@ -137,10 +137,9 @@ public class VText extends Viewer {
         float _w = getWidth();
         if (_w != width) {
             width = _w;
-            layoutInterior();
             IView _parent = parent.get();
-            _parent.layoutInterior();
-            flush();
+            _parent.paint();
+            paint();
         }
     }
 }

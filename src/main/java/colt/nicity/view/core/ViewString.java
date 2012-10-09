@@ -88,8 +88,8 @@ public class ViewString extends AViewableWH implements IOrientable, IValue {
         setColor(_color);
         setFont(_font);
 
-        w = (float) UVA.stringWidth(font, text.toString());
-        h = (float) (UVA.fontAscent(font) + UVA.fontDescent(font));
+        w = (float) font.getW(text.toString());
+        h = (float) (font.getDescent() + font.getAscent());
         setText(_text);
 
     }
@@ -111,9 +111,9 @@ public class ViewString extends AViewableWH implements IOrientable, IValue {
             _text = "";
         }
         text = _text;
-        w = (float) UVA.stringWidth(font, text.toString());
+        w = (float) font.getW(text.toString());
         if (text.toString().length() > 0) {
-            h = (float) (UVA.fontAscent(font) + UVA.fontDescent(font));
+            h = (float)  (font.getDescent() + font.getAscent());
         } else {
             h = 1;
         }
@@ -136,8 +136,8 @@ public class ViewString extends AViewableWH implements IOrientable, IValue {
             _font = UV.fonts[UV.cText];
         }
         font = _font;
-        w = (float) UVA.stringWidth(font, text.toString());
-        h = (float) (UVA.fontAscent(font) + UVA.fontDescent(font));
+        w = (float) font.getW(text.toString());
+        h = (float) (font.getDescent() + font.getAscent());
     }
 
     /**
@@ -166,9 +166,9 @@ public class ViewString extends AViewableWH implements IOrientable, IValue {
         g.setFont(font);
         String t = text.toString();
 
-        w = (float) UVA.stringWidth(font, t);
+        w = (float) font.getW(t);
         if (t.length() > 0) {
-            h = (float) (UVA.fontAscent(font) + UVA.fontDescent(font));
+            h = (float) (font.getDescent() + font.getAscent());
         } else {
             h = 1;
         }

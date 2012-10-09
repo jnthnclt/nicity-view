@@ -19,13 +19,13 @@
  */
 package colt.nicity.view.interfaces;
 
-import colt.nicity.view.event.AViewEvent;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.core.Flex;
 import colt.nicity.view.core.Layer;
 import colt.nicity.view.core.Place;
+import colt.nicity.view.event.AViewEvent;
 
 /**
  *

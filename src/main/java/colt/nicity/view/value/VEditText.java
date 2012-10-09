@@ -80,8 +80,6 @@ public class VEditText extends Viewer {
         };
         editText.spans(UV.cXNSEW);
         placer = new Placer(editText);
-        layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 }

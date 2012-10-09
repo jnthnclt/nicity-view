@@ -254,7 +254,6 @@ public class VLog extends Viewer implements IOut, ISizeable {
         pan.setPositionY(1f);
         c.add(pan);
         setContent(c);
-        layoutInterior();
         paint();
     }
 

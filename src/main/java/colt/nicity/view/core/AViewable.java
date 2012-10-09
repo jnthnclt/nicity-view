@@ -19,14 +19,15 @@
  */
 package colt.nicity.view.core;
 
-import colt.nicity.view.border.NullBorder;
-import colt.nicity.view.border.UBorder;
-import colt.nicity.view.event.AViewEvent;
-import colt.nicity.view.event.UEvent;
 import colt.nicity.core.lang.ASetObject;
 import colt.nicity.core.memory.struct.WH_F;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IViewEventConstants;
+import colt.nicity.view.border.NullBorder;
+import colt.nicity.view.border.UBorder;
+import colt.nicity.view.event.AViewEvent;
+import colt.nicity.view.event.UEvent;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IEvent;
@@ -452,19 +453,19 @@ public abstract class AViewable extends ASetObject implements IView {
     public long getEventMask() {
         long taskMask = 0;
         if (this instanceof IWindowEvents) {
-            taskMask |= AViewEvent.cWindowEvent;
+            taskMask |= IViewEventConstants.cWindowEvent;
         }
         if (this instanceof IMouseEvents) {
-            taskMask |= AViewEvent.cMouseEvent;
+            taskMask |= IViewEventConstants.cMouseEvent;
         }
         if (this instanceof IKeyEvents) {
-            taskMask |= AViewEvent.cKeyEvent;
+            taskMask |= IViewEventConstants.cKeyEvent;
         }
         if (this instanceof IMouseMotionEvents) {
-            taskMask |= AViewEvent.cMouseMotionEvent;
+            taskMask |= IViewEventConstants.cMouseMotionEvent;
         }
         if (this instanceof IFocusEvents) {
-            taskMask |= AViewEvent.cFocusEvent;
+            taskMask |= IViewEventConstants.cFocusEvent;
         }
         return taskMask;
     }

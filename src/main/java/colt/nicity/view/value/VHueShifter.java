@@ -19,22 +19,22 @@
  */
 package colt.nicity.view.value;
 
-import colt.nicity.view.paint.UPaint;
+import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IPath;
 import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.border.ViewBorder;
-import colt.nicity.view.event.MouseDragged;
-import colt.nicity.view.event.MouseMoved;
-import colt.nicity.view.image.IImage;
-import colt.nicity.view.list.AItem;
-import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.RigidBox;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VChain;
+import colt.nicity.view.event.MouseDragged;
+import colt.nicity.view.event.MouseMoved;
+import colt.nicity.view.image.IImage;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
-import java.awt.geom.GeneralPath;
+import colt.nicity.view.list.AItem;
+import colt.nicity.view.paint.UPaint;
 
 /**
  *
@@ -113,7 +113,7 @@ public class VHueShifter extends AItem implements IMouseEvents, IMouseMotionEven
             }
         }
         _g.drawImage(hueMap, 0, 0, null);
-        GeneralPath arrows = new GeneralPath();
+        IPath arrows = VS.path();
         for (int i = 0; i < _w; i += xres) {
             float hue = (float) i / (float) _w;
             int index = (int) (shiftHues.length * hue);

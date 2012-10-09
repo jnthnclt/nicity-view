@@ -19,8 +19,8 @@
  */
 package colt.nicity.view.image;
 
-import colt.nicity.view.adaptor.VS;
 import colt.nicity.core.memory.struct.XYWH_I;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPaintable;

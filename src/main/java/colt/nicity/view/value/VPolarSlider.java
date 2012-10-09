@@ -243,8 +243,7 @@ public class VPolarSlider extends AItem implements Comparable {
                 value.setValue(new Double(_value));
             }
             init();
-            layoutInterior();
-            flush();
+            paint();
         }
     }
 

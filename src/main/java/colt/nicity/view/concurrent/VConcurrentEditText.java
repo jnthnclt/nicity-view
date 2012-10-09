@@ -6,13 +6,14 @@ import colt.nicity.core.lang.UArray;
 import colt.nicity.core.lang.UString;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IKeyEventConstants;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.border.NullBorder;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.DragAndDrop;
 import colt.nicity.view.core.Layer;
 import colt.nicity.view.core.NullView;
-import colt.nicity.view.core.UVA;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.core.ViewText;
 import colt.nicity.view.event.AKeyEvent;
@@ -38,19 +39,12 @@ import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.KeyEvent;
 
 /**
  * 
  * @author jonathan
  */
-public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents, ClipboardOwner {
+public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyEvents, IMouseEvents, IMouseMotionEvents {
 
     // Convienient overloadable methods
     /**
@@ -193,9 +187,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
     }
 
     private void update() {
-        parent.layoutInterior();
-        repair();
-        flush();
+        parent.paint();
     }
 
     // AViewable
@@ -292,7 +284,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                         if (rc.colum > tl) {
                             rc.colum = tl;
                         }
-                        int x = UVA.stringWidth(font, text[i].substring(0, rc.colum));
+                        int x = (int)font.getW(text[i].substring(0, rc.colum));
                         g.line(x, y, x, (y + size));
                         g.line(x - 1, y, x - 1, (y + size));
 
@@ -303,8 +295,8 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
     }
 
     private void paintSelected(ICanvas g, int y, AFont font, String line, int start, int end) {
-        int s = UVA.stringWidth(font, line.substring(0, start));
-        int e = UVA.stringWidth(font, line.substring(0, end));
+        int s = (int)font.getW(line.substring(0, start));
+        int e = (int)font.getW(line.substring(0, end));
         g.rect(true, s, y, e - s, font.getSize() + 5);
         g.setAlpha(1f, 0);
         g.rect(false, s, y, e - s, font.getSize() + 4);
@@ -352,11 +344,6 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
         return h + font.getSize() + border.getH();
     }
 
-    // ClipboardOwner
-    @Override
-    public void lostOwnership(Clipboard clipboard, Transferable contents) {
-        //System.out.println("lostOwnership "+clipboard+" "+contents);
-    }
 
     // IKeyEvents
     @Override
@@ -364,22 +351,19 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
         int code = e.getKeyCode();
         if (e.isControlDown()) {
             switch (code) {
-                case KeyEvent.VK_A: {
+                case IKeyEventConstants.cA: {
                     caret(e.who(), new RowColum(e.who(), 0, 0), selectionStart);
                     int end = text.length - 1;
                     caret(e.who(), new RowColum(e.who(), end, text[end].length()), selectionEnd);
                     update();
                     break;
                 }
-                case KeyEvent.VK_X: {
+                case IKeyEventConstants.cX: {
                     RowColum ss = caret(e.who(), selectionStart);
                     RowColum se = caret(e.who(), selectionEnd);
                     if (ss != null && se != null) {
                         String cut = ss.selected(text, se);
-                        Toolkit tk = Toolkit.getDefaultToolkit();
-                        Clipboard cb = tk.getSystemClipboard();
-                        cb.setContents(new StringSelection(cut), this);
-
+                        VS.clipboard().put(cut);
                         setText(ss.remove(text, se));
                         caret(e.who(), ss, carets);
                         caret(e.who(), null, selectionStart);
@@ -389,24 +373,19 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                     }
                     break;
                 }
-                case KeyEvent.VK_C: {
+                case IKeyEventConstants.cC: {
                     RowColum ss = caret(e.who(), selectionStart);
                     RowColum se = caret(e.who(), selectionEnd);
                     if (ss != null && se != null) {
                         String copy = ss.selected(text, se);
-                        Toolkit tk = Toolkit.getDefaultToolkit();
-                        Clipboard cb = tk.getSystemClipboard();
-                        cb.setContents(new StringSelection(copy), this);
+                        VS.clipboard().put(copy);
                     }
                     break;
                 }
-                case KeyEvent.VK_V: {
-                    Toolkit tk = Toolkit.getDefaultToolkit();
-                    Clipboard cb = tk.getSystemClipboard();
-                    Transferable t = cb.getContents(this);
+                case IKeyEventConstants.cV: {
                     String paste = "";
                     try {
-                        paste = (String) t.getTransferData(DataFlavor.stringFlavor);
+                        paste = VS.clipboard().get(String.class);
                         appendText(UString.toStringArray(paste, "\n"));
                         update();
                         stringChanged(text);
@@ -434,10 +413,10 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                 }
             }
             return;
-        } else if (code == KeyEvent.VK_SHIFT) {
-        } else if (code == KeyEvent.VK_CONTROL) {
-        } else if (code == KeyEvent.VK_ALT) {
-        } else if (code == KeyEvent.VK_RIGHT) {
+        } else if (code == IKeyEventConstants.cShift) {
+        } else if (code == IKeyEventConstants.cCtrl) {
+        } else if (code == IKeyEventConstants.cAlt) {
+        } else if (code == IKeyEventConstants.cRight) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
@@ -451,7 +430,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                 caret(e.who(), rc, selectionBegin);
             }
             update();
-        } else if (code == KeyEvent.VK_LEFT) {
+        } else if (code == IKeyEventConstants.cLeft) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
@@ -468,7 +447,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                 caret(e.who(), rc, selectionBegin);
             }
             update();
-        } else if (code == KeyEvent.VK_UP) {
+        } else if (code == IKeyEventConstants.cUp) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
@@ -485,7 +464,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                 caret(e.who(), rc, selectionBegin);
             }
             update();
-        } else if (code == KeyEvent.VK_DOWN) {
+        } else if (code == IKeyEventConstants.cDown) {
             RowColum rc = caret(e.who(), carets);
             if (e.isShiftDown()) {
                 orderStartEnd(rc);
@@ -502,7 +481,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
                 caret(e.who(), rc, selectionBegin);
             }
             update();
-        } else if (code == KeyEvent.VK_BACK_SPACE) {
+        } else if (code == IKeyEventConstants.cBackspace) {
             RowColum rc = caret(e.who(), carets);
             RowColum ss = caret(e.who(), selectionStart);
             RowColum se = caret(e.who(), selectionEnd);
@@ -525,7 +504,7 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
             }
             stringChanged(text);
             update();
-        } else if (code == KeyEvent.VK_DELETE) {
+        } else if (code == IKeyEventConstants.cDelete) {
             RowColum rc = caret(e.who(), carets);
             RowColum ss = caret(e.who(), selectionStart);
             RowColum se = caret(e.who(), selectionEnd);
@@ -548,18 +527,18 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
             }
             stringChanged(text);
             update();
-        } else if (code == KeyEvent.VK_HOME) {
+        } else if (code == IKeyEventConstants.cHome) {
             RowColum rc = caret(e.who(), carets);
             rc = new RowColum(e.who(), rc.getRow(), 0);
             caret(e.who(), rc, carets);
             update();
-        } else if (code == KeyEvent.VK_END) {
+        } else if (code == IKeyEventConstants.cEnd) {
             RowColum rc = caret(e.who(), carets);
             int row = rc.getRow();
             rc = new RowColum(e.who(), rc.getRow(), text[row].length());
             caret(e.who(), rc, carets);
             update();
-        } else if (code == KeyEvent.VK_ENTER) {
+        } else if (code == IKeyEventConstants.cEnter) {
             caret(e.who(), null, selectionStart);
             caret(e.who(), null, selectionEnd);
 
@@ -806,8 +785,8 @@ public class VConcurrentEditText extends ViewText implements IFocusEvents, IKeyE
             colum = 0;
         } else {
             for (; s >= 0 && e <= lineLength;) {
-                int sx = UVA.stringWidth(_font, line.substring(0, s));
-                int ex = UVA.stringWidth(_font, line.substring(0, e));
+                int sx = (int)_font.getW(line.substring(0, s));
+                int ex = (int)_font.getW(line.substring(0, e));
                 if (p.x < sx) {
                     s--;
                     e--;

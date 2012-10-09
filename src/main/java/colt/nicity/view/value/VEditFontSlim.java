@@ -26,6 +26,7 @@ import colt.nicity.core.observer.Change;
 import colt.nicity.core.observer.IObservable;
 import colt.nicity.core.observer.IObserver;
 import colt.nicity.core.value.Value;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.UV;
 import colt.nicity.view.core.VChain;
@@ -115,28 +116,28 @@ public class VEditFontSlim extends Viewer implements IObserver {
 
                     @Override
                     public void picked(IEvent _e) {
-                        style.setValue(AFont.cPlain);
+                        style.setValue(IFontConstants.cPlain);
                     }
                 });
                 c.add(new VItem("Bold") {
 
                     @Override
                     public void picked(IEvent _e) {
-                        style.setValue(AFont.cBold);
+                        style.setValue(IFontConstants.cBold);
                     }
                 });
                 c.add(new VItem("Italic") {
 
                     @Override
                     public void picked(IEvent _e) {
-                        style.setValue(AFont.cItalic);
+                        style.setValue(IFontConstants.cItalic);
                     }
                 });
                 c.add(new VItem("Bold Italic") {
 
                     @Override
                     public void picked(IEvent _e) {
-                        style.setValue(AFont.cBold | AFont.cItalic);
+                        style.setValue(IFontConstants.cBold | IFontConstants.cItalic);
                     }
                 });
                 return c;

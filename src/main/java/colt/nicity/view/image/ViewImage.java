@@ -19,8 +19,8 @@
  */
 package colt.nicity.view.image;
 
-import colt.nicity.view.adaptor.VS;
 import colt.nicity.core.memory.struct.XYWH_I;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IPaintable;
@@ -256,6 +256,7 @@ public class ViewImage implements IPaintable {
      * @param g
      * @param _xywh
      */
+    @Override
     public void paint(ICanvas g, XYWH_I _xywh) {
         if (loading) {
             g.setColor(AColor.gray);
@@ -282,6 +283,7 @@ public class ViewImage implements IPaintable {
      * @param _over
      * @return
      */
+    @Override
     public float getW(IPaintable _under, IPaintable _over) {
         return width * scaleX;
     }
@@ -292,6 +294,7 @@ public class ViewImage implements IPaintable {
      * @param _over
      * @return
      */
+    @Override
     public float getH(IPaintable _under, IPaintable _over) {
         return height * scaleY;
     }

@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.event;
 
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.core.NullView;
 import colt.nicity.view.interfaces.IView;
 
@@ -69,11 +70,12 @@ abstract public class AKeyEvent extends AInputEvent {
      * @param view
      * @return
      */
+    @Override
     public IView disbatchEvent(IView parent, IView view) {
         if (view == null) {
             return NullView.cNull;
         }
-        if (!(view.isEventEnabled(AViewEvent.cKeyEvent))) {
+        if (!(view.isEventEnabled(IViewEventConstants.cKeyEvent))) {
             return NullView.cNull;
         }
         this.setSource(view);
@@ -85,9 +87,10 @@ abstract public class AKeyEvent extends AInputEvent {
      * @return
      */
     public long getMask() {
-        return AViewEvent.cKeyEvent;
+        return IViewEventConstants.cKeyEvent;
     }
 
+    @Override
     public String toString() {
         return super.toString() + " keyCode=" + keyCode + " keyChar=" + (char) keyChar;
     }

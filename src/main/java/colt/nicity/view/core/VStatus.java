@@ -24,17 +24,21 @@ import colt.nicity.core.lang.IOut;
 import colt.nicity.core.value.Value;
 import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IView;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
  * @author Administrator
  */
 public class VStatus extends Viewer implements IOut {
-
+    
+    static ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     /**
      *
      */
-    public Value status = new Value("");
+    public Value<String> status = new Value<String>("");
 
     /**
      *
@@ -102,6 +106,7 @@ public class VStatus extends Viewer implements IOut {
      * @param _count
      * @param _outof
      */
+    @Override
     public void out(double _count, double _outof) {
         setStatus((int) ((_count / _outof) * 100) + "%");
     }
@@ -110,6 +115,7 @@ public class VStatus extends Viewer implements IOut {
      *
      * @param _value
      */
+    @Override
     public void out(Object... _value) {
         if (_value != null) {
             for(Object _v:_value) {
@@ -117,11 +123,27 @@ public class VStatus extends Viewer implements IOut {
             }
         }
     }
+    
+    private static final String done = "done";
+    public void done() {
+        setStatus(done);
+        executor.schedule(new Runnable() {
+
+            @Override
+            public void run() {
+                String current = status.getValue();
+                if (current == done) {
+                    setStatus("");
+                }
+            }
+        }, 1200, TimeUnit.MILLISECONDS);
+    }
 
     /**
      *
      * @return
      */
+    @Override
     public boolean canceled() {
         return false;
     }

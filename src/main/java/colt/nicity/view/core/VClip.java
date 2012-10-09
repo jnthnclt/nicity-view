@@ -125,7 +125,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
             float _h = hDependant.getY();
             if (ch != _h) {
                 h = _h;
-                getParentView().layoutInterior();
+                getParentView().paint();
             }
             return _h;
         } else {
@@ -140,7 +140,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
             float _w = wDependant.getX();
             if (cw != _w) {
                 w = _w;
-                getParentView().layoutInterior();
+                getParentView().paint();
             }
             return _w;
         } else {
@@ -186,7 +186,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
     }
 
     @Override
-    synchronized public void layoutInterior(IView _parent, Flex _flex) {
+    public void layoutInterior(IView _parent, Flex _flex) {
         IView _view = placer.getView();
         IView isChild = UV.getChild(_parent, _flex.getCreator());
         if (isChild != null || _flex.getCreator() == this) {
@@ -413,7 +413,7 @@ public class VClip extends Viewer implements ISizeable, ISupportSizeDependecy {
         }
 
         if (alignX != oldAlignX || alignY != oldAlignY) {
-            layoutInterior();
+            paint();
         }
     }
 }

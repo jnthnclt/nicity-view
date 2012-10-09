@@ -25,6 +25,7 @@ import colt.nicity.view.list.AItem;
 import colt.nicity.view.list.VMenu;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.value.IValue;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.Placer;
@@ -79,7 +80,7 @@ public class ProgressView extends AItem implements IValue {
      * @param _h
      */
     public ProgressView(float _w, float _h) {
-        progressFont = new AFont(AFont.cPlain, (int) (_h / 1.75f));
+        progressFont = new AFont(IFontConstants.cPlain, (int) (_h / 1.75f));
         setPlacer(new Placer(new RigidBox(_w, _h)));
         setBorder(new ViewBorder());
     }

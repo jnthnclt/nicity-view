@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.paint;
 
+import colt.nicity.core.memory.struct.Poly_I;
 import colt.nicity.core.collection.CArray;
 import colt.nicity.core.collection.CSet;
 import colt.nicity.core.lang.MinMaxDouble;
@@ -26,6 +27,8 @@ import colt.nicity.core.lang.UMath;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_D;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IPath;
+import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.Place;
@@ -37,7 +40,6 @@ import colt.nicity.view.interfaces.ICanvas;
 import colt.nicity.view.interfaces.IHaveColor;
 import colt.nicity.view.interfaces.IView;
 import java.awt.Polygon;
-import java.awt.geom.GeneralPath;
 import java.util.Vector;
 
 /**
@@ -80,7 +82,7 @@ public class UPaint {
 
         _g.setAlpha(0.5f, 0);
         _g.setColor(forground);
-        GeneralPath path = new GeneralPath();
+        IPath path = VS.path();
         path.moveTo(x, y);
         path.lineTo(x + w, y);
         path.lineTo(x, y + h);
@@ -221,7 +223,7 @@ public class UPaint {
      * @param shrink
      * @return
      */
-    public static Polygon join(Polygon grow, Polygon shrink) {
+    public static Poly_I join(Poly_I grow, Poly_I shrink) {
         int count = grow.npoints + 1 + shrink.npoints + 1;
         int[] xs = new int[count];
         int[] ys = new int[count];
@@ -245,7 +247,7 @@ public class UPaint {
         }
 
 
-        return new Polygon(xs, ys, count);
+        return new Poly_I(xs, ys, count);
     }
 
     // _a 0->1
@@ -292,7 +294,7 @@ public class UPaint {
      * @param _r
      */
     public static void moveToRadial(
-            GeneralPath _path,
+            IPath _path,
             int _x, int _y, double _a, double _r) {
         int x = (int) (_r * Math.cos(_a * (Math.PI * 2)));
         int y = (int) (_r * Math.sin(_a * (Math.PI * 2)));
@@ -312,7 +314,7 @@ public class UPaint {
      * @param _r2
      */
     public static void quadToRadial(
-            GeneralPath _path,
+            IPath _path,
             int _x, int _y,
             double _a1, double _r1,
             double _a2, double _r2) {
@@ -657,7 +659,7 @@ public class UPaint {
      * @param _arrow
      * @param _reach
      */
-    public static void perimeterLineTo(GeneralPath _path, IView _from, IView _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
+    public static void perimeterLineTo(IPath _path, IView _from, IView _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
         if (_path == null || _from == null || _to == null) {
             return;
 
@@ -679,7 +681,7 @@ public class UPaint {
      * @param _arrow
      * @param _reach
      */
-    public static void perimeterLineTo(GeneralPath _path, IView _from, XY_I _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
+    public static void perimeterLineTo(IPath _path, IView _from, XY_I _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
         if (_path == null || _from == null || _to == null) {
             return;
 
@@ -702,7 +704,7 @@ public class UPaint {
      * @param _arrow
      * @param _reach
      */
-    public static void perimeterLineTo(GeneralPath _path, XY_I _from, IView _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
+    public static void perimeterLineTo(IPath _path, XY_I _from, IView _to, XY_I _offset, int _inset, double _deflect, boolean _arrow, double _reach) {
         if (_path == null || _from == null || _to == null) {
             return;
 
@@ -730,7 +732,7 @@ public class UPaint {
      * @param _reach
      */
     public static void perimeterLineTo(
-            GeneralPath _path,
+            IPath _path,
             XY_I f, float _fw, float _fh,
             XY_I t, float _tw, float _th,
             XY_I _offset, int _inset, double _deflect, boolean _arrow,
@@ -783,7 +785,7 @@ public class UPaint {
      * @param _deflect
      */
     public static void quadTo(
-            GeneralPath _path,
+            IPath _path,
             XY_I _f, XY_I _t,
             double _deflect) {
 
@@ -813,7 +815,7 @@ public class UPaint {
      * @param _reach
      */
     public static void perimeterLineToHard(
-            GeneralPath _path,
+            IPath _path,
             XY_I f, float _fw, float _fh,
             XY_I t, float _tw, float _th,
             XY_I _offset, int _inset, double _deflect, boolean _arrow,
@@ -870,7 +872,7 @@ public class UPaint {
      * @param _length
      * @param _angle
      */
-    public static void arrowHead(GeneralPath _p, float _x, float _y, float _direction, float _length, float _angle) {
+    public static void arrowHead(IPath _p, float _x, float _y, float _direction, float _length, float _angle) {
         _p.moveTo(_x, _y);
         _direction -= (_angle / 2);
         _p.lineTo((float) (_x + (Math.sin(Math.toRadians(_direction)) * _length)), _y + (float) ((Math.sin(Math.toRadians(_direction + 90)) * _length)));
@@ -888,7 +890,7 @@ public class UPaint {
      * @param _angle
      * @param _length
      */
-    public static void vector(GeneralPath _p, float _sx, float _sy, float _angle, float _length) {
+    public static void vector(IPath _p, float _sx, float _sy, float _angle, float _length) {
         _p.moveTo(_sx, _sy);
         float radians = (float) Math.toRadians(_angle);
         float ex = (float) (_sx + (Math.sin(radians) * _length));
@@ -923,7 +925,7 @@ public class UPaint {
      * @param _length
      * @param _angle
      */
-    public static void arrowTo(GeneralPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
+    public static void arrowTo(IPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
 
         double radians = UMath.angle(_sx, _sy, _ex, _ey);
 
@@ -948,7 +950,7 @@ public class UPaint {
      * @param _length
      * @param _angle
      */
-    public static void solidArrow(GeneralPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
+    public static void solidArrow(IPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
 
         double radians = UMath.angle(_sx, _sy, _ex, _ey);
 
@@ -973,7 +975,7 @@ public class UPaint {
      * @param _length
      * @param _angle
      */
-    public static void longArrow(GeneralPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
+    public static void longArrow(IPath _p, float _sx, float _sy, float _ex, float _ey, float _length, float _angle) {
 
         double radians = UMath.angle(_sx, _sy, _ex, _ey);
 
@@ -997,7 +999,7 @@ public class UPaint {
      * @param _toY
      * @param _tension
      */
-    public static void drawCurveLink(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
+    public static void drawCurveLink(IPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
 
         float gapX = (Math.max(_fromX, _toX) - Math.min(_fromX, _toX));
         float gapY = (Math.max(_fromY, _toY) - Math.min(_fromY, _toY));
@@ -1025,7 +1027,7 @@ public class UPaint {
      * @param _toX
      * @param _toY
      */
-    public static void drawCurveLink(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY) {
+    public static void drawCurveLink(IPath _p, float _fromX, float _fromY, float _toX, float _toY) {
 
         float gapX = (Math.max(_fromX, _toX) - Math.min(_fromX, _toX));
         float gapY = (Math.max(_fromY, _toY) - Math.min(_fromY, _toY));
@@ -1055,7 +1057,7 @@ public class UPaint {
      * @param _toX
      * @param _toY
      */
-    public static void drawLine(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY) {
+    public static void drawLine(IPath _p, float _fromX, float _fromY, float _toX, float _toY) {
         _p.moveTo(_fromX, _fromY);
         _p.lineTo(_toX, _toY);
     }
@@ -1069,7 +1071,7 @@ public class UPaint {
      * @param _toY
      * @param _tension
      */
-    public static void drawLeftToLeftCurveLink(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
+    public static void drawLeftToLeftCurveLink(IPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
 
         float gapX = (Math.max(_fromX, _toX) - Math.min(_fromX, _toX));
         float gapY = (Math.max(_fromY, _toY) - Math.min(_fromY, _toY));
@@ -1117,7 +1119,7 @@ public class UPaint {
      * @param _toY
      * @param _tension
      */
-    public static void drawRightToRightCurveLink(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
+    public static void drawRightToRightCurveLink(IPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
 
         float gapX = (Math.max(_fromX, _toX) - Math.min(_fromX, _toX));
         float gapY = (Math.max(_fromY, _toY) - Math.min(_fromY, _toY));
@@ -1165,7 +1167,7 @@ public class UPaint {
      * @param _deflect2
      */
     public static void moon(
-            GeneralPath _path,
+            IPath _path,
             XY_I _f, XY_I _t,
             double _deflect1, double _deflect2) {
 
@@ -1196,7 +1198,7 @@ public class UPaint {
      * @param _deflect
      */
     public static void deflectLine(
-            GeneralPath _path,
+            IPath _path,
             XY_I _f, XY_I _t,
             double _deflect) {
 
@@ -1236,7 +1238,7 @@ public class UPaint {
      * @param _deflect2
      */
     public static void moonArrow(
-            GeneralPath _path,
+            IPath _path,
             XY_I _f, XY_I _t,
             int _deflect1, int _deflect2) {
 
@@ -1277,7 +1279,7 @@ public class UPaint {
      * @param _deflect2
      */
     public static void moon(
-            GeneralPath _path,
+            IPath _path,
             XY_I _f, XY_I _t,
             int _deflect1, int _deflect2) {
 
@@ -1309,7 +1311,7 @@ public class UPaint {
      * @param _toY
      * @param _tension
      */
-    public static void drawLineLink(GeneralPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
+    public static void drawLineLink(IPath _p, float _fromX, float _fromY, float _toX, float _toY, float _tension) {
         float gapX = (Math.max(_fromX, _toX) - Math.min(_fromX, _toX));
         float gapY = (Math.max(_fromY, _toY) - Math.min(_fromY, _toY));
 
@@ -1427,8 +1429,8 @@ public class UPaint {
      * @param _sequence
      * @return
      */
-    public static GeneralPath line(XY_I _o, Object[] _sequence) {
-        GeneralPath path = new GeneralPath();
+    public static IPath line(XY_I _o, Object[] _sequence) {
+        IPath path = VS.path();
         if (_sequence == null || _sequence.length == 0) {
             return path;
         }
@@ -1455,7 +1457,7 @@ public class UPaint {
      * @param _sequence
      * @return
      */
-    public static GeneralPath sequence(XY_I _o, Object[] _sequence) {
+    public static IPath sequence(XY_I _o, Object[] _sequence) {
         return sequence(_o, _sequence, 0.15d);
     }
 
@@ -1466,8 +1468,8 @@ public class UPaint {
      * @param _shift
      * @return
      */
-    public static GeneralPath sequence(XY_I _o, Object[] _sequence, double _shift) {
-        GeneralPath path = new GeneralPath();
+    public static IPath sequence(XY_I _o, Object[] _sequence, double _shift) {
+        IPath path = VS.path();
         if (_sequence == null || _sequence.length == 0) {
             return path;
         }
@@ -1494,7 +1496,7 @@ public class UPaint {
      * @param _domain
      * @return
      */
-    public static Polygon wrap(CSet _set, CSet _domain) {
+    public static Poly_I wrap(CSet _set, CSet _domain) {
         if (_set == null) {
             return null;
         }
@@ -1511,7 +1513,7 @@ public class UPaint {
             }
             bounds.insertLast(view.getEventBounds().growFromCenter(grow));//!!1-6-09 was getBounds
         }
-        Polygon poly = UMath.toPoly(UMath.wrapRectangles(bounds), true);
+        Poly_I poly = UMath.toPoly(UMath.wrapRectangles(bounds), true);
         if (_domain != null) {
             all = _domain.getAll(Object.class);
             CSet set = new CSet();
@@ -1535,7 +1537,7 @@ public class UPaint {
                 }
                 set.add(view);
             }
-            Polygon remove = wrap(set, null);
+            Poly_I remove = wrap(set, null);
             return UMath.removeAFromB(remove, poly);
         }
         return poly;
@@ -1546,7 +1548,7 @@ public class UPaint {
      * @param _all
      * @return
      */
-    public static Polygon wrap(Object[] _all) {
+    public static Poly_I wrap(Object[] _all) {
         CArray bounds = new CArray(XYWH_I.class);
         int grow = _all.length;
         for (int a = 0; a < _all.length; a++) {
@@ -1559,7 +1561,7 @@ public class UPaint {
         if (bounds.getCount() == 0) {
             return null;
         }
-        Polygon poly = UMath.toPoly(UMath.wrapRectangles(bounds), true);
+        Poly_I poly = UMath.toPoly(UMath.wrapRectangles(bounds), true);
         return poly;
     }
 
@@ -1664,12 +1666,12 @@ public class UPaint {
      * @param _sy
      * @return
      */
-    public static GeneralPath toCurvePath(double[] xs, double[] ys, double _tx, double _ty, double _sx, double _sy) {
+    public static IPath toCurvePath(double[] xs, double[] ys, double _tx, double _ty, double _sx, double _sy) {
         int count = xs.length;
         if (count == 0) {
             return null;
         }
-        GeneralPath path = new GeneralPath();
+        IPath path = VS.path();
         for (int k = 0; k < count; k += 2) {
             if (k == 0) {
                 path.moveTo((float) (_tx + (xs[(k + 0)] * _sx)), (float) (_ty + (ys[(k + 0)] * _sy)));
@@ -1696,12 +1698,12 @@ public class UPaint {
      * @param ys
      * @return
      */
-    public static GeneralPath toCurvedPath(float[] xs, float[] ys) {
+    public static IPath toCurvedPath(float[] xs, float[] ys) {
         int count = xs.length;
         if (count == 0) {
             return null;
         }
-        GeneralPath path = new GeneralPath();
+        IPath path = VS.path();
         for (int k = 0; k < count; k += 2) {
             if (k == 0) {
                 path.moveTo(xs[(k + 0)], ys[(k + 0)]);
@@ -1728,12 +1730,12 @@ public class UPaint {
      * @param ys
      * @return
      */
-    public static GeneralPath toCurvedPath(int[] xs, int[] ys) {
+    public static IPath toCurvedPath(int[] xs, int[] ys) {
         int count = xs.length;
         if (count == 0) {
             return null;
         }
-        GeneralPath path = new GeneralPath();
+        IPath path = VS.path();
         for (int k = 0; k < count; k += 2) {
             if (k == 0) {
                 path.moveTo(
@@ -1761,12 +1763,12 @@ public class UPaint {
      * @param ps
      * @return
      */
-    public static GeneralPath toCurvedPath(XY_I[] ps) {
+    public static IPath toCurvedPath(XY_I[] ps) {
         int count = ps.length;
         if (count == 0) {
             return null;
         }
-        GeneralPath path = new GeneralPath();
+        IPath path = VS.path();
         for (int k = 0; k < count; k += 2) {
             if (k == 0) {
                 path.moveTo(

@@ -40,6 +40,7 @@ import colt.nicity.core.lang.UFloat;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.value.IValue;
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
@@ -49,7 +50,6 @@ import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -216,11 +216,12 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         setColor(_fontColor);
         setFont(_font);
 
-        w = (float) UVA.stringWidth(font, _text.toString());
+        String ts = text.toString();
+        w = (float)font.getW(ts);
         if (w < 10) {
             w = 10;//!!
         }
-        h = (float) UVA.fontHeight(font);
+        h = (float)font.getH(ts);
         _setText(_text);
         border = _border;
     }
@@ -279,7 +280,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         }
         text = _text;
         String ts = text.toString();
-        float _w = (float) UVA.stringWidth(font, ts);
+        float _w = (float)font.getW(ts);
         if (minW != -1 && _w < minW) {
             w = minW;
         } else if (maxW != -1 && _w > maxW) {
@@ -287,7 +288,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         } else {
             w = _w;
         }
-        h = (float) UVA.fontHeight(font);
+        h = (float)font.getH(ts);
         repair();
         flush();
     }
@@ -309,9 +310,9 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
             _font = UV.fonts[UV.cText];
         }
         font = _font;
-        w = (float) UVA.stringWidth(font, text.toString());
+        w = (float) font.getW(text.toString());
         //if (w < 10) w = 10;//!!
-        h = (float) UVA.fontHeight(font);
+        h = (float) font.getH(text.toString());
     }
 
     /**
@@ -435,13 +436,13 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
 
             if (start != -1 && end != -1) {
                 g.setColor(highlight);
-                int s = UVA.stringWidth(font, string.substring(0, start));
-                int e = UVA.stringWidth(font, string.substring(0, end));
+                int s = (int)font.getW(string.substring(0, start));
+                int e = (int)font.getW(string.substring(0, end));
                 g.rect(true, s, 0, e - s, (int) h);
             }
             int x = 0;
             if (at > -1 && at <= string.length()) {
-                x = UVA.stringWidth(font, string.substring(0, at));
+                x = (int)font.getW(string.substring(0, at));
                 if (at == string.length()) {
                     x -= 1;
                 }
@@ -550,11 +551,11 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
         int code = e.getKeyCode();
         if (e.isControlDown()) {
             switch (code) {
-                case KeyEvent.VK_ESCAPE: {
+                case IKeyEventConstants.cEscape: {
                     canceled();
                     break;
                 }
-                case KeyEvent.VK_X: {
+                case IKeyEventConstants.cX: {
                     String cut = "";
                     if (start != -1 && end != -1) {
                         cut = text.toString().substring(start, end);
@@ -571,12 +572,12 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                     if (at > text.toString().length()) {
                         at = text.toString().length();
                     }
-                    parent.layoutInterior();
+                    parent.paint();
                     update();
                     VS.setClipboard(cut);
                     break;
                 }
-                case KeyEvent.VK_C: {
+                case IKeyEventConstants.cC: {
                     String copy = "";
                     if (start != -1 && end != -1) {
                         copy = text.toString().substring(start, end);
@@ -584,7 +585,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                     VS.setClipboard(copy);
                     break;
                 }
-                case KeyEvent.VK_V: {
+                case IKeyEventConstants.cV: {
                     try {
                         String paste = VS.getClipboardIfString(this);
                         if (start != -1 && end != -1) {
@@ -597,13 +598,13 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                             setText(new String(UArray.add(text.toString().toCharArray(), at, paste.toCharArray(), at)));
                             at += paste.length();
                         }
-                        parent.layoutInterior();
+                        parent.paint();
                         update();
                     } catch (Exception x) {
                     }
                     break;
                 }
-                case KeyEvent.VK_A: {
+                case IKeyEventConstants.cA: {
                     start = 0;
                     end = text.toString().length();
                     update();
@@ -612,7 +613,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
             }
             return;
         }
-        if (code == KeyEvent.VK_RIGHT) {
+        if (code == IKeyEventConstants.cRight) {
             at++;
             if (at > text.toString().length()) {
                 at = text.toString().length();
@@ -635,7 +636,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                 end = -1;
             }
             update();
-        } else if (code == KeyEvent.VK_LEFT) {
+        } else if (code == IKeyEventConstants.cLeft) {
             at--;
             if (at < 0) {
                 at = 0;
@@ -659,11 +660,11 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                 end = -1;
             }
             update();
-        } else if (code == KeyEvent.VK_UP) {
+        } else if (code == IKeyEventConstants.cUp) {
             bondary(e);
-        } else if (code == KeyEvent.VK_DOWN) {
+        } else if (code == IKeyEventConstants.cDown) {
             bondary(e);
-        } else if (code == KeyEvent.VK_BACK_SPACE) {
+        } else if (code == IKeyEventConstants.cBackspace) {
             if (start != -1 && end != -1) {
                 setText(new String(UArray.remove(text.toString().toCharArray(), start, end)));
                 at = start;
@@ -680,9 +681,9 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
             if (at > text.toString().length()) {
                 at = text.toString().length();
             }
-            parent.layoutInterior();
+            parent.paint();
             update();
-        } else if (code == KeyEvent.VK_DELETE) {
+        } else if (code == IKeyEventConstants.cDelete) {
             if (start != -1 && end != -1) {
                 int _at = text.toString().length() - Math.max(start, end);
                 setText(new String(UArray.remove(text.toString().toCharArray(), start, end)));
@@ -698,17 +699,17 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
             if (at > text.toString().length()) {
                 at = text.toString().length();
             }
-            parent.layoutInterior();
+            parent.paint();
             update();
-        } else if (code == KeyEvent.VK_HOME) {
+        } else if (code == IKeyEventConstants.cHome) {
             at = 0;
             update();
-        } else if (code == KeyEvent.VK_END) {
+        } else if (code == IKeyEventConstants.cEnd) {
             at = text.toString().length();
             update();
-        } else if (code == KeyEvent.VK_ENTER) {
+        } else if (code == IKeyEventConstants.cEnter) {
             stringSet(text.toString());
-        } else if (code == KeyEvent.VK_ESCAPE) {
+        } else if (code == IKeyEventConstants.cEscape) {
             return;
         } else {
             char k = e.getKeyChar();
@@ -736,7 +737,7 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
                     }
                 }
                 at++;
-                parent.layoutInterior();
+                parent.paint();
                 update();
             }
         }
@@ -950,8 +951,8 @@ public class EditString extends AViewableWH implements IValue, IFocusEvents, IKe
             return 0;
         }
         for (; s >= 0 && e <= tl;) {
-            int sx = UVA.stringWidth(font, _text.substring(0, s));
-            int ex = UVA.stringWidth(font, _text.substring(0, e));
+            int sx = (int)font.getW(_text.substring(0, s));
+            int ex = (int)font.getW(_text.substring(0, e));
             if (p.x < sx) {
                 s--;
                 e--;

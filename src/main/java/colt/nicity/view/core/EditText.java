@@ -40,6 +40,7 @@ import colt.nicity.core.lang.UArray;
 import colt.nicity.core.lang.UString;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.adaptor.VS;
 import colt.nicity.view.interfaces.IBorder;
 import colt.nicity.view.interfaces.ICanvas;
@@ -49,7 +50,6 @@ import colt.nicity.view.interfaces.IKeyEvents;
 import colt.nicity.view.interfaces.IMouseEvents;
 import colt.nicity.view.interfaces.IMouseMotionEvents;
 import colt.nicity.view.interfaces.IView;
-import java.awt.event.KeyEvent;
 
 /**
  *
@@ -183,9 +183,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
     }
 
     private void update() {
-        parent.layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 
     // AViewable
@@ -273,7 +271,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                     if (caret.colum > tl) {
                         caret.colum = tl;
                     }
-                    int x = UVA.stringWidth(font, text[i].substring(0, caret.colum));
+                    int x = (int)font.getW(text[i].substring(0, caret.colum));
                     g.line(x, y, x, (y + size));
                 }
             }
@@ -281,8 +279,8 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
     }
 
     private void paintSelected(ICanvas g, int y, AFont font, String line, int start, int end) {
-        int s = UVA.stringWidth(font, line.substring(0, start));
-        int e = UVA.stringWidth(font, line.substring(0, end));
+        int s = (int)font.getW(line.substring(0, start));
+        int e = (int)font.getW(line.substring(0, end));
         g.rect(true, s, y, e - s, font.getSize());
     }
 
@@ -329,17 +327,18 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
     }
 
     // IKeyEvents
+    @Override
     public void keyPressed(KeyPressed e) {
         int code = e.getKeyCode();
         if (e.isControlDown()) {
             switch (code) {
-                case KeyEvent.VK_A: {
+                case IKeyEventConstants.cA: {
                     selectionStart = new RowColum(0, 0);
                     int end = text.length - 1;
                     selectionEnd = new RowColum(end, text[end].length());
                     break;
                 }
-                case KeyEvent.VK_X: {
+                case IKeyEventConstants.cX: {
                     if (selectionStart != null && selectionEnd != null) {
                         String cut = selectionStart.selected(text, selectionEnd);
                         VS.setClipboard(cut);
@@ -352,14 +351,14 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                     }
                     break;
                 }
-                case KeyEvent.VK_C: {
+                case IKeyEventConstants.cC: {
                     if (selectionStart != null && selectionEnd != null) {
                         String copy = selectionStart.selected(text, selectionEnd);
                         VS.setClipboard(copy);
                     }
                     break;
                 }
-                case KeyEvent.VK_V: {
+                case IKeyEventConstants.cV: {
                     String paste = "";
                     try {
                         paste = VS.getClipboardIfString(this);
@@ -385,10 +384,10 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 }
             }
             return;
-        } else if (code == KeyEvent.VK_SHIFT) {
-        } else if (code == KeyEvent.VK_CONTROL) {
-        } else if (code == KeyEvent.VK_ALT) {
-        } else if (code == KeyEvent.VK_RIGHT) {
+        } else if (code == IKeyEventConstants.cShift) {
+        } else if (code == IKeyEventConstants.cCtrl) {
+        } else if (code == IKeyEventConstants.cAlt) {
+        } else if (code == IKeyEventConstants.cRight) {
             if (e.isShiftDown()) {
                 orderStartEnd(caret);
             }
@@ -397,7 +396,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 orderStartEnd(caret);
             }
             update();
-        } else if (code == KeyEvent.VK_LEFT) {
+        } else if (code == IKeyEventConstants.cLeft) {
             if (e.isShiftDown()) {
                 orderStartEnd(caret);
             }
@@ -406,7 +405,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 orderStartEnd(caret);
             }
             update();
-        } else if (code == KeyEvent.VK_UP) {
+        } else if (code == IKeyEventConstants.cUp) {
             if (e.isShiftDown()) {
                 orderStartEnd(caret);
             }
@@ -415,7 +414,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 orderStartEnd(caret);
             }
             update();
-        } else if (code == KeyEvent.VK_DOWN) {
+        } else if (code == IKeyEventConstants.cDown) {
             if (e.isShiftDown()) {
                 orderStartEnd(caret);
             }
@@ -424,7 +423,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
                 orderStartEnd(caret);
             }
             update();
-        } else if (code == KeyEvent.VK_BACK_SPACE) {
+        } else if (code == IKeyEventConstants.cBackspace) {
             if (selectionStart == null || selectionEnd == null || selectionStart.equals(selectionEnd)) {
                 selectionStart = caret.prevColum(text);
                 selectionEnd = caret;
@@ -440,7 +439,7 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
             }
             stringChanged(text);
             update();
-        } else if (code == KeyEvent.VK_DELETE) {
+        } else if (code == IKeyEventConstants.cDelete) {
             if (selectionStart == null || selectionEnd == null || selectionStart.equals(selectionEnd)) {
                 selectionStart = caret;
                 selectionEnd = caret.nextColum(text);
@@ -456,14 +455,14 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
             }
             stringChanged(text);
             update();
-        } else if (code == KeyEvent.VK_HOME) {
+        } else if (code == IKeyEventConstants.cHome) {
             caret = new RowColum(caret.getRow(), 0);
             update();
-        } else if (code == KeyEvent.VK_END) {
+        } else if (code == IKeyEventConstants.cEnd) {
             int row = caret.getRow();
             caret = new RowColum(caret.getRow(), text[row].length());
             update();
-        } else if (code == KeyEvent.VK_ENTER) {
+        } else if (code == IKeyEventConstants.cEnter) {
             selectionStart = null;
             selectionEnd = null;
 
@@ -683,8 +682,8 @@ public class EditText extends ViewText implements IFocusEvents, IKeyEvents, IMou
             colum = 0;
         } else {
             for (; s >= 0 && e <= lineLength;) {
-                int sx = UVA.stringWidth(_font, line.substring(0, s));
-                int ex = UVA.stringWidth(_font, line.substring(0, e));
+                int sx = (int)_font.getW(line.substring(0, s));
+                int ex = (int)_font.getW(line.substring(0, e));
                 if (p.x < sx) {
                     s--;
                     e--;

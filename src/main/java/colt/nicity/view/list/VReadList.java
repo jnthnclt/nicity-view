@@ -160,8 +160,7 @@ public class VReadList extends AVList implements IVList {
             _controller = NullListController.cNull;
         }
         controller = _controller;
-        layoutInterior();//??
-        flush();//??
+        paint();
     }
 
     /**
@@ -310,4 +309,3 @@ public class VReadList extends AVList implements IVList {
         h = (size.getH()) + getBorder().getH();
     }
 }
-

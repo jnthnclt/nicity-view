@@ -186,4 +186,10 @@ public interface IPeerView {
      * @param _region
      */
     public void modifiedRegion(XYWH_I _region);
+    
+    /**
+     * 
+     * @param undecorated 
+     */
+    public void setUndecorated(boolean undecorated);
 }

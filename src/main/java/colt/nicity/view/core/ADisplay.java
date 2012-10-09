@@ -27,6 +27,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -92,7 +94,8 @@ abstract public class ADisplay {
      *
      */
     private final Painter painter;
-    private final ExecutorService painterThread;
+    private Thread painterThread;
+    private final ExecutorService executor;
     private final BlockingQueue<IView> blockingQueue;
     private final IView displaying;
     private boolean antialias = true;
@@ -106,8 +109,8 @@ abstract public class ADisplay {
         displaying = view;
         blockingQueue = new LinkedBlockingQueue<IView>();
         painter = new Painter();
-        painterThread = Executors.newSingleThreadExecutor();
-        painterThread.submit(painter);
+        executor = Executors.newSingleThreadExecutor();
+        executor.submit(painter);
     }
 
     /**
@@ -171,6 +174,10 @@ abstract public class ADisplay {
      * @param _view
      */
     public void addToRepaint(IView _view) {
+        if (painterThread == Thread.currentThread()) {
+            // prevents painter thread from creating an infinite loop
+            return;
+        }
         blockingQueue.add(_view);
     }
 
@@ -180,8 +187,7 @@ abstract public class ADisplay {
     public void repaint() {
         addToRepaint(displaying);
     }
-    
-    
+
     /**
      *
      */
@@ -196,21 +202,37 @@ abstract public class ADisplay {
 
         @Override
         public void run() {
+            
+            painterThread = Thread.currentThread();
             while (!stop) {
                 LinkedList<IView> list = new LinkedList<IView>();
+                try {
+                    IView take = blockingQueue.take();
+                    list.add(take);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ADisplay.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 blockingQueue.drainTo(list);
-                if (list.isEmpty()) continue;
-                for (IView l:list) {
-                    if (l.hasFlag(UV.cMend)) continue;//??
+                for (IView l : list) {
+                    if (l.hasFlag(UV.cMend)) {
+                        continue;//??
+                    }
+                    l.layoutInterior();
                     l.enableFlag(UV.cRepair);
                     l.mend();
                 }
-
                 try {
                     float w = displaying.getW();
                     float h = displaying.getH();
+                    if (w == 0 && h == 0) {
+                        displaying.repair();
+                        repaint();
+                        continue;
+                    }
                     ICanvas g = display(0, w, h);//who
                     if (g == null) {
+                        displaying.repair();
+                        repaint();
                         continue;
                     }
                     XYWH_I region = new XYWH_I(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -218,10 +240,19 @@ abstract public class ADisplay {
                     displaying.paint(displaying, g, layer, UV.cMend, region);
                     paintWhos(g);
                     displayable(g, region);
+                    
+                    float nw = displaying.getW();
+                    float nh = displaying.getH();
+                    if (nw == w && nh == h) {
+                        displaying.repair();
+                        repaint();
+                        continue;
+                    }
 
                 } catch (Exception x) {
                     x.printStackTrace();
                 }
+
             }
         }
     }

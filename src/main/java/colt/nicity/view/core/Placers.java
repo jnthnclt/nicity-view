@@ -54,7 +54,7 @@ public class Placers extends APlacers {
     //!! addPlacer should be directly improved such that it is impossible to add a
     // IPlacer that will cause recursion. For now use careful programing!
     @Override
-    synchronized public IPlacer addPlacer(IPlacer value) {
+    public IPlacer addPlacer(IPlacer value) {
         IPlacer found = findPlacer(value);
         if (found != NullPlacer.cNull) {
             return found;
@@ -132,7 +132,7 @@ public class Placers extends APlacers {
     }
 
     @Override
-    synchronized public IPlacer removePlacer(IPlacer value) {
+    public IPlacer removePlacer(IPlacer value) {
         if (value == null || set == null) {
             return NullPlacer.cNull;
         }
@@ -162,7 +162,7 @@ public class Placers extends APlacers {
     }
 
     @Override
-    synchronized public IPlacer removeView(IView view) {
+    public IPlacer removeView(IView view) {
         if (view == null || set == null) {
             return NullPlacer.cNull;
         }

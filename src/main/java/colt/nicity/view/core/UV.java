@@ -36,6 +36,7 @@ import colt.nicity.core.lang.BitMasks;
 import colt.nicity.core.lang.UMath;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.border.BevelBorder;
 import colt.nicity.view.border.BuldgeBorder;
 import colt.nicity.view.border.SolidBorder;
@@ -164,26 +165,21 @@ public class UV {
     /**
      *
      */
-    public static String cDefaultFontName = "System";
-    
-    /**
-     *
-     */
     public static AFont[] fonts = new AFont[]{
-        new AFont(cDefaultFontName, AFont.cPlain, 8),
-        new AFont(cDefaultFontName, AFont.cPlain, 10),
-        new AFont(cDefaultFontName, AFont.cPlain, 18),
-        new AFont(cDefaultFontName, AFont.cPlain, 24),
-        new AFont(cDefaultFontName, AFont.cPlain, 32),
-        new AFont(cDefaultFontName, AFont.cPlain, 18),
-        new AFont(cDefaultFontName, AFont.cPlain, 18),
-        new AFont(cDefaultFontName, AFont.cItalic | AFont.cBold, 14),
-        new AFont(cDefaultFontName, AFont.cBold, 15),
-        new AFont(cDefaultFontName, AFont.cPlain, 15),
-        new AFont(cDefaultFontName, AFont.cItalic, 14),
-        new AFont(cDefaultFontName, AFont.cItalic, 24),
-        new AFont(cDefaultFontName, AFont.cPlain, 15),
-        new AFont(cDefaultFontName, AFont.cPlain, 15)
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 8),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 10),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 18),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 24),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 32),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 18),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 18),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cItalic | IFontConstants.cBold, 14),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cBold, 15),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 15),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cItalic, 14),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cItalic, 24),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 15),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 15)
     };
     /**
      *
@@ -263,21 +259,21 @@ public class UV {
      *
      */
     public static AFont[] cTexts = new AFont[]{
-        new AFont(cDefaultFontName, AFont.cPlain, 10),
-        new AFont(cDefaultFontName, AFont.cPlain, 11),
-        new AFont(cDefaultFontName, AFont.cPlain, 12),
-        new AFont(cDefaultFontName, AFont.cPlain, 13),
-        new AFont(cDefaultFontName, AFont.cPlain, 14),
-        new AFont(cDefaultFontName, AFont.cPlain, 15),
-        new AFont(cDefaultFontName, AFont.cPlain, 16),
-        new AFont(cDefaultFontName, AFont.cPlain, 17),
-        new AFont(cDefaultFontName, AFont.cPlain, 18),
-        new AFont(cDefaultFontName, AFont.cPlain, 19),
-        new AFont(cDefaultFontName, AFont.cPlain, 20),
-        new AFont(cDefaultFontName, AFont.cPlain, 21),
-        new AFont(cDefaultFontName, AFont.cPlain, 22),
-        new AFont(cDefaultFontName, AFont.cPlain, 23),
-        new AFont(cDefaultFontName, AFont.cPlain, 24),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 10),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 11),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 12),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 13),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 14),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 15),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 16),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 17),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 18),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 19),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 20),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 21),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 22),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 23),
+        new AFont(IFontConstants.cDefaultFontName, IFontConstants.cPlain, 24),
     };
     /**
      *
@@ -820,7 +816,7 @@ public class UV {
      * @param _place
      * @return
      */
-    public static IView spans(IView _view, Place _place) {
+    public static <T extends IView> T spans(T _view, Place _place) {
         if (_view == null) {
             return _view;
         }
@@ -955,7 +951,7 @@ public class UV {
      * @param _border
      * @return
      */
-    public static IView border(IView _view, IBorder _border) {
+    public static <T extends IView> T border(T _view, IBorder _border) {
         if (_view  != null) _view.setBorder(_border);
         return _view;
     }
@@ -1946,6 +1942,10 @@ public class UV {
         UV.frame(c, "Fatal Exception", false, false);
     }
     
+    public static void framePopup(IView ref,Place place,IView popup,String name) {
+        popup(ref,place,new VFrame(popup, name,true,false),false,false);
+    }
+    
     public static void popup(IView ref,Place place,IView popup,boolean _hideOnExit, boolean _hideOnLost) {
         XY_I p = new XY_I(0,0);
         p.x += (int) (place.getParentX() * ref.getW());
@@ -1953,6 +1953,10 @@ public class UV {
         p.x -= (int) (place.getChildX() * popup.getW());
         p.y -= (int) (place.getChildY() * popup.getH());
         popup(ref,p,popup,_hideOnExit,_hideOnLost);
+    }
+    
+    public static void framePopup(IView ref,IEvent event,IView popup,String name) {
+        popup(ref,event,new VFrame(popup, name,true,false),false,false);
     }
     
     public static void popup(IView ref,IEvent event,IView popup,boolean _hideOnExit, boolean _hideOnLost) {

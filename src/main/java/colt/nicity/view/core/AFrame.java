@@ -24,9 +24,6 @@ import colt.nicity.view.awt.PeerViewBorder;
 import colt.nicity.view.interfaces.IPeerView;
 import colt.nicity.view.interfaces.IPlacer;
 import colt.nicity.view.interfaces.IView;
-import java.awt.Component;
-import java.awt.Frame;
-import java.awt.dnd.DropTarget;
 
 /**
  *
@@ -88,12 +85,6 @@ public class AFrame extends AWindow {
                 peer = _peer;
 
                 setBorder(null);
-
-                dropTarget = new DropTarget((Component) _peer, this);
-                dropTarget.setActive(true);
-                ((Component) _peer).setDropTarget(dropTarget);
-                ((Component) _peer).setEnabled(true);
-
                 _peer.setVisible(true);
                 peerBorder = new PeerViewBorder(_peer);
                 return _peer;
@@ -111,7 +102,7 @@ public class AFrame extends AWindow {
      */
     public void setUndecorated(boolean _isUndecorated) {
         try {
-            ((Frame) getPeer()).setUndecorated(_isUndecorated);
+            getPeer().setUndecorated(_isUndecorated);
         } catch (Throwable x) {
             minW = 150;
         } // 1.3 compatiable

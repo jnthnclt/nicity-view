@@ -21,10 +21,10 @@ package colt.nicity.view.core;
 
 import colt.nicity.view.event.ADK;
 import colt.nicity.core.lang.ASetObject;
+import colt.nicity.view.adaptor.IEventConstants;
+import colt.nicity.view.adaptor.IKeyEventConstants;
 import colt.nicity.view.interfaces.ICanvas;
-import java.awt.Event;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import colt.nicity.view.interfaces.IKeyEvents;
 
 /**
  *
@@ -33,112 +33,51 @@ import java.awt.event.KeyEvent;
 public class PrimativeEvent extends ASetObject {
 
     private long who = 0;
-    /**
-     *
-     */
     public Object source = null;
-    /**
-     *
-     */
-    /**
-     *
-     */
     public int family = 0, id = 0;
-    /**
-     *
-     */
     public int modifiers = 0;
-    /**
-     *
-     */
     public int clickCount = 0;
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
     public float x = 0, y = 0, z = 0;
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
     public int scrollType = 0, scrollAmount = 0, wheelRotation = 0;
-    /**
-     *
-     */
-    /**
-     *
-     */
-    /**
-     *
-     */
     public double presure = 1, tiltAngle = 0, tiltDirection = 0;
-    /**
-     *
-     */
     public int keyCode = 0;
-    /**
-     *
-     */
     public char keyChar = 0;
-
-    /**
-     *
-     */
     public PrimativeEvent() {
     }
-
-    /**
-     *
-     * @param _who
-     */
     public PrimativeEvent(long _who) {
         who = _who;
     }
 
-    /**
-     *
-     * @return
-     */
     public long who() {
         return who;
     }
 
     @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append(ADK.family[family] + " ");
         s.append(ADK.familyID[family][id] + " ");
 
-        if ((modifiers & Event.SHIFT_MASK) != 0) {
+        if ((modifiers & IEventConstants.cShiftMask) != 0) {
             s.append("SHIFT ");
         }
-        if ((modifiers & Event.CTRL_MASK) != 0) {
+        if ((modifiers & IEventConstants.cCrtlMask) != 0) {
             s.append("CTRL ");
         }
-        if ((modifiers & Event.META_MASK) != 0) {
+        if ((modifiers & IEventConstants.cMetaMask) != 0) {
             s.append("META ");
         }
-        if ((modifiers & Event.ALT_MASK) != 0) {
+        if ((modifiers & IEventConstants.cAltMask) != 0) {
             s.append("ALT ");
         }
 
-        if ((modifiers & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+        if ((modifiers & IEventConstants.cButton1Mask) == IEventConstants.cButton1Mask) {
             s.append("MB1 ");
         }
-        if ((modifiers & InputEvent.BUTTON2_MASK) == InputEvent.BUTTON2_MASK) {
+        if ((modifiers & IEventConstants.cButton2Mask) == IEventConstants.cButton2Mask) {
             s.append("MB2 ");
         }
-        if ((modifiers & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+        if ((modifiers & IEventConstants.cButton3Mask) == IEventConstants.cButton3Mask) {
             s.append("MB3 ");
         }
 
@@ -184,11 +123,11 @@ public class PrimativeEvent extends ASetObject {
      */
     public static boolean isModifierKey(int keyCode) {
         switch (keyCode) {
-            case KeyEvent.VK_SHIFT:
-            case KeyEvent.VK_CONTROL:
-            case KeyEvent.VK_ALT:
-            case KeyEvent.VK_META:
-            case KeyEvent.VK_ALT_GRAPH:
+            case IKeyEventConstants.cShift:
+            case IKeyEventConstants.cCtrl:
+            case IKeyEventConstants.cAlt:
+            case IKeyEventConstants.cMeta:
+            case IKeyEventConstants.cAltGraph:
                 return true;
         }
         return false;
@@ -201,87 +140,82 @@ public class PrimativeEvent extends ASetObject {
      */
     public static boolean isActionKey(int keyCode) {
         switch (keyCode) {
-            case KeyEvent.VK_HOME:
-            case KeyEvent.VK_END:
-            case KeyEvent.VK_PAGE_UP:
-            case KeyEvent.VK_PAGE_DOWN:
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_BEGIN:
+            case IKeyEventConstants.cHome:
+            case IKeyEventConstants.cEnd:
+            case IKeyEventConstants.cPageDown:
+            case IKeyEventConstants.cPageUp:
+            case IKeyEventConstants.cUp:
+            case IKeyEventConstants.cDown:
+            case IKeyEventConstants.cLeft:
+            case IKeyEventConstants.cRight:
+            case IKeyEventConstants.cBegin:
 
-            case KeyEvent.VK_KP_LEFT:
-            case KeyEvent.VK_KP_UP:
-            case KeyEvent.VK_KP_RIGHT:
-            case KeyEvent.VK_KP_DOWN:
+            case IKeyEventConstants.cF1:
+            case IKeyEventConstants.cF2:
+            case IKeyEventConstants.cF3:
+            case IKeyEventConstants.cF4:
+            case IKeyEventConstants.cF5:
+            case IKeyEventConstants.cF6:
+            case IKeyEventConstants.cF7:
+            case IKeyEventConstants.cF8:
+            case IKeyEventConstants.cF9:
+            case IKeyEventConstants.cF10:
+            case IKeyEventConstants.cF11:
+            case IKeyEventConstants.cF12:
+            case IKeyEventConstants.cF13:
+            case IKeyEventConstants.cF14:
+            case IKeyEventConstants.cF15:
+            case IKeyEventConstants.cF16:
+            case IKeyEventConstants.cF17:
+            case IKeyEventConstants.cF18:
+            case IKeyEventConstants.cF19:
+            case IKeyEventConstants.cF20:
+            case IKeyEventConstants.cF21:
+            case IKeyEventConstants.cF22:
+            case IKeyEventConstants.cF23:
+            case IKeyEventConstants.cF24:
+            case IKeyEventConstants.cPrintScreen:
+            case IKeyEventConstants.cScrollLock:
+            case IKeyEventConstants.cCapsLock:
+            case IKeyEventConstants.cNumLock:
+            case IKeyEventConstants.cPause:
+            case IKeyEventConstants.cInsert:
 
-            case KeyEvent.VK_F1:
-            case KeyEvent.VK_F2:
-            case KeyEvent.VK_F3:
-            case KeyEvent.VK_F4:
-            case KeyEvent.VK_F5:
-            case KeyEvent.VK_F6:
-            case KeyEvent.VK_F7:
-            case KeyEvent.VK_F8:
-            case KeyEvent.VK_F9:
-            case KeyEvent.VK_F10:
-            case KeyEvent.VK_F11:
-            case KeyEvent.VK_F12:
-            case KeyEvent.VK_F13:
-            case KeyEvent.VK_F14:
-            case KeyEvent.VK_F15:
-            case KeyEvent.VK_F16:
-            case KeyEvent.VK_F17:
-            case KeyEvent.VK_F18:
-            case KeyEvent.VK_F19:
-            case KeyEvent.VK_F20:
-            case KeyEvent.VK_F21:
-            case KeyEvent.VK_F22:
-            case KeyEvent.VK_F23:
-            case KeyEvent.VK_F24:
-            case KeyEvent.VK_PRINTSCREEN:
-            case KeyEvent.VK_SCROLL_LOCK:
-            case KeyEvent.VK_CAPS_LOCK:
-            case KeyEvent.VK_NUM_LOCK:
-            case KeyEvent.VK_PAUSE:
-            case KeyEvent.VK_INSERT:
+//            case IKeyEventConstants.cFINAL:
+//            case IKeyEventConstants.cCONVERT:
+//            case IKeyEventConstants.cNONCONVERT:
+//            case IKeyEventConstants.cACCEPT:
+//            case IKeyEventConstants.cMODECHANGE:
+//            case IKeyEventConstants.cKANA:
+//            case IKeyEventConstants.cKANJI:
+            case IKeyEventConstants.cAlphaNumeric:
 
-            case KeyEvent.VK_FINAL:
-            case KeyEvent.VK_CONVERT:
-            case KeyEvent.VK_NONCONVERT:
-            case KeyEvent.VK_ACCEPT:
-            case KeyEvent.VK_MODECHANGE:
-            case KeyEvent.VK_KANA:
-            case KeyEvent.VK_KANJI:
-            case KeyEvent.VK_ALPHANUMERIC:
+//            case IKeyEventConstants.cKATAKANA:
+//            case IKeyEventConstants.cHIRAGANA:
+//            case IKeyEventConstants.cFULL_WIDTH:
+//            case IKeyEventConstants.cHALF_WIDTH:
+//            case IKeyEventConstants.cROMAN_CHARACTERS:
+//            case IKeyEventConstants.cALL_CANDIDATES:
+//            case IKeyEventConstants.cPREVIOUS_CANDIDATE:
+//            case IKeyEventConstants.cCODE_INPUT:
+//            case IKeyEventConstants.cJAPANESE_KATAKANA:
+//            case IKeyEventConstants.cJAPANESE_HIRAGANA:
+//            case IKeyEventConstants.cJAPANESE_ROMAN:
+//            case IKeyEventConstants.cKANA_LOCK:
+//            case IKeyEventConstants.cINPUT_METHOD_ON_OFF:
 
-            case KeyEvent.VK_KATAKANA:
-            case KeyEvent.VK_HIRAGANA:
-            case KeyEvent.VK_FULL_WIDTH:
-            case KeyEvent.VK_HALF_WIDTH:
-            case KeyEvent.VK_ROMAN_CHARACTERS:
-            case KeyEvent.VK_ALL_CANDIDATES:
-            case KeyEvent.VK_PREVIOUS_CANDIDATE:
-            case KeyEvent.VK_CODE_INPUT:
-            case KeyEvent.VK_JAPANESE_KATAKANA:
-            case KeyEvent.VK_JAPANESE_HIRAGANA:
-            case KeyEvent.VK_JAPANESE_ROMAN:
-            case KeyEvent.VK_KANA_LOCK:
-            case KeyEvent.VK_INPUT_METHOD_ON_OFF:
+            case IKeyEventConstants.cAgain:
+            case IKeyEventConstants.cUndo:
+            case IKeyEventConstants.cCopy:
+            case IKeyEventConstants.cPaste:
+            case IKeyEventConstants.cCut:
+            case IKeyEventConstants.cFind:
+            case IKeyEventConstants.cProps:
+            case IKeyEventConstants.cStop:
 
-            case KeyEvent.VK_AGAIN:
-            case KeyEvent.VK_UNDO:
-            case KeyEvent.VK_COPY:
-            case KeyEvent.VK_PASTE:
-            case KeyEvent.VK_CUT:
-            case KeyEvent.VK_FIND:
-            case KeyEvent.VK_PROPS:
-            case KeyEvent.VK_STOP:
-
-            case KeyEvent.VK_HELP:
-            case KeyEvent.VK_WINDOWS:
-            case KeyEvent.VK_CONTEXT_MENU:
+            case IKeyEventConstants.cHelp:
+            case IKeyEventConstants.cWindows:
+            case IKeyEventConstants.cContextMenu:
                 return true;
         }
         return false;

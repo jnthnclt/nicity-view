@@ -41,11 +41,11 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeImportant = new AColor(0, 200, 200);
+    public static AColor cThemeImportant = new AColor(180, 180, 200);
     /**
      *
      */
-    public static AColor cThemeAccent = new AColor(0, 200, 230);
+    public static AColor cThemeAccent = new AColor(200, 200, 230);
     /**
      *
      */
@@ -77,7 +77,7 @@ public class ViewColor {
     /**
      *
      */
-    public static AColor cThemeSelected = new AColor(0, 150, 200);
+    public static AColor cThemeSelected = new AColor(190, 190, 200);
     /**
      *
      */

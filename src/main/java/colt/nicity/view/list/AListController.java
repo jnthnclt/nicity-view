@@ -168,7 +168,6 @@ abstract public class AListController extends ASetObject implements IListControl
         if (list == null) {
             return;
         }
-        list.layoutInterior();
         list.paint();
     }
 
@@ -191,7 +190,6 @@ abstract public class AListController extends ASetObject implements IListControl
         if (list == null) {
             return;
         }
-        list.layoutInterior();
         list.paint();
     }
 
@@ -204,7 +202,6 @@ abstract public class AListController extends ASetObject implements IListControl
         if (list == null) {
             return;
         }
-        list.layoutInterior();
         list.paint();
     }
 

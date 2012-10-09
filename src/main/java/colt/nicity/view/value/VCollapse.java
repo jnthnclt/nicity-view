@@ -117,6 +117,22 @@ public class VCollapse extends AItem implements Comparable {
      * @param _contentCallback
      * @param _open
      */
+    public VCollapse(Object _name, final IView view, boolean _open) {
+        this(_name, new ICallback<Object, Object>() {
+
+            @Override
+            public Object callback(Object i) {
+                return view;
+            }
+        }, _open, false);
+    }
+    
+    /**
+     *
+     * @param _name
+     * @param _contentCallback
+     * @param _open
+     */
     public VCollapse(Object _name, ICallback _contentCallback, boolean _open) {
         this(_name, _contentCallback, _open, false);
     }
@@ -171,6 +187,8 @@ public class VCollapse extends AItem implements Comparable {
         vertical = _vertical;
         rebuild(null);
     }
+    
+    
 
     /**
      *
@@ -271,7 +289,6 @@ public class VCollapse extends AItem implements Comparable {
         }
         setBorder(null);
         setContent(m);
-        layoutInterior();
         paint();
     }
 
@@ -302,19 +319,19 @@ public class VCollapse extends AItem implements Comparable {
         Handle(IView _content) {
             if (open) {
                 if (name instanceof IView) {
-                    VChain c = new VChain(UV.cEW, openable(), (IView) name);
+                    VChain c = new VChain(UV.cEW, closeable(), (IView) name);
                     c.spans(openSpans);
                     setContent(c);
                 } else {
-                    setContent(new VChain(UV.cEW, openable(), new VString(name, color.invert().bw())));
+                    setContent(new VChain(UV.cEW, closeable(), new VString(name, color.invert().bw())));
                 }
             } else {
                 if (name instanceof IView) {
-                    VChain c = new VChain(UV.cEW, closeable(), (IView) name);
+                    VChain c = new VChain(UV.cEW, openable(), (IView) name);
                     c.spans(closeSpans);
                     setContent(c);
                 } else {
-                    setContent(new VChain(UV.cEW, closeable(), new VString(name, color.invert().bw())));
+                    setContent(new VChain(UV.cEW, openable(), new VString(name, color.invert().bw())));
                 }
             }
         }

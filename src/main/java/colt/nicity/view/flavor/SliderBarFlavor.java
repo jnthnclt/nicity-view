@@ -22,7 +22,7 @@ package colt.nicity.view.flavor;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.ViewColor;
 import colt.nicity.view.interfaces.ICanvas;
-import java.awt.Polygon;
+import colt.nicity.core.memory.struct.Poly_I;
 
 /**
  *
@@ -42,7 +42,7 @@ public class SliderBarFlavor extends AFlavor {
             int hh = _h / 2;
             int x = _x + hw;
             int y = _y;
-            Polygon p = new Polygon(
+            Poly_I p = new Poly_I(
                     new int[]{x, x + hw, x + hw, x - hw, x - hw, x},
                     new int[]{y, y + hh, y + _h, y + _h, y + hh, y},
                     6);
@@ -64,7 +64,7 @@ public class SliderBarFlavor extends AFlavor {
             int hh = _h / 2;
             int x = _x + hw;
             int y = _y;
-            Polygon p = new Polygon(
+            Poly_I p = new Poly_I(
                     new int[]{x, x + hw, x + hw, x - hw, x - hw, x},
                     new int[]{y + _h, y + hh, y, y, y + hh, y + _h},
                     6);
@@ -86,7 +86,7 @@ public class SliderBarFlavor extends AFlavor {
             int hh = _h / 2;
             int x = _x + hw;
             int y = _y;
-            Polygon p = new Polygon(
+            Poly_I p = new Poly_I(
                     new int[]{x + _w, x + hw, x, x, x + hw, x + _w},
                     new int[]{y + hh, y + _h, y + _h, y, y, y + hh},
                     6);
@@ -108,7 +108,7 @@ public class SliderBarFlavor extends AFlavor {
             int hh = _h / 2;
             int x = _x + hw;
             int y = _y;
-            Polygon p = new Polygon(
+            Poly_I p = new Poly_I(
                     new int[]{x, x + hw, x + _w, x + _w, x + hw, x},
                     new int[]{y + hh, y + _h, y + _h, y, y, y + hh},
                     6);

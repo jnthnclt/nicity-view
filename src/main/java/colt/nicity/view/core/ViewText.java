@@ -120,9 +120,9 @@ public class ViewText extends AViewableWH {
             line = line.replace('\t', ' ');
             //line = line.trim();
             text[i] = line;
-            w = Math.max(w, (float) UVA.stringWidth(font, line));
+            w = Math.max(w, (float)font.getW( line));
         }
-        h = (float) (((font.getSize()) * text.length) + UVA.fontDescent(font));
+        h = (float) (((font.getSize()) * text.length) + font.getDescent());
     }
 
     /**

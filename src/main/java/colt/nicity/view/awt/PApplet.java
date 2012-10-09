@@ -372,4 +372,8 @@ public class PApplet extends Applet implements IPeerView {
         Insets insert = super.getInsets();
         return new TRLB_I(insert.top, insert.right, insert.left, insert.bottom);
     }
+
+    @Override
+    public void setUndecorated(boolean undecorated) {
+    }
 }

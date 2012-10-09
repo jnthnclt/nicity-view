@@ -100,8 +100,6 @@ abstract public class AVMode extends AItem {
      */
     public void refresh() {
         setView(indexView(value.intValue()));
-        layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 }

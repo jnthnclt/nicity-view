@@ -264,4 +264,8 @@ public class NullPeerView implements IPeerView {
     @Override
     public void modifiedRegion(XYWH_I _region) {
     }
+
+    @Override
+    public void setUndecorated(boolean undecorated) {
+    }
 }

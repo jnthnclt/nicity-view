@@ -21,7 +21,6 @@ package colt.nicity.view.event;
 
 import colt.nicity.view.core.NullView;
 import colt.nicity.view.interfaces.IView;
-import java.awt.AWTEvent;
 
 /**
  *
@@ -29,27 +28,7 @@ import java.awt.AWTEvent;
  */
 abstract public class AViewEvent extends AEvent {
 
-    /**
-     *
-     */
-    public final static long cFocusEvent = AWTEvent.FOCUS_EVENT_MASK;
-    /**
-     *
-     */
-    public final static long cKeyEvent = AWTEvent.KEY_EVENT_MASK;
-    /**
-     *
-     */
-    public final static long cMouseEvent = AWTEvent.MOUSE_EVENT_MASK;
-    /**
-     *
-     */
-    public final static long cMouseMotionEvent = AWTEvent.MOUSE_MOTION_EVENT_MASK;
-    /**
-     *
-     */
-    public final static long cWindowEvent = AWTEvent.WINDOW_EVENT_MASK;
-
+    
     /**
      *
      */

@@ -19,23 +19,13 @@
  */
 package colt.nicity.view.canvas;
 
+import colt.nicity.view.adaptor.IPath;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.flavor.AFlavor;
 import colt.nicity.view.image.IImage;
 import colt.nicity.view.interfaces.ICanvas;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -240,7 +230,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      */
     @Override
     public void setFont(AFont _font) {
-        g.setFont(_font.getFont());
+        g.setFont((Font)_font.getFont().getNativeFont());
     }
 
     /**
@@ -323,6 +313,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      */
     @Override
     public void fill(Object _fill) {
+        if (_fill instanceof IPath) _fill = ((IPath)_fill).getRawPath();
         ((Graphics2D) g).fill((Shape) _fill);
     }
 
@@ -332,6 +323,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      */
     @Override
     public void draw(Object _draw) {
+        if (_draw instanceof IPath) _draw = ((IPath)_draw).getRawPath();
         ((Graphics2D) g).draw((Shape) _draw);
     }
 
@@ -341,6 +333,7 @@ public class GlueAWTGraphicsToCanvas implements ICanvas {
      */
     @Override
     public void setPaint(Object _draw) {
+        if (_draw instanceof IPath) _draw = ((IPath)_draw).getRawPath();
         ((Graphics2D) g).setPaint((Paint) _draw);
     }
 

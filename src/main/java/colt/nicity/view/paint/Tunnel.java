@@ -25,6 +25,7 @@ import colt.nicity.core.lang.UDouble;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
 import colt.nicity.core.time.UTime;
+import colt.nicity.view.adaptor.IFontConstants;
 import colt.nicity.view.core.AColor;
 import colt.nicity.view.core.AFont;
 import colt.nicity.view.core.Layer;
@@ -799,7 +800,7 @@ public class Tunnel {
 
             if (!titled && title && _title != null) {
                 titled = true;
-                AFont font = new AFont(AFont.cPlain, 10 + (int) ((1 - fpz) * 22));
+                AFont font = new AFont(IFontConstants.cPlain, 10 + (int) ((1 - fpz) * 22));
                 _g.setColor(AColor.black);
                 _g.setAlpha(1 - (float) fpz, 0);
 

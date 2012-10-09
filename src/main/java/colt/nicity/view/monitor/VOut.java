@@ -319,15 +319,13 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
             _view = NullView.cNull;
         }
         dialog.setContent(_view);
-        dialog.layoutInterior();
-        layoutInterior();
+        dialog.paint();
         paint();
 
         if (_modal != null) {
             Object v = _modal.getValue();
             dialog.setContent(NullView.cNull);
-            dialog.layoutInterior();
-            layoutInterior();
+            dialog.paint();
             paint();
             return v;
         } else {
@@ -368,7 +366,7 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
     /**
      *
      */
-    synchronized public void show() {
+    public void show() {
         if (hide) {
             return;
         }
@@ -379,7 +377,7 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
     /**
      *
      */
-    synchronized public void showNow() {
+    public void showNow() {
         if (hide) {
             return;
         }
@@ -387,7 +385,7 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
         _show();
     }
 
-    synchronized private void _show() {
+    private void _show() {
         if (hide) {
             pulseSet.remove(this);
             return;
@@ -398,7 +396,7 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
         }
     }
 
-    synchronized private void _showWindow() {
+    private void _showWindow() {
         AWindow _showing = showing;
         if (_showing == null) {
             _showing = new AWindow(this);
@@ -417,7 +415,7 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
     /**
      *
      */
-    synchronized public void hide() {
+    public void hide() {
         hide = true;
         pulseSet.remove(this);
         if (errors.getCount() > 0 || logs.getCount() > 0) {
@@ -433,7 +431,6 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
                 }
             };
             buttonChain.add(closeButton);
-            buttonChain.layoutInterior();
             buttonChain.paint();
 
         } else {
@@ -808,7 +805,6 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
                 }
             };
             buttonChain.add(stopButton);
-            buttonChain.layoutInterior();
             buttonChain.paint();
         }
         return stopped;
@@ -839,19 +835,16 @@ public class VOut extends Viewer implements IOut, IFocusEvents, IWindowEvents, I
                         suspend = false;
                         resume();
                         setContent(new VString(" Suspend "));
-                        layoutInterior();
                         paint();
                     } else {
                         out(" User requested Suspend. ");
                         suspend = true;
                         setContent(new VString(" Suspended "));
-                        layoutInterior();
                         paint();
                     }
                 }
             };
             buttonChain.add(suspendButton);
-            buttonChain.layoutInterior();
             buttonChain.paint();
         }
         if (!suspend) {

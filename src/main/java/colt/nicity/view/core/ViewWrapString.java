@@ -127,9 +127,9 @@ public class ViewWrapString extends AViewableWH implements IValue {
         String[] wraps = UString.wrap(s, wrapAfter);
         w = 0;
         for (int i = 0; i < wraps.length; i++) {
-            w = (float) Math.max(UVA.stringWidth(font,wraps[i]), w);
+            w = (float) Math.max(font.getW(wraps[i]), w);
         }
-        h = (float) (UVA.fontAscent(font) + UVA.fontDescent(font)) * wraps.length;
+        h = (float) (font.getAscent() + font.getDescent()) * wraps.length;
         return wraps;
     }
     

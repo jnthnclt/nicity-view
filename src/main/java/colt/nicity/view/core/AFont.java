@@ -21,9 +21,9 @@ package colt.nicity.view.core;
 
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import colt.nicity.view.adaptor.IFont;
+import colt.nicity.view.adaptor.IFontConstants;
+import colt.nicity.view.adaptor.VS;
 
 /**
  *
@@ -34,24 +34,7 @@ public class AFont {
     /**
      *
      */
-    public static int cPlain = Font.PLAIN;
-    /**
-     *
-     */
-    public static int cBold = Font.BOLD;
-    /**
-     *
-     */
-    public static int cItalic = Font.ITALIC;
-    /**
-     *
-     */
-    protected final static Component component = new Component() {
-    };
-    /**
-     *
-     */
-    protected Font cacheFont;
+    protected IFont cacheFont;
 
     /**
      *
@@ -63,7 +46,7 @@ public class AFont {
      *
      * @param _font
      */
-    public AFont(Font _font) {
+    public AFont(IFont _font) {
         cacheFont = _font;
     }
 
@@ -74,7 +57,7 @@ public class AFont {
      * @param _size
      */
     public AFont(String _name, int _style, int _size) {
-        setFont(new Font(_name, _style, _size));
+        setFont(VS.getFont(_name, _style, _size));
     }
 
     /**
@@ -83,7 +66,7 @@ public class AFont {
      * @param _size
      */
     public AFont(int _style, int _size) {
-        setFont(new Font(UV.cDefaultFontName, _style, _size));
+        setFont(VS.getFont(IFontConstants.cDefaultFontName, _style, _size));
     }
 
     /**
@@ -91,8 +74,7 @@ public class AFont {
      * @return
      */
     public int getSize() {
-        Font f = getFont();
-        return f.getSize();
+        return getFont().getSize();
     }
 
     /**
@@ -100,8 +82,7 @@ public class AFont {
      * @return
      */
     public int getStyle() {
-        Font f = getFont();
-        return f.getStyle();
+        return getFont().getStyle();
     }
 
     /**
@@ -109,15 +90,14 @@ public class AFont {
      * @return
      */
     public String getFontName() {
-        Font f = getFont();
-        return f.getFontName();
+        return getFont().getFontName();
     }
 
     /**
      *
      * @param _font
      */
-    public void setFont(Font _font) {
+    public void setFont(IFont _font) {
         cacheFont = _font;
     }
 
@@ -125,11 +105,11 @@ public class AFont {
      *
      * @return
      */
-    public Font getFont() {
+    public IFont getFont() {
         if (cacheFont != null) {
             return cacheFont;
         }
-        cacheFont = new Font(UV.cDefaultFontName, Font.PLAIN, 12);
+        cacheFont = VS.getSystemFont();
         return cacheFont;
     }
 
@@ -139,9 +119,7 @@ public class AFont {
      * @return
      */
     public float getW(String _string) {
-        Font f = getFont();
-        FontMetrics fm = component.getFontMetrics(f);
-        return (float) fm.stringWidth(_string);
+        return (float) getFont().stringWidth(_string);
     }
 
     /**
@@ -150,9 +128,7 @@ public class AFont {
      * @return
      */
     public float getH(String _string) {
-        Font f = getFont();
-        FontMetrics fm = component.getFontMetrics(f);
-        return (float) (fm.getHeight());
+        return (float) getFont().stringHeight(_string);
     }
 
     /**
@@ -160,10 +136,12 @@ public class AFont {
      * @param _string
      * @return
      */
-    public float getDescent(String _string) {
-        Font f = getFont();
-        FontMetrics fm = component.getFontMetrics(f);
-        return (float) (fm.getDescent());
+    public float getDescent() {
+        return (float) getFont().descent();
+    }
+
+    public float getAscent() {
+        return (float) getFont().ascent();
     }
 
     /**
@@ -196,5 +174,11 @@ public class AFont {
         return new XYWH_I((int) _x, (int) _y, (int) _w, (int) _h);
     }
 
-   
+    float getCharW(char c) {
+        return getFont().charWidth(c);
+    }
+
+    public Object getName() {
+        return getFont().getFontName();
+    }
 }

@@ -127,8 +127,7 @@ public class VList extends AVList implements IVList {
             _controller = NullListController.cNull;
         }
         controller = _controller;
-        layoutInterior();//??
-        flush();//??
+        paint();
     }
 
     /**
@@ -210,6 +209,7 @@ public class VList extends AVList implements IVList {
      * @param _parent
      * @param _flex
      */
+    @Override
     public void layoutInterior(IView _parent, Flex _flex) {
         Object[] items = getItems();
 
@@ -236,11 +236,9 @@ public class VList extends AVList implements IVList {
                 if (v instanceof ISkip && ((ISkip) v).skip()) {
                     continue;
                 }
-                synchronized (v) {
-                    v.setParentView(this);
-                    v.layoutInterior(_flex);
-                    v.setLocation(x, y);
-                }
+                v.setParentView(this);
+                v.layoutInterior(_flex);
+                v.setLocation(x, y);
                 itemSize.max(v.getW(), v.getH());
                 v.layoutExterior(itemSize, _flex);//??
                 if (getRowsColums() > 0) {

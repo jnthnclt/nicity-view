@@ -74,24 +74,26 @@ public class VPopupViewer extends Viewer implements IRootView {
 
         UV.exitFrame(new VPopupViewer(new VPan(x, 600, 600)), "view pop test");
     }
-    
-    
-    
+    private final RigidBox empty = new RigidBox(1, 1);
     private Viewer over;
     private boolean hadChildEvent = false;
 
     public VPopupViewer(IView _view) {
-        over = new Viewer();
+        over = new Viewer(empty);
         setContent(new VAlwaysOver(new VTrapFlex(over), _view, UV.cOrigin));
     }
-    
+
     @Override
     public IView disbatchEvent(IView parent, AViewEvent event) {
         IView v = super.disbatchEvent(parent, event);
         if (!UV.isChild(over, v)) {
-            if (event instanceof AMouseEvent && ((AMouseEvent)event).isDragging()) return v;
-            if (!hadChildEvent) return v;
-            over.setView(new RigidBox(1, 1));
+            if (event instanceof AMouseEvent && ((AMouseEvent) event).isDragging()) {
+                return v;
+            }
+            if (!hadChildEvent) {
+                return v;
+            }
+            over.setView(empty);
             layoutAllInterior();
             paint();
         } else {
@@ -99,7 +101,7 @@ public class VPopupViewer extends Viewer implements IRootView {
         }
         return v;
     }
-    
+
     @Override
     public void flush() {
         getParentView().getRootView().flush();
@@ -111,18 +113,18 @@ public class VPopupViewer extends Viewer implements IRootView {
      * @param _popup
      * @param _place
      */
-    synchronized public void popup(IView _relativeTo, IView _popup, XY_I pp, boolean _hideOnExit, boolean _hideOnLost) {
+    public void popup(IView _relativeTo, IView _popup, XY_I pp, boolean _hideOnExit, boolean _hideOnLost) {
         hadChildEvent = false;
         int pad = 8;
-        
+
         //IView parent = getParentView();
         //int cw = (int) parent.getW() - (pad * 2);
         //int ch = (int) parent.getH() - (pad * 2);
-        
+
         int cw = (int) getW() - (pad * 2);
         int ch = (int) getH() - (pad * 2);
 
-        VPopUp popUp = new VPopUp(_popup, _hideOnExit, _hideOnLost);
+        VPopUp popUp = new VPopUp(_popup,empty, _hideOnExit, _hideOnLost);
         popUp.layoutInterior();
         int pw = (int) popUp.getW();
         int ph = (int) popUp.getH();
@@ -159,13 +161,12 @@ public class VPopupViewer extends Viewer implements IRootView {
                 }
             }
             if (ppw != -1 || pph != -1) {
-                popUp = new VPopUp(new VPan(_popup, ppw, pph), _hideOnExit, _hideOnLost);
-                popUp.layoutAllInterior();
+                popUp = new VPopUp(new VPan(_popup, ppw, pph),empty, _hideOnExit, _hideOnLost);
+                popUp.paint();
             }
         }
 
         over.setPlacer(new Placer(popUp, new Place(UV.cOrigin, p.x, p.y)));
-        over.layoutInterior();
         over.paint();
     }
 
@@ -195,8 +196,10 @@ public class VPopupViewer extends Viewer implements IRootView {
 
         boolean closeOnFocusLost;
         boolean closeOnMouseExited;
+        IView empty;
 
-        VPopUp(IView view, boolean closeOnMouseExited, boolean closeOnFocusLost) {
+        VPopUp(IView view,IView empty, boolean closeOnMouseExited, boolean closeOnFocusLost) {
+            this.empty = empty;
             this.closeOnMouseExited = closeOnMouseExited;
             this.closeOnFocusLost = closeOnFocusLost;
             setContent(view);
@@ -224,7 +227,7 @@ public class VPopupViewer extends Viewer implements IRootView {
                 }
             }
             if (closeOnMouseExited) {
-                getParentView().setView(new RigidBox(1, 1));
+                getParentView().setView(empty);
             }
         }
 
@@ -297,8 +300,12 @@ public class VPopupViewer extends Viewer implements IRootView {
 
     @Override
     public void dispose() {
-        over.setView(new RigidBox(1, 1));
-        getParentView().layoutInterior();
+        if (over.getContent() == null || over.getContent() instanceof RigidBox) {
+            getParentView().getRootView().dispose();
+        } else {
+            over.setView(empty);
+            paint();
+        }
     }
 
     @Override

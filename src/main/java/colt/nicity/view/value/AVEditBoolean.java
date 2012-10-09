@@ -19,7 +19,6 @@
  */
 package colt.nicity.view.value;
 
-import colt.nicity.view.list.AItem;
 import colt.nicity.core.observer.AObserver;
 import colt.nicity.core.observer.Change;
 import colt.nicity.core.observer.IObservable;
@@ -28,6 +27,7 @@ import colt.nicity.core.value.Value;
 import colt.nicity.view.core.Placer;
 import colt.nicity.view.interfaces.IEvent;
 import colt.nicity.view.interfaces.IView;
+import colt.nicity.view.list.AItem;
 
 /**
  *
@@ -108,8 +108,6 @@ abstract public class AVEditBoolean extends AItem {
             placer = new Placer(falseView());
             deselectBorder();
         }
-        layoutInterior();
-        repair();
-        flush();
+        paint();
     }
 }

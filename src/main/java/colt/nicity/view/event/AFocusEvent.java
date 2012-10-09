@@ -19,6 +19,7 @@
  */
 package colt.nicity.view.event;
 
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.core.NullView;
 import colt.nicity.view.interfaces.IView;
 
@@ -53,7 +54,7 @@ abstract public class AFocusEvent extends AViewEvent {
      * @return
      */
     public IView disbatchEvent(IView parent, IView view) {
-        if (!(view.isEventEnabled(AViewEvent.cFocusEvent))) {
+        if (!(view.isEventEnabled(IViewEventConstants.cFocusEvent))) {
             return NullView.cNull;
         }
         return view.disbatchEvent(parent, this);
@@ -64,7 +65,7 @@ abstract public class AFocusEvent extends AViewEvent {
      * @return
      */
     public long getMask() {
-        return AViewEvent.cFocusEvent;
+        return IViewEventConstants.cFocusEvent;
     }
 
     public String toString() {

@@ -22,6 +22,7 @@ package colt.nicity.view.event;
 import colt.nicity.core.memory.struct.UXYWH_I;
 import colt.nicity.core.memory.struct.XYWH_I;
 import colt.nicity.core.memory.struct.XY_I;
+import colt.nicity.view.adaptor.IViewEventConstants;
 import colt.nicity.view.core.NullView;
 import colt.nicity.view.interfaces.IView;
 
@@ -258,8 +259,9 @@ abstract public class AMouseEvent extends AInputEvent {
      *
      * @return
      */
+    @Override
     public long getMask() {
-        return AViewEvent.cMouseEvent;
+        return IViewEventConstants.cMouseEvent;
     }
 
     /**
