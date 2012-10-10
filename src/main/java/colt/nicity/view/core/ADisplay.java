@@ -225,13 +225,13 @@ abstract public class ADisplay {
                     float w = displaying.getW();
                     float h = displaying.getH();
                     if (w == 0 && h == 0) {
-                        displaying.repair();
+                        displaying.mend();
                         repaint();
                         continue;
                     }
                     ICanvas g = display(0, w, h);//who
                     if (g == null) {
-                        displaying.repair();
+                        displaying.mend();
                         repaint();
                         continue;
                     }
@@ -244,7 +244,7 @@ abstract public class ADisplay {
                     float nw = displaying.getW();
                     float nh = displaying.getH();
                     if (nw == w && nh == h) {
-                        displaying.repair();
+                        displaying.mend();
                         repaint();
                         continue;
                     }

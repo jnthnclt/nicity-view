@@ -293,15 +293,17 @@ public class AWindow extends AViewer implements IEventClient, IRootView, IDropVi
      */
     public void show() {
         super.setParentView(NullRootView.cNull);
+        IPeerView p = null;
         synchronized (getPeerLock) {
             if (requestedDispose) {
                 return;
             }
-            IPeerView p = getPeer();
-            p.setVisible(true);
-            flush();
-            ADisplay.topDisplay = display;
+            p = getPeer();
+           
         }
+        p.setVisible(true);
+        ADisplay.topDisplay = display;
+        flush();
     }
 
     @Override

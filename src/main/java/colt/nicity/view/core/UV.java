@@ -1680,6 +1680,7 @@ public class UV {
         VFrame frameViewer = new VFrame(_view, _name, _canClose, _canMinimize);
         AWindow frame = new AWindow(frameViewer);
         frame.setTitle(_name.toString());
+        frame.layoutAllInterior();
         centerWindow(frame);
         frame.show();
         return frame;
@@ -1696,6 +1697,7 @@ public class UV {
         AWindow frame = new AWindow(frameViewer);
         frame.setTitle(_name.toString());
         frame.systemExitOnClose(true);
+        frame.layoutAllInterior();
         centerWindow(frame);
         frame.show();
         return frame;
